@@ -1,22 +1,20 @@
-# create-svelte
+# MIT class group chats for Matrix
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
 
-## Creating a project
+## Environment variables needed
 
-If you're seeing this, you've probably already done this step. Congrats!
+In order to use this project, you need to set the following environment variables in `.env`:
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+* `MATRIX_TOKEN`: A Matrix access token for the bot or app service.
+* `MULESOFT_CLIENT_ID`: A client ID to access developer.mit.edu APIs
+* `MULESOFT_CLIENT_SECRET`: A client secret to access developer.mit.edu APIs
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Once you've installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+Note: the Matrix dependency prefers `yarn`, but `npm` seems to work fine.
 
 ```bash
 npm run dev
