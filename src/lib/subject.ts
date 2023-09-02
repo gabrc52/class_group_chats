@@ -31,7 +31,7 @@ export async function getSubjectsApiTerm() {
 /**
  * Convert from Hydrant term format to subject API format
  */
-function toSubjectsApi(term: string) {
+export function toSubjectsApi(term: string) {
     const date = new Date();
     const year = date.getFullYear();
     assert.strictEqual(term.length, 3);

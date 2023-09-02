@@ -2,7 +2,9 @@ as_token: Generate one with pwgen -s 64 -n 2
 hs_token: Generate one with pwgen -s 64 -n 2
 id: Subject group chats
 namespaces:
-  aliases: []
+  aliases:
+    - exclusive: true
+      regex: '#subject.+:uplink.mit.edu'
   rooms: []
   users: []
 rate_limited: false

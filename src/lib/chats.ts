@@ -1,14 +1,35 @@
 import { MATRIX_HOMESERVER } from '$env/static/private';
+import { getSubjectDetails, getSubjectsApiTerm, toSubjectsApi } from "$lib/subject";
+import { Preset, Visibility } from 'matrix-js-sdk';
+import { matrixClient } from './matrix';
+
+function getRoomAliasLocalpart(subject: string, term: string): string {
+    return `subject_${subject}_${term.toLowerCase()}`;
+}
 
 /**
  * Calculate the room alias of a given subject chat
  * 
  * @param subject an existing, valid canonical subject number
- * @param term the term for the given chat, in Hydrant format (e.g. f23)
+ * @param term the term for the given chat, in Subject API format (e.g. 2023FA)
  * @returns the generated room alias
  */
 export function getRoomAlias(subject: string, term: string): string {
-    const aliasLocalpart = `#${subject}_${term.toLowerCase()}`;
-    const alias = `${aliasLocalpart}:${MATRIX_HOMESERVER}`;
+    const aliasLocalpart = getRoomAliasLocalpart(subject, term);
+    const alias = `#${aliasLocalpart}:${MATRIX_HOMESERVER}`;
     return alias;
+}
+
+
+export async function createChat(subject: string, term: string) {
+    const { title, description } = await getSubjectDetails(subject);
+    // TODO: think about power levels or defaults in general
+    const response = await matrixClient.createRoom({
+        room_alias_name: getRoomAliasLocalpart(subject, term),
+        name: `${subject} ${title}`,
+        topic: description,
+        visibility: Visibility.Private,
+        preset: Preset.TrustedPrivateChat,
+    });
+    return response.room_id;
 }
