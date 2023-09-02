@@ -12,6 +12,10 @@ Who is the server authenticated as? (bot or appservice user)
 
 Get details about subject
 
+### `GET ./subject/all`
+
+Get all subjects
+
 ### `GET ./chat/[subject]`
 
 Get details about class group chat
