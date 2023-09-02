@@ -1,0 +1,10 @@
+as_token: Generate one with pwgen -s 64 -n 2
+hs_token: Generate one with pwgen -s 64 -n 2
+id: Subject group chats
+namespaces:
+  aliases: []
+  rooms: []
+  users: []
+rate_limited: false
+sender_localpart: classesbot
+url: null
