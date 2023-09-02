@@ -3,6 +3,7 @@ import { createChat, getRoomAlias } from "$lib/chats";
 import { getRoomId, matrixClient } from "$lib/matrix";
 import { SubjectNotFoundError, getSubjectsApiTerm } from "$lib/subject";
 import { error, json } from "@sveltejs/kit";
+import { MatrixError } from "matrix-js-sdk";
 
 export const PUT = authenticated(async function ({ params }) {
     // TODO: check if student and not staff (ideally)
@@ -19,6 +20,8 @@ export const PUT = authenticated(async function ({ params }) {
     } catch (e) {
         if (e instanceof SubjectNotFoundError) {
             throw error(404, 'subject does not exist');
+        } else if (e instanceof MatrixError) {
+            throw error(e.httpStatus ?? 500, e.data.error ?? 'a matrix error occurred');
         } else {
             throw e;
         }
