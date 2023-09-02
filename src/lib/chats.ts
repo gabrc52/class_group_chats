@@ -2,6 +2,7 @@ import { MATRIX_HOMESERVER } from '$env/static/private';
 import { getSubjectDetails, getSubjectsApiTerm, toSubjectsApi } from "$lib/subject";
 import { Preset, Visibility } from 'matrix-js-sdk';
 import { matrixClient } from './matrix';
+import { power_level_content_override } from './powerLevels';
 
 function getRoomAliasLocalpart(subject: string, term: string): string {
     return `subject_${subject}_${term.toLowerCase()}`;
@@ -20,7 +21,6 @@ export function getRoomAlias(subject: string, term: string): string {
     return alias;
 }
 
-
 export async function createChat(subject: string, term: string) {
     const { title, description } = await getSubjectDetails(subject);
     // TODO: think about power levels or defaults in general
@@ -30,6 +30,7 @@ export async function createChat(subject: string, term: string) {
         topic: description,
         visibility: Visibility.Private,
         preset: Preset.TrustedPrivateChat,
+        power_level_content_override: power_level_content_override,
     });
     return response.room_id;
 }
