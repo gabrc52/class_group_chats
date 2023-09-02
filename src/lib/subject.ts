@@ -57,6 +57,14 @@ export type SubjectDetails = {
     instructorKerbs: string[], // e.g. ["hartz", "rcm", ...], or empty array if unknown
 }
 
+export type Subject /* from hydrant */ = {
+    number: string,
+    name: string,
+    // description: string,
+    // instructor: string,
+    level: string,
+}
+
 export class SubjectNotFoundError extends Error {}
 
 /**
