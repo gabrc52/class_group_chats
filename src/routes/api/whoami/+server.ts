@@ -1,5 +1,5 @@
 import { error, json } from '@sveltejs/kit';
-import { matrixClient } from '$lib';
+import { matrixClient } from '$lib/matrix';
 import { API_SHARED_SECRET } from '$env/static/private';
 import status from 'http-status';
 

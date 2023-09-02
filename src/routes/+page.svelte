@@ -18,13 +18,11 @@
 <br />
 <br />
 
-{#if type}
-	<section class="hero {type}" transition:slide>
-		<div class="hero-body">
-			<div class="container">
-				<h1 class="title">Title</h1>
-				<h2 class="subtitle">Subtitle</h2>
-			</div>
+<section class="hero {type}" transition:slide>
+	<div class="hero-body">
+		<div class="container">
+			<h1 class="title">Title</h1>
+			<h2 class="subtitle">Subtitle</h2>
 		</div>
-	</section>
-{/if}
+	</div>
+</section>

@@ -1,4 +1,4 @@
-import { matrixClient } from '$lib';
+import { matrixClient } from '$lib/matrix';
 
 // Simple demo
 // This variant calls Matrix directly
