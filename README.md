@@ -7,6 +7,7 @@ Everything you need to build a Svelte project, powered by [`create-svelte`](http
 In order to use this project, you need to set the following environment variables in `.env`:
 
 * `MATRIX_TOKEN`: A Matrix access token for the bot or app service.
+* `API_SHARED_SECRET`: A shared secret that trusted clients of the API can use to perform actions. Generate with `pwgen -s 64 -n 1`
 * `MULESOFT_CLIENT_ID`: A client ID to access developer.mit.edu APIs
 * `MULESOFT_CLIENT_SECRET`: A client secret to access developer.mit.edu APIs
 

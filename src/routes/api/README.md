@@ -1,0 +1,1 @@
+This API authenticates using a shared secret. Its clients are not end users, they are other servers, such as Interstellar, or this same server. The clients of this API should ensure the user has enough access, as deemed appropriate.
