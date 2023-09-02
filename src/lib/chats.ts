@@ -23,7 +23,6 @@ export function getRoomAlias(subject: string, term: string): string {
 
 export async function createChat(subject: string, term: string) {
     const { title, description } = await getSubjectDetails(subject);
-    // TODO: think about power levels or defaults in general
     const response = await matrixClient.createRoom({
         room_alias_name: getRoomAliasLocalpart(subject, term),
         name: `${subject} ${title}`,

@@ -1,6 +1,7 @@
 import { PUBLIC_HYDRANT_BASEURL } from "$env/static/public";
 import { MULESOFT_SUBJECT_API, MULESOFT_CLIENT_ID, MULESOFT_CLIENT_SECRET } from "$env/static/private";
 import assert from 'assert';
+import { decode } from 'he';
 
 // TODO: figure out how to use the Terms API, and use it to get the latest term.
 
@@ -82,13 +83,14 @@ export async function getSubjectDetails(subject: string): Promise<SubjectDetails
     const instructorKerbs = json.item.instructorDetails
         ? json.item.instructorDetails.map((i: {kerbId: string}) => i.kerbId.toLowerCase())
         : [];
+    // Some fields may contain HTML entities, so we unescape them
     return {
-        title: json.item.title,
-        cluster: json.item.cluster,
-        prerequisites: json.item.prerequisites,
+        title: decode(json.item.title),
+        cluster: decode(json.item.cluster),
+        prerequisites: decode(json.item.prerequisites),
         units: json.item.units,
-        optional: json.item.optional,
-        description: json.item.description,
+        optional: decode(json.item.optional),
+        description: decode(json.item.description),
         instructorKerbs: instructorKerbs,
     };
 }
