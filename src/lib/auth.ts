@@ -12,9 +12,10 @@ import status from 'http-status';
  */
 export function authenticated(f: RequestHandler): RequestHandler {
     return async function (e) {
-        if (e.isSubRequest || e.request.headers.get('shared_secret') === API_SHARED_SECRET) {
-            f(e);
+        const authenticated = e.isSubRequest || e.request.headers.get('shared_secret') === API_SHARED_SECRET;
+        if (!authenticated) {
+            throw error(status.UNAUTHORIZED, 'Please specify a shared_secret header');
         }
-        throw error(status.UNAUTHORIZED, 'Please specify a shared_secret header');
+        return f(e);
     }
 }
