@@ -11,7 +11,8 @@
     // TODO: use some actual authentication mechanism
     const username = persisted<string>('username', '');
     setContext('username', readonly(username));
-    setContext('mxid', derived(username, (username) => `@${username}:${PUBLIC_MATRIX_HOMESERVER}`));
+	const mxid = derived(username, (username) => `@${username}:${PUBLIC_MATRIX_HOMESERVER}`);
+    setContext('mxid', mxid);
 
 	let subject: Subject | undefined;
 	$: console.log(subject);
@@ -34,7 +35,7 @@
 			</p>
 		</div>
         {#if $username}
-            <p class="help">The full thing (@{$username}:{PUBLIC_MATRIX_HOMESERVER}) is your global Matrix username.</p>
+            <p class="help">The full thing ({$mxid}) is your global Matrix username.</p>
         {/if}
 	</div>
     
