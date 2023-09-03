@@ -1,5 +1,5 @@
 import { authenticated } from "$lib/auth";
-import { createChat, getRoomAlias } from "$lib/chats";
+import { ClassGroupChatMembership, createChat, getRoomAlias } from "$lib/chats";
 import { getRoomId, matrixClient } from "$lib/matrix";
 import { SubjectNotFoundError, getSubjectsApiTerm } from "$lib/subject";
 import { error, json } from "@sveltejs/kit";
@@ -27,13 +27,6 @@ export const PUT = authenticated(async function ({ params }) {
         }
     }
 });
-
-enum ClassGroupChatMembership { 
-    not_joined = 'not_joined',
-    invited = 'invited',
-    joined = 'joined',
-    banned = 'banned',
-};
 
 export const GET = authenticated(async function({ params }) {
     try {

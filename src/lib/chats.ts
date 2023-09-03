@@ -11,6 +11,17 @@ export type SubjectChatDetails = {
     numMembers: number,
 }
 
+export enum ClassGroupChatMembership {
+    not_joined = 'not_joined',
+    invited = 'invited',
+    joined = 'joined',
+    banned = 'banned',
+}
+
+export type MembershipResult = {
+    membership: ClassGroupChatMembership,
+}
+
 function getRoomAliasLocalpart(subject: string, term: string): string {
     return `subject_${subject}_${term.toLowerCase()}`;
 }

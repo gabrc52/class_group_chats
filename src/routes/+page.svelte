@@ -5,11 +5,12 @@
 	import SubjectDetails from '$lib/components/SubjectDetails.svelte';
 	import type { Subject } from '$lib/subject';
     import { setContext } from 'svelte';
-    import { readonly, writable } from 'svelte/store';
+    import { derived, readonly, writable } from 'svelte/store';
 
     // TODO: use some actual authentication mechanism
     const username = writable<string>('');
     setContext('username', readonly(username));
+    setContext('mxid', derived(username, (username) => `@${username}:${PUBLIC_MATRIX_HOMESERVER}`));
 
 	let subject: Subject | undefined;
 	$: console.log(subject);

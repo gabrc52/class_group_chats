@@ -3,10 +3,14 @@
 -->
 
 <script lang="ts">
-	import type { Subject, SubjectDetails } from '$lib/subject';
 	import type { SubjectChatDetails } from '$lib/chats';
+	import type { Subject, SubjectDetails } from '$lib/subject';
+	import { getContext } from 'svelte';
+	import type { Readable } from 'svelte/store';
 
 	export let subject: Subject;
+
+	const mxid: Readable<string> = getContext('mxid');
 
 	async function getSubjectDetails(number: string): Promise<SubjectDetails> {
 		const response = await fetch(`/classes/api/subject/${number}`);
@@ -15,12 +19,16 @@
 	}
 
 	async function getSubjectChat(number: string): Promise<SubjectChatDetails> {
-		const response = await fetch(`/classes/api/chat/${number}`)
+		const response = await fetch(`/classes/api/chat/${number}`);
 		const json = await response.json();
 		return json;
 	}
 
-	
+	// async function getMembership(number: string, mxid: string): Promise<ClassGroupChatMembership> {
+	// 	const response = await fetch(`/classes/api/chat/${number}/member/${mxid}`);
+	// 	const json: MembershipResult = await response.json();
+	// 	return json.membership;
+	// }
 </script>
 
 {#await Promise.all([getSubjectDetails(subject.number), getSubjectChat(subject.number)])}
@@ -50,7 +58,8 @@
 							<div class="icon-text">
 								<span class="icon">
 									<!-- TODO fa-user-check if already inside -->
-									<i class="fa-solid fa-user-plus" />
+									<!-- fa-user-xmark if banned-->
+									<!-- <i class="fa-solid" class:fa-user-check={membership === ClassGroupChatMembership.not_joined} /> -->
 								</span>
 								<!-- TODO: dynamically update text "Invite me" "Invited!" -->
 								<span>Invite me</span>
