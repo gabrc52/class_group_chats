@@ -41,7 +41,7 @@
 			(subject) =>
 				((subject.level === 'G' && level !== Level.undergrad)
 					|| (subject.level === 'U' && level !== Level.grad))
-				&& (subject.number.includes(query)
+				&& (subject.number.toLowerCase().includes(query.toLowerCase())
 					|| (subject.oldNumber && subject.oldNumber.includes(query))
 					|| subject.name.toLowerCase().includes(query.toLowerCase())
 			)
@@ -53,7 +53,8 @@
 	$: search(subjects, query, $level).then((r) => (results = r));
 
 	function selectSubject(subject: Subject) {
-		dispatch('subjectSelected', subject.number);
+		dispatch('subjectSelected', subject);
+		query = '';
 	}
 </script>
 
