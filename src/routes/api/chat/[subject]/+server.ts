@@ -15,7 +15,7 @@ export type SubjectChatDetails = {
  * Get details about the given class group chat
  * (for now just the member count)
  */
-export const GET = authenticated(async function ({ params }) {
+export const GET = async function ({ params }) {
     const { subject } = params;
     const term = await getSubjectsApiTerm();
     const alias = getRoomAlias(subject!, term);
@@ -26,5 +26,5 @@ export const GET = authenticated(async function ({ params }) {
         roomId: id,
         numMembers: await countMembers(id),
     });
-});
+};
 
