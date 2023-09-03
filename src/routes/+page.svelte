@@ -13,6 +13,9 @@
 
 {#if subject}
     <div class="section">
-        <h1 class="title">{subject.number}: {subject.name}</h1>
+        <div class="container is-max-desktop">
+            <h1 class="title">{subject.number}: {subject.name}</h1>
+            <progress class="progress is-info" max="100">30%</progress>
+        </div>
     </div>
 {/if}

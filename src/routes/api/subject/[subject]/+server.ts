@@ -2,8 +2,6 @@ import { getSubjectDetails, SubjectNotFoundError, type Subject } from '$lib/subj
 import { error, json } from '@sveltejs/kit';
 import { PUBLIC_HYDRANT_BASEURL } from "$env/static/public";
 
-// TODO: deal with classes with multiple numbers
-
 async function getAllHydrantClasses() {
     // TODO: cache this :)
     const response = await fetch(`${PUBLIC_HYDRANT_BASEURL}/latest.json`);

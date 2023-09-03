@@ -48,6 +48,7 @@ export function toSubjectsApi(term: string) {
 
 
 export type SubjectDetails = {
+    canonicalNumber: string, // e.g. 6.1200 instead of 6.042 or 18.062
     title: string, // e.g. "Mathematics for Computer Science"
     cluster: string, // e.g. "(Same subject as 18.062J)"
     prerequisites: string, // e.g. "Calculus I (GIR)"
@@ -67,6 +68,21 @@ export type Subject /* from hydrant */ = {
 }
 
 export class SubjectNotFoundError extends Error {}
+
+function getCanonicalNumber(subjectItem: any): string {
+    if (!subjectItem.cluster) {
+        return subjectItem.subjectId;
+    }
+    const description: string = subjectItem.description;
+    // TODO: the only way I could think of getting the canonical subject,
+    // but it could break at any time
+    const notCanonicalRegex = /See description under subject (.+)J\./;
+    const match = notCanonicalRegex.exec(description);
+    if (!match) {
+        return subjectItem.subjectId;
+    }
+    return match[1];
+}
 
 /**
  * Get the details about a subject.
@@ -89,16 +105,20 @@ export async function getSubjectDetails(subject: string): Promise<SubjectDetails
     if (!response.ok) throw new SubjectNotFoundError();
     const json = await response.json();
     if (json.item.offered !== true) throw new SubjectNotFoundError();
+    const canonicalNumber = getCanonicalNumber(json);
     const instructorKerbs = json.item.instructorDetails
         ? json.item.instructorDetails.map((i: {kerbId: string}) => i.kerbId.toLowerCase())
         : [];
     // Some fields may contain HTML entities, so we unescape them
     return {
+        canonicalNumber: getCanonicalNumber(json.item),
         title: decode(json.item.title),
         cluster: decode(json.item.cluster),
         prerequisites: decode(json.item.prerequisites),
         units: json.item.units,
         optional: decode(json.item.optional),
+        // TODO: do we want to get the original description?
+        // i'm not doing it to avoid the extra query since it's not actually used yet
         description: decode(json.item.description),
         instructorKerbs: instructorKerbs,
     };
