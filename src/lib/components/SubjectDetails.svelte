@@ -39,7 +39,7 @@
 						<!-- TODO: is-loading if loading, disabled if already inside -->
 						<button class="button is-link">
 							<div class="icon-text">
-								<span class="icon has-text">
+								<span class="icon">
 									<!-- TODO fa-user-check if already inside -->
 									<i class="fa-solid fa-user-plus" />
 								</span>
@@ -49,7 +49,7 @@
 						</button>
 						<span class="button is-static">
 							<span>0</span>
-							<span class="icon has-text">
+							<span class="icon">
 								<i class="fa-solid fa-users" />
 							</span>
 						</span>
