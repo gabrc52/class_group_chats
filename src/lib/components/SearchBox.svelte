@@ -4,6 +4,7 @@
 	import { fade, slide } from 'svelte/transition';
 	import { persisted } from 'svelte-local-storage-store';
 	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
 
 	enum Level {
 		undergrad,
@@ -51,9 +52,8 @@
 
 	$: search(subjects, query, $level).then((r) => (results = r));
 
-	const dispatch = createEventDispatcher();
 	function selectSubject(subject: Subject) {
-		dispatch<string>('subjectSelected', subject.number);
+		dispatch('subjectSelected', subject.number);
 	}
 </script>
 
@@ -67,20 +67,22 @@
 				<div class="panel-block">
 					<p class="control has-icons-left">
 						<!-- TODO turn this into a form too -->
-						<input class="input" type="text" placeholder="Search" bind:value={query} />
+						<input class="input" type="text" id="searchbox" placeholder="Search a class by number or name" bind:value={query} />
 						<span class="icon is-left">
 							<i class="fas fa-search" aria-hidden="true" />
 						</span>
 					</p>
 				</div>
 				<p class="panel-tabs">
-					<a href="#" class:is-active={$level === Level.undergrad} on:click={() => ($level = Level.undergrad)}>Undergrad</a>
-					<a href="#" class:is-active={$level === Level.grad} on:click={() => ($level = Level.grad)}>Grad</a>
-					<a href="#" class:is-active={$level === Level.both} on:click={() => ($level = Level.both)}>Both</a>
+					<!-- TODO: accessibility stuff like making sure Tab and Enter works,
+					           as well as whatever else is the issue with <a> -->
+					<a class:is-active={$level === Level.undergrad} on:click={() => ($level = Level.undergrad)}>Undergrad</a>
+					<a class:is-active={$level === Level.grad} on:click={() => ($level = Level.grad)}>Grad</a>
+					<a class:is-active={$level === Level.both} on:click={() => ($level = Level.both)}>Both</a>
 				</p>
 
                 {#each results as result (result.number)}
-                <a href="#" class="panel-block" on:click={() => selectSubject(result)}>
+                <a class="panel-block" on:click={() => selectSubject(result)}>
 					<span class="panel-icon">
 						<i class="fas fa-book" aria-hidden=	"true" />
 					</span>

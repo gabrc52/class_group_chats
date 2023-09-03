@@ -8,4 +8,4 @@
 </script>
 
 <Header/>
-<SearchBox on:subjectChange={(event) => subject = event.detail}/>
+<SearchBox on:subjectSelected={(event) => subject = event.detail}/>
