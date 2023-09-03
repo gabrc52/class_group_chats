@@ -40,6 +40,7 @@ export async function countMembers(roomId: string | undefined): Promise<number> 
     }
     const members = (await matrixClient.getJoinedRoomMembers(roomId)).joined;
     const numMembers = Object.keys(members).length;
-    return numMembers;
+    // substract 1 since the bot doesn't count
+    return numMembers - 1;
 }
 
