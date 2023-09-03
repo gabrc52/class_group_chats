@@ -1,5 +1,3 @@
-import { MATRIX_HOMESERVER } from "$env/static/private"
-
 export const power_level_content_override = {
     "events": {
       "m.room.name": 0,

@@ -4,13 +4,6 @@ import { getRoomId, countMembers } from "$lib/matrix";
 import { getLatestTerm, getSubjectsApiTerm } from "$lib/subject";
 import { json } from "@sveltejs/kit";
 
-export type SubjectChatDetails = {
-    exists: boolean,
-    alias: string,
-    roomId: string,
-    numMembers: number,
-}
-
 /**
  * Get details about the given class group chat
  * (for now just the member count)

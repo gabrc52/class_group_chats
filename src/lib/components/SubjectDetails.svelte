@@ -4,6 +4,7 @@
 
 <script lang="ts">
 	import type { Subject, SubjectDetails } from '$lib/subject';
+	import type { SubjectChatDetails } from '$lib/chats';
 
 	export let subject: Subject;
 
@@ -12,9 +13,17 @@
 		const json = await response.json();
 		return json;
 	}
+
+	async function getSubjectChat(number: string): Promise<SubjectChatDetails> {
+		const response = await fetch(`/classes/api/chat/${number}`)
+		const json = await response.json();
+		return json;
+	}
+
+	
 </script>
 
-{#await Promise.all([getSubjectDetails(subject.number)])}
+{#await Promise.all([getSubjectDetails(subject.number), getSubjectChat(subject.number)])}
 	<div class="section">
 		<div class="container is-max-desktop">
 			<h1 class="title">{subject.number}</h1>
@@ -22,7 +31,7 @@
 			<progress class="progress is-info" max="100">30%</progress>
 		</div>
 	</div>
-{:then [canonicalSubject]}
+{:then [canonicalSubject, chat]}
 	<div class="section">
 		<div class="container is-max-desktop">
 			<div class="level">
@@ -48,7 +57,7 @@
 							</div>
 						</button>
 						<span class="button is-static">
-							<span>0</span>
+							<span>{chat.numMembers}</span>
 							<span class="icon">
 								<i class="fa-solid fa-users" />
 							</span>

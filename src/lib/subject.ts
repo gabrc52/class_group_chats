@@ -103,7 +103,6 @@ function getCanonicalNumber(subjectItem: any): string {
  */
 export async function getSubjectDetails(subject: string): Promise<SubjectDetails> {
     const term = await getSubjectsApiTerm();
-    console.log('subjects api term is', term);
     const url = `${MULESOFT_SUBJECT_API}/terms/${term}/subjects/${subject}`;
     const response = await fetch(url, {
         headers: {
@@ -116,7 +115,6 @@ export async function getSubjectDetails(subject: string): Promise<SubjectDetails
     if (json.item.offered !== true) throw new SubjectNotFoundError();
     const canonicalNumber = getCanonicalNumber(json.item);
     if (canonicalNumber !== subject) {
-        console.log(canonicalNumber);
         return getSubjectDetails(canonicalNumber);
     }
     const instructorKerbs = json.item.instructorDetails
