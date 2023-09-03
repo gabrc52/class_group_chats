@@ -36,9 +36,11 @@
 		// It seems like Hydrant has some fuzzier matching (for example "6042" works too)
 		return subjects.filter(
 			(subject) =>
-				subject.number.includes(query)
+				((subject.level === 'G' && level !== Level.undergrad)
+					|| (subject.level === 'U' && level !== Level.grad))
+				&& (subject.number.includes(query)
 					|| (subject.oldNumber && subject.oldNumber.includes(query))
-					|| subject.name.toLowerCase().includes(query.toLowerCase()
+					|| subject.name.toLowerCase().includes(query.toLowerCase())
 			)
 		);
 	}
