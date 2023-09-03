@@ -48,8 +48,6 @@
 		);
 	}
 
-	let searchResults = [];
-
 	$: search(subjects, query, $level).then((r) => (results = r));
 
 	function selectSubject(subject: Subject) {
@@ -92,5 +90,7 @@
                 {/each}
 			</div>
 		</div>
+	{:else}
+		<progress class="progress is-primary" max="100">30%</progress>
 	{/if}
 </div>

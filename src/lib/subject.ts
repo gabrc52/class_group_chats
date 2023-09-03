@@ -43,7 +43,15 @@ export function toSubjectsApi(term: string) {
     const convertedTerm = conversions.get(term[0]) ?? assert.fail(`unknown prefix ${term[0]}`);
     const century = year.toString().substring(0, 2);
     const relativeYear = term.substring(1);
-    return `${century}${relativeYear}${convertedTerm}`;
+    
+    // Hydrant calls f23 the fall of the year 2023
+    // The subjects API calls 2023FA the fall of the year 2022-2023
+    // So we may need to add 1!!!
+    const academicYear = Number.parseInt(`${century}${relativeYear}`) + (
+        convertedTerm === 'FA' ? 1 : 0
+    );
+
+    return `${academicYear}${convertedTerm}`;
 }
 
 
@@ -95,6 +103,7 @@ function getCanonicalNumber(subjectItem: any): string {
  */
 export async function getSubjectDetails(subject: string): Promise<SubjectDetails> {
     const term = await getSubjectsApiTerm();
+    console.log('subjects api term is', term);
     const url = `${MULESOFT_SUBJECT_API}/terms/${term}/subjects/${subject}`;
     const response = await fetch(url, {
         headers: {
