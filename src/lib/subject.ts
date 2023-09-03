@@ -59,6 +59,7 @@ export type SubjectDetails = {
 
 export type Subject /* from hydrant */ = {
     number: string,
+    oldNumber: string | undefined,
     name: string,
     // description: string,
     // instructor: string,

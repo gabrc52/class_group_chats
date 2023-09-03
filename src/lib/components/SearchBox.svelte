@@ -31,9 +31,15 @@
         if (query === '') {
             return [];
         }
+		// TODO: ideally, we should sort by relevance, for example prefer startsWith over includes
+		// this is more of a stretch goal but makes the user interface nicer
+		// It seems like Hydrant has some fuzzier matching (for example "6042" works too)
 		return subjects.filter(
 			(subject) =>
-				subject.number.includes(query) || subject.name.toLowerCase().includes(query.toLowerCase())
+				subject.number.includes(query)
+					|| (subject.oldNumber && subject.oldNumber.includes(query))
+					|| subject.name.toLowerCase().includes(query.toLowerCase()
+			)
 		);
 	}
 
@@ -59,13 +65,13 @@
 					</p>
 				</div>
 				<p class="panel-tabs">
-					<a class:is-active={level === Level.undergrad} on:click={() => (level = Level.undergrad)}>Undergrad</a>
-					<a class:is-active={level === Level.grad} on:click={() => (level = Level.grad)}>Grad</a>
-					<a class:is-active={level === Level.both} on:click={() => (level = Level.both)}>Both</a>
+					<a href="#" class:is-active={level === Level.undergrad} on:click={() => (level = Level.undergrad)}>Undergrad</a>
+					<a href="#" class:is-active={level === Level.grad} on:click={() => (level = Level.grad)}>Grad</a>
+					<a href="#" class:is-active={level === Level.both} on:click={() => (level = Level.both)}>Both</a>
 				</p>
 
                 {#each results as result (result.number)}
-                <a class="panel-block">
+                <a href="#" class="panel-block">
 					<span class="panel-icon">
 						<i class="fas fa-book" aria-hidden="true" />
 					</span>
