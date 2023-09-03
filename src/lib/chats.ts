@@ -4,24 +4,6 @@ import { Preset, Visibility } from 'matrix-js-sdk';
 import { matrixClient } from './matrix';
 import { power_level_content_override } from './powerLevels';
 
-export type SubjectChatDetails = {
-    exists: boolean,
-    alias: string,
-    roomId: string,
-    numMembers: number,
-}
-
-export enum ClassGroupChatMembership {
-    not_joined = 'not_joined',
-    invited = 'invited',
-    joined = 'joined',
-    banned = 'banned',
-}
-
-export type MembershipResult = {
-    membership: ClassGroupChatMembership,
-}
-
 function getRoomAliasLocalpart(subject: string, term: string): string {
     return `subject_${subject}_${term.toLowerCase()}`;
 }

@@ -3,7 +3,7 @@
 	import Header from '$lib/components/Header.svelte';
 	import SearchBox from '$lib/components/SearchBox.svelte';
 	import SubjectDetails from '$lib/components/SubjectDetails.svelte';
-	import type { Subject } from '$lib/subject';
+	import type { Subject } from '$lib/types';
     import { setContext } from 'svelte';
 	import { persisted } from 'svelte-local-storage-store';
     import { derived, readonly } from 'svelte/store';

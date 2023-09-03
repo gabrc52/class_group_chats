@@ -1,7 +1,8 @@
 import { authenticated } from "$lib/auth";
-import { ClassGroupChatMembership, createChat, getRoomAlias } from "$lib/chats";
+import { ClassGroupChatMembership, SubjectNotFoundError } from "$lib/types";
+import { createChat, getRoomAlias } from "$lib/chats";
 import { getRoomId, matrixClient } from "$lib/matrix";
-import { SubjectNotFoundError, getSubjectsApiTerm } from "$lib/subject";
+import { getSubjectsApiTerm } from "$lib/subject";
 import { error, json } from "@sveltejs/kit";
 import { MatrixError } from "matrix-js-sdk";
 

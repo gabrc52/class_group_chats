@@ -3,8 +3,8 @@
 -->
 
 <script lang="ts">
-	import type { SubjectChatDetails } from '$lib/chats';
-	import type { Subject, SubjectDetails } from '$lib/subject';
+	import type { Subject, SubjectDetails, MembershipResult, SubjectChatDetails } from '$lib/types';
+	import { ClassGroupChatMembership } from '$lib/types';
 	import { getContext } from 'svelte';
 	import type { Readable } from 'svelte/store';
 
@@ -24,14 +24,14 @@
 		return json;
 	}
 
-	// async function getMembership(number: string, mxid: string): Promise<ClassGroupChatMembership> {
-	// 	const response = await fetch(`/classes/api/chat/${number}/member/${mxid}`);
-	// 	const json: MembershipResult = await response.json();
-	// 	return json.membership;
-	// }
+	async function getMembership(number: string, mxid: string): Promise<ClassGroupChatMembership> {
+		const response = await fetch(`/classes/api/chat/${number}/member/${mxid}`);
+		const json: MembershipResult = await response.json();
+		return json.membership;
+	}
 </script>
 
-{#await Promise.all([getSubjectDetails(subject.number), getSubjectChat(subject.number)])}
+{#await Promise.all([getSubjectDetails(subject.number), getSubjectChat(subject.number), getMembership(subject.number, $mxid)])}
 	<div class="section">
 		<div class="container is-max-desktop">
 			<h1 class="title">{subject.number}</h1>
@@ -39,7 +39,7 @@
 			<progress class="progress is-info" max="100">30%</progress>
 		</div>
 	</div>
-{:then [canonicalSubject, chat]}
+{:then [canonicalSubject, chat, membership]}
 	<div class="section">
 		<div class="container is-max-desktop">
 			<div class="level">
@@ -59,7 +59,7 @@
 								<span class="icon">
 									<!-- TODO fa-user-check if already inside -->
 									<!-- fa-user-xmark if banned-->
-									<!-- <i class="fa-solid" class:fa-user-check={membership === ClassGroupChatMembership.not_joined} /> -->
+									<i class="fa-solid" class:fa-user-check={membership === ClassGroupChatMembership.not_joined} />
 								</span>
 								<!-- TODO: dynamically update text "Invite me" "Invited!" -->
 								<span>Invite me</span>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Subject } from '$lib/subject';
+	import type { Subject } from '$lib/types';
 	import { getContext, onMount } from 'svelte';
 	import { fade, slide } from 'svelte/transition';
 	import { persisted } from 'svelte-local-storage-store';
