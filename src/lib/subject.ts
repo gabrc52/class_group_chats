@@ -105,13 +105,17 @@ export async function getSubjectDetails(subject: string): Promise<SubjectDetails
     if (!response.ok) throw new SubjectNotFoundError();
     const json = await response.json();
     if (json.item.offered !== true) throw new SubjectNotFoundError();
-    const canonicalNumber = getCanonicalNumber(json);
+    const canonicalNumber = getCanonicalNumber(json.item);
+    if (canonicalNumber !== subject) {
+        console.log(canonicalNumber);
+        return getSubjectDetails(canonicalNumber);
+    }
     const instructorKerbs = json.item.instructorDetails
         ? json.item.instructorDetails.map((i: {kerbId: string}) => i.kerbId.toLowerCase())
         : [];
     // Some fields may contain HTML entities, so we unescape them
     return {
-        canonicalNumber: getCanonicalNumber(json.item),
+        canonicalNumber: canonicalNumber,
         title: decode(json.item.title),
         cluster: decode(json.item.cluster),
         prerequisites: decode(json.item.prerequisites),
