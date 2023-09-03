@@ -2,7 +2,8 @@
 	import type { Subject } from '$lib/subject';
 	import { onMount } from 'svelte';
 	import { fade, slide } from 'svelte/transition';
-	import { persisted } from 'svelte-local-storage-store'
+	import { persisted } from 'svelte-local-storage-store';
+	import { createEventDispatcher } from 'svelte';
 
 	enum Level {
 		undergrad,
@@ -49,6 +50,11 @@
 	let searchResults = [];
 
 	$: search(subjects, query, $level).then((r) => (results = r));
+
+	const dispatch = createEventDispatcher();
+	function selectSubject(subject: Subject) {
+		dispatch<string>('subjectSelected', subject.number);
+	}
 </script>
 
 <!-- TODO implement some sort of search-->
@@ -74,9 +80,9 @@
 				</p>
 
                 {#each results as result (result.number)}
-                <a href="#" class="panel-block">
+                <a href="#" class="panel-block" on:click={() => selectSubject(result)}>
 					<span class="panel-icon">
-						<i class="fas fa-book" aria-hidden="true" />
+						<i class="fas fa-book" aria-hidden=	"true" />
 					</span>
 					<p><strong>{result.number}</strong>: {result.name}</p>
 				</a>
