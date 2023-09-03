@@ -3,10 +3,13 @@
 -->
 
 <script lang="ts">
-	import type { Subject, SubjectDetails, MembershipResult, SubjectChatDetails } from '$lib/types';
+	import { invalidate } from '$app/navigation';
+import type { Subject, SubjectDetails, MembershipResult, SubjectChatDetails } from '$lib/types';
 	import { ClassGroupChatMembership } from '$lib/types';
 	import { getContext } from 'svelte';
 	import type { Readable } from 'svelte/store';
+
+	const Membership = ClassGroupChatMembership;
 
 	export let subject: Subject;
 
@@ -54,15 +57,27 @@
 				<div class="level-right">
 					<div class="level-item">
 						<!-- TODO: is-loading if loading, disabled if already inside -->
-						<button class="button is-link">
+						<button class="button is-link" disabled={membership !== Membership.not_joined}>
 							<div class="icon-text">
 								<span class="icon">
-									<!-- TODO fa-user-check if already inside -->
-									<!-- fa-user-xmark if banned-->
-									<i class="fa-solid" class:fa-user-check={membership === ClassGroupChatMembership.not_joined} />
+									<i class="fa-solid"
+										class:fa-user-plus={membership === Membership.not_joined}
+										class:fa-user-clock={membership === Membership.invited}
+										class:fa-user-check={membership === Membership.joined}
+										class:fa-user-xmark={membership === Membership.banned}
+									/>
 								</span>
-								<!-- TODO: dynamically update text "Invite me" "Invited!" -->
-								<span>Invite me</span>
+								<span>
+									{#if membership === Membership.not_joined}
+										Invite me
+									{:else if membership === Membership.invited}
+										Invited
+									{:else if membership === Membership.banned}
+										Banned
+									{:else if membership === Membership.joined}
+										You are in
+									{/if}
+								</span>
 							</div>
 						</button>
 						<span class="button is-static">
@@ -74,16 +89,17 @@
 					</div>
 				</div>
 			</div>
-			<!-- TODO: show conditionally -->
-			<div class="notification is-warning">
-				<!--button class="delete" /-->
-				<p>You have already been invited to the chat. To accept the invite, go to
-				<a href="https://matrix.mit.edu">
-					matrix.mit.edu<span class="icon"><i class="fa fa-external-link-alt" /></span>
-				</a>.</p>
-				<p>You can also download <a href="https://matrix.mit.edu/mobile_guide/">Element</a> on
-				your phone, and change your server to <strong>matrix.mit.edu</strong> before logging in.</p>
-			</div>
+			{#if membership == Membership.invited}
+				<div class="notification is-warning">
+					<!--button class="delete" /-->
+					<p>You have already been invited to the chat. To accept the invite, go to
+					<a href="https://matrix.mit.edu">
+						matrix.mit.edu<span class="icon"><i class="fa fa-external-link-alt" /></span>
+					</a>.</p>
+					<p>You can also download <a href="https://matrix.mit.edu/mobile_guide/">Element</a> on
+					your phone, and change your server to <strong>matrix.mit.edu</strong> before logging in.</p>
+				</div>
+			{/if}
 			<p>{canonicalSubject.description}</p>
 		</div>
 	</div>
