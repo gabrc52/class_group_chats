@@ -2,6 +2,7 @@
 	import type { Subject } from '$lib/subject';
 	import { onMount } from 'svelte';
 	import { fade, slide } from 'svelte/transition';
+	import { persisted } from 'svelte-local-storage-store'
 
 	enum Level {
 		undergrad,
@@ -12,7 +13,7 @@
 	let query: string = '';
 	let subjects: Subject[] = [];
 	let results: Subject[] = [];
-	let level: Level = Level.undergrad;
+	let level = persisted('level', Level.undergrad);
 
 	onMount(async () => {
 		subjects = await getAllSubjects();
@@ -47,7 +48,7 @@
 
 	let searchResults = [];
 
-	$: search(subjects, query, level).then((r) => (results = r));
+	$: search(subjects, query, $level).then((r) => (results = r));
 </script>
 
 <!-- TODO implement some sort of search-->
@@ -67,9 +68,9 @@
 					</p>
 				</div>
 				<p class="panel-tabs">
-					<a href="#" class:is-active={level === Level.undergrad} on:click={() => (level = Level.undergrad)}>Undergrad</a>
-					<a href="#" class:is-active={level === Level.grad} on:click={() => (level = Level.grad)}>Grad</a>
-					<a href="#" class:is-active={level === Level.both} on:click={() => (level = Level.both)}>Both</a>
+					<a href="#" class:is-active={$level === Level.undergrad} on:click={() => ($level = Level.undergrad)}>Undergrad</a>
+					<a href="#" class:is-active={$level === Level.grad} on:click={() => ($level = Level.grad)}>Grad</a>
+					<a href="#" class:is-active={$level === Level.both} on:click={() => ($level = Level.both)}>Both</a>
 				</p>
 
                 {#each results as result (result.number)}
