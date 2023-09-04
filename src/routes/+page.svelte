@@ -48,7 +48,8 @@
 	</div>
 </div>
 
-{#if showHydrantInstructions}
+{#if $username}
+	{#if showHydrantInstructions}
 	<div class="section">
 		<div class="container is-max-desktop">
 			<a href="https://hydrant.mit.edu" target="_self">
@@ -70,10 +71,11 @@
 			</a>
 		</div>
 	</div>
-{/if}
+	{/if}
 
-<SearchBox on:subjectSelected={(event) => (subject = event.detail)} />
+	<SearchBox on:subjectSelected={(event) => (subject = event.detail)} />
 
-{#if subject}
+	{#if subject}
 	<SubjectDetails {subject} />
+	{/if}
 {/if}

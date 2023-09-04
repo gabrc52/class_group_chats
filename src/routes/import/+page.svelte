@@ -49,60 +49,63 @@
 	</div>
 </div>
 
-<!-- TODO: it would be nice to show one single loading indicator and wait for all children
+{#if $username}
+	<!-- TODO: it would be nice to show one single loading indicator and wait for all children
 	but i don't think there's currently a straightforward way to know whether a child is loading -->
 
-<div class="section">
-	<div class="container is-max-desktop">
-		<div class="level">
-			<div class="level-left">
-				<div class="level-item">
-					<div class="content">
-						<h1 class="title is-1">
-							Importing from
-							{#if importingFrom.toLowerCase() == 'hydrant'}
-								<HydrantLogo />
-							{:else}
-								{importingFrom}
-							{/if}
-						</h1>
-						<p class="subtitle is-4" style="padding-top: 25px;">
-							Join some of them or join all of them, your pick.
-						</p>
+	<div class="section">
+		<div class="container is-max-desktop">
+			<div class="level">
+				<div class="level-left">
+					<div class="level-item">
+						<div class="content">
+							<h1 class="title is-1">
+								Importing from
+								{#if importingFrom.toLowerCase() == 'hydrant'}
+									<HydrantLogo />
+								{:else}
+									{importingFrom}
+								{/if}
+							</h1>
+							<p class="subtitle is-4" style="padding-top: 25px;">
+								Join some of them or join all of them, your pick.
+							</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="level-right">
-				<div class="level-item">
-					<button class="button is-link is-rounded" on:click={inviteAll}>
-						<span class="icon">
-							<i class="fa-solid fa-user-plus" />
-						</span>
-						<span>Join all of them</span>
-					</button>
-				</div>
-				<div class="level-item">
-					<button
-						class="button is-primary is-outlined is-rounded"
-						on:click={() => (subjects = subjects)}
-					>
-						<span class="icon">
-							<i class="fa-solid fa-arrow-rotate-right" />
-						</span>
-						<span>Refresh</span>
-					</button>
+				<div class="level-right">
+					<div class="level-item">
+						<button class="button is-link is-rounded" on:click={inviteAll}>
+							<span class="icon">
+								<i class="fa-solid fa-user-plus" />
+							</span>
+							<span>Join all of them</span>
+						</button>
+					</div>
+					<div class="level-item">
+						<button
+							class="button is-primary is-outlined is-rounded"
+							on:click={() => (subjects = subjects)}
+						>
+							<span class="icon">
+								<i class="fa-solid fa-arrow-rotate-right" />
+							</span>
+							<span>Refresh</span>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-{#if loading === true}
-	<div class="container is-max-desktop">
-		<progress class="progress is-link" max="100">30%</progress>
-	</div>
-{:else}
-	{#each subjects as subject (subject.number)}
-		<SubjectDetails {subject} isListItem={true} />
-		<hr class="solid is-hidden-desktop"/>
-	{/each}
+	{#if loading === true}
+		<div class="container is-max-desktop">
+			<progress class="progress is-link" max="100">30%</progress>
+		</div>
+	{:else}
+		{#each subjects as subject (subject.number)}
+			<SubjectDetails {subject} isListItem={true} />
+			<hr class="solid is-hidden-desktop"/>
+		{/each}
+	{/if}
+
 {/if}
