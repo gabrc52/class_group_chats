@@ -1,6 +1,6 @@
 <script lang="ts">
 	import HydrantLogo from '$lib/components/HydrantLogo.svelte';
-import KerbInput from '$lib/components/KerbInput.svelte';
+	import KerbInput from '$lib/components/KerbInput.svelte';
 	import SearchBox from '$lib/components/SearchBox.svelte';
 	import SubjectDetails from '$lib/components/SubjectDetails.svelte';
 	import type { Subject } from '$lib/types';
@@ -8,6 +8,7 @@ import KerbInput from '$lib/components/KerbInput.svelte';
 	import type { Writable } from 'svelte/store';
 
 	let subject: Subject | undefined;
+	let showHydrantInstructions: boolean = false;
 
 	const username: Writable<string> = getContext('username');
 
@@ -18,20 +19,47 @@ import KerbInput from '$lib/components/KerbInput.svelte';
 	<div class="container is-max-desktop">
 		<div class="columns is-centered is-vcentered">
 			<div class="column is-half">
-				<KerbInput {username}/>
+				<KerbInput {username} />
 			</div>
 			<div class="column">
-				<button class="button">
+				<button
+					class="button is-info is-light is-outlined"
+					on:click={() => (showHydrantInstructions = true)}
+				>
 					<span>Import class list from</span>
-					<span style="margin-left: 5px;"><HydrantLogo/></span>
+					<span style="margin-left: 5px;"><HydrantLogo /></span>
 				</button>
 			</div>
 			<div class="column">
-				<button class="button">Import from Webathena</button>
+				<button class="button is-warning">Import from Webathena</button>
 			</div>
 		</div>
 	</div>
 </div>
+
+{#if showHydrantInstructions}
+	<div class="section">
+		<div class="container is-max-desktop">
+			<a href="https://hydrant.mit.edu" target="_self">
+				<div class="notification is-warning">
+					<button
+						class="delete"
+						on:click|preventDefault={() => (showHydrantInstructions = false)}
+					/>
+					<!-- TODO would require another PR to Hydrant but pass a flag meaning (redirect me now) -->
+					To import your class list from <HydrantLogo />, you must go to <HydrantLogo /><span
+						class="icon"><i class="fa-solid fa-arrow-up-right-from-square" /></span
+					> and click on the button which says
+					<button class="button is-light"
+						><span class="icon"><i class="fa-regular fa-message" /></span><span
+							>Join group chats on Matrix</span
+						><span class="icon"><i class="fa-solid fa-arrow-up-right-from-square" /></span></button
+					>.
+				</div>
+			</a>
+		</div>
+	</div>
+{/if}
 
 <SearchBox on:subjectSelected={(event) => (subject = event.detail)} />
 

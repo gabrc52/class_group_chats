@@ -4,7 +4,7 @@
 
 <script lang="ts">
 	import { PUBLIC_MATRIX_ROOM_LINK_BASE } from '$env/static/public';
-import type { Subject, SubjectDetails, MembershipResult, SubjectChatDetails } from '$lib/types';
+	import type { Subject, SubjectDetails, MembershipResult, SubjectChatDetails } from '$lib/types';
 	import { ClassGroupChatMembership } from '$lib/types';
 	import { getContext } from 'svelte';
 	import type { Readable } from 'svelte/store';
