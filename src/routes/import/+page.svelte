@@ -81,7 +81,7 @@
 						<span class="icon">
 							<i class="fa-solid fa-arrow-rotate-right" />
 						</span>
-						<span>Refresh all</span>
+						<span>Refresh</span>
 					</button>
 				</div>
 			</div>

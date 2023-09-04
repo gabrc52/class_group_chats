@@ -103,21 +103,25 @@
 					</div>
 				</div>
 				<div class="level-right">
-					<div class="level-item">
-						<button
-							class="button is-primary is-outlined"
-							on:click={() => subject = subject}
-						>
-							<span class="icon">
-								<i class="fa-solid fa-arrow-rotate-right"/>
-							</span>
-							<span>Refresh</span>
-						</button>
-					</div>
+					{#if !isListItem}
+						<!-- I think it's too confusing/non-sensical to have several refresh buttons -->
+						<div class="level-item">
+							<button
+								class="button is-primary is-outlined"
+								on:click={() => subject = subject}
+							>
+								<span class="icon">
+									<i class="fa-solid fa-arrow-rotate-right"/>
+								</span>
+								<span>Refresh</span>
+							</button>
+						</div>
+					{/if}
 					<div class="level-item">
 						<button
 							class:is-loading={loading}
 							class="button is-link"
+							class:is-light={isListItem}
 							disabled={loading || membership !== Membership.not_joined}
 							on:click={() => invite(canonicalSubject.canonicalNumber, $mxid)}
 						>
@@ -144,7 +148,7 @@
 								</span>
 							</div>
 						</button>
-						<span class="button is-static">
+						<span class="button is-static" class:is-light={isListItem}>
 							<!-- substract 1 since the bot doesn't count -->
 							<span>{chat.numMembers}</span>
 							<span class="icon">
