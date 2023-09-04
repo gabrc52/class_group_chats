@@ -14,8 +14,13 @@
 <!-- TODO: maybe center?-->
 <div class="section content">
 	<div class="container is-max-desktop">
-		<h1 class="title">Importing from {importingFrom}</h1>
-		<p class="subtitle">TODO(rgabriel): Implement</p>
+		<h1 class="title">Importing from 
+			{#if importingFrom.toLowerCase() == 'hydrant'}
+				<span id="hydr">Hydr</span><span id="ant">ant</span>
+			{:else}
+				{importingFrom}
+			{/if}
+		</h1>
         <p class="subtitle">Join some of them or join all of them, your pick.</p>
         <!-- TODO: make UI actually functional, using similar endpoints to SubjectDetails.svelte -->
 
@@ -35,3 +40,18 @@
 		}}/>
 	{/each}
 </div>
+
+<style>
+	@font-face { font-family: Epilogue-Bold; src: url('/Epilogue-Bold.ttf'); } 
+
+	#hydr {
+		font-family: Epilogue-Bold;
+		color: #1499e1;
+		text-transform: lowercase;
+	}
+
+	#ant {
+		font-family: Epilogue-Bold;
+		color: #e43a45;
+	}
+</style>
