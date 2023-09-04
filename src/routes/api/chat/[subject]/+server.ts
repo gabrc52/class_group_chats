@@ -1,7 +1,7 @@
 import { authenticated } from "$lib/auth";
 import { getRoomAlias } from "$lib/chats";
 import { getRoomId, countMembers } from "$lib/matrix";
-import { getLatestTerm, getSubjectsApiTerm } from "$lib/subject";
+import { getLatestTerm, getSubjectsApiTerm } from "$lib/terms";
 import { json } from "@sveltejs/kit";
 
 /**
