@@ -107,8 +107,6 @@ export async function getSubjectDetails(subject: string): Promise<SubjectDetails
         prerequisites: decode(json.item.prerequisites),
         units: json.item.units,
         optional: decode(json.item.optional),
-        // TODO: do we want to get the original description?
-        // i'm not doing it to avoid the extra query since it's not actually used yet
         description: decode(json.item.description),
         instructorKerbs: instructorKerbs,
     };

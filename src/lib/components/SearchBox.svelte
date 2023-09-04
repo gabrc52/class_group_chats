@@ -30,7 +30,6 @@
 		return json;
 	}
 
-	// TODO: deal with subjects with multiple numbers
 	async function search(subjects: Subject[], query: string, level: Level): Promise<Subject[]> {
         query = query.trim();
         // Don't display anything if there is no query yet
@@ -59,10 +58,8 @@
 	}
 </script>
 
-<!-- TODO implement some sort of search-->
 <div class="section">
 	{#if subjects.length > 0}
-		<!-- TODO shrink it more-->
 		<div class="container is-max-desktop" transition:fade={{ duration: 200 }}>
 			<div class="panel">
 				<p class="panel-heading">Class search</p>

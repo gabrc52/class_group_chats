@@ -24,7 +24,6 @@
 
 	// It is important to use the canonical class number to check the membership
 	// (NOTE: we are trusting the client, but I think that is fine)
-	// TODO: use the canonical number on chat creation (necessary so it is fine)
 
 	async function getSubjectChat(number: string): Promise<SubjectChatDetails> {
 		const details = await subjectDetailsPromise;
