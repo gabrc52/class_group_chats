@@ -11,7 +11,7 @@
 
 	// TODO: use some actual authentication mechanism
     const username = persisted<string>('username', '');
-    setContext('username', readonly(username));
+    setContext('username', username);
 	const mxid = derived(username, (username) => `@${username}:${PUBLIC_MATRIX_HOMESERVER}`);
     setContext('mxid', mxid);
 </script>
@@ -21,8 +21,6 @@
 	but I think it's good to reuse the "authentication"
 -->
 <Header />
-
-<KerbInput {username}/>
 
 {#if $username}
 	<slot />

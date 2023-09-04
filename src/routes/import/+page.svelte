@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import HydrantLogo from '$lib/components/HydrantLogo.svelte';
+	import KerbInput from '$lib/components/KerbInput.svelte';
 	import SubjectDetails from '$lib/components/SubjectDetails.svelte';
 	import type { Subject } from '$lib/types';
 	import { getContext } from 'svelte';
-	import type { Readable } from 'svelte/store';
+	import type { Readable, Writable } from 'svelte/store';
 
+	const username: Writable<string> = getContext('username');
 	const mxid: Readable<string> = getContext('mxid');
 
 	let importingFrom: string;
@@ -40,6 +42,8 @@
 		loading = false;
 	}
 </script>
+
+<KerbInput {username}/>
 
 <!-- TODO: it would be nice to show one single loading indicator and wait for all children
 	but i don't think there's currently a straightforward way to know whether a child is loading -->
