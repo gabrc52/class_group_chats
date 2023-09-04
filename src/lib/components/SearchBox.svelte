@@ -16,7 +16,9 @@
 	let query: string = '';
 	let subjects: Subject[] = [];
 	let results: Subject[] = [];
-	let level = persisted('level', Level.undergrad);
+	// we namespace the local storage keys because we are on the same local storage
+	// as Element
+	let level = persisted('edu.mit.sipb.subjects.level', Level.undergrad);
 
 	let username: Readable<string> = getContext('username');
 

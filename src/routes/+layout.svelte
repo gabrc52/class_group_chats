@@ -10,7 +10,7 @@
 	import KerbInput from '$lib/components/KerbInput.svelte';
 
 	// TODO: use some actual authentication mechanism
-    const username = persisted<string>('username', '');
+    const username = persisted<string>('edu.mit.sipb.subjects.username', '');
     setContext('username', username);
 	const mxid = derived(username, (username) => `@${username}:${PUBLIC_MATRIX_HOMESERVER}`);
     setContext('mxid', mxid);
