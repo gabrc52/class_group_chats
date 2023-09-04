@@ -14,15 +14,17 @@
 
 <!-- TODO: maybe center?-->
 <div class="section content">
-	<div class="container is-max-desktop">
-		<h1 class="title is-1">Importing from 
-			{#if importingFrom.toLowerCase() == 'hydrant'}
-				<HydrantLogo/>
-			{:else}
-				{importingFrom}
-			{/if}
-		</h1>
-        <p class="subtitle is-4">Join some of them or join all of them, your pick.</p>
+	<div class="section">
+		<div class="container is-max-desktop">
+			<h1 class="title is-1">Importing from 
+				{#if importingFrom.toLowerCase() == 'hydrant'}
+					<HydrantLogo/>
+				{:else}
+					{importingFrom}
+				{/if}
+			</h1>
+			<p class="subtitle is-4">Join some of them or join all of them, your pick.</p>
+		</div>
 	</div>
 	{#each classNumbers as classNumber}
 		<SubjectDetails subject={{
@@ -31,6 +33,6 @@
 			name: '',
 			level: '',
 			oldNumber: undefined,
-		}}/>
+		}} showDescription={false}/>
 	{/each}
 </div>

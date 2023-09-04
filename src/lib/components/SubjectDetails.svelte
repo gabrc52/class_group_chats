@@ -11,6 +11,7 @@
 	const Membership = ClassGroupChatMembership;
 
 	export let subject: Subject;
+	export let showDescription: boolean = true;
 
 	const mxid: Readable<string> = getContext('mxid');
 
@@ -75,7 +76,8 @@
 		</div>
 	</div>
 {:then [canonicalSubject, chat, membership]}
-	<div class="section">
+	<!-- this is probably hard-coded behavior for our specific usage-->
+	<div class={showDescription ? "section" : "block"}>
 		<div class="container is-max-desktop">
 			<div class="level">
 				<div class="level-left">
@@ -153,7 +155,9 @@
 					</p>
 				</div>
 			{/if}
-			<p>{canonicalSubject.description}</p>
+			{#if showDescription}
+				<p>{canonicalSubject.description}</p>
+			{/if}
 		</div>
 	</div>
 {/await}
