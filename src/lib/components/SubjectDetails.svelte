@@ -119,10 +119,12 @@
 						</div>
 					{/if}
 					<div class="level-item">
+						<!-- This weird (isListItem && loading) makes it look
+						     decent to work around https://github.com/jgthms/bulma/issues/3676 -->
 						<button
 							class:is-loading={loading}
 							class="button is-link"
-							class:is-light={isListItem}
+							class:is-light={isListItem && !loading}
 							disabled={loading || membership !== Membership.not_joined}
 							on:click={() => invite(canonicalSubject.canonicalNumber, $mxid)}
 						>
