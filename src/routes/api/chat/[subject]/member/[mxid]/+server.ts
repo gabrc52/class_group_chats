@@ -2,7 +2,7 @@ import { authenticated } from "$lib/auth";
 import { ClassGroupChatMembership, SubjectNotFoundError } from "$lib/types";
 import { createChat, getRoomAlias } from "$lib/chats";
 import { getRoomId, matrixClient } from "$lib/matrix";
-import { getSubjectsApiTerm } from "$lib/subject";
+import { getSubjectDetails, getSubjectsApiTerm } from "$lib/subject";
 import { error, json } from "@sveltejs/kit";
 import { MatrixError } from "matrix-js-sdk";
 
@@ -11,10 +11,13 @@ export const PUT = authenticated(async function ({ params }) {
     try {
         const { subject, mxid } = params;
         const term = await getSubjectsApiTerm();
-        const alias = getRoomAlias(subject!, term);
+        const details = await getSubjectDetails(subject!);
+        // TODO: it would be nice but not necessary to add other Matrix
+        // aliases for each other non-canonical number
+        const alias = getRoomAlias(details.canonicalNumber, term);
         let roomId = await getRoomId(alias);
         if (roomId === undefined) {
-            roomId = await createChat(subject!, term);
+            roomId = await createChat(details, term);
         }
         await matrixClient.invite(roomId, mxid!);
         return json({});

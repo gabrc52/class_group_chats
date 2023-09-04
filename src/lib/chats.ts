@@ -3,6 +3,7 @@ import { getSubjectDetails, getSubjectsApiTerm, toSubjectsApi } from "$lib/subje
 import { Preset, Visibility } from 'matrix-js-sdk';
 import { matrixClient } from './matrix';
 import { power_level_content_override } from './powerLevels';
+import type { SubjectDetails } from './types';
 
 function getRoomAliasLocalpart(subject: string, term: string): string {
     return `subject_${subject}_${term.toLowerCase()}`;
@@ -21,11 +22,11 @@ export function getRoomAlias(subject: string, term: string): string {
     return alias;
 }
 
-export async function createChat(subject: string, term: string) {
-    const { title, description } = await getSubjectDetails(subject);
+export async function createChat(subjectDetails: SubjectDetails, term: string) {
+    const { canonicalNumber, title, description } = subjectDetails;
     const response = await matrixClient.createRoom({
-        room_alias_name: getRoomAliasLocalpart(subject, term),
-        name: `${subject} ${title}`,
+        room_alias_name: getRoomAliasLocalpart(canonicalNumber, term),
+        name: `${canonicalNumber} ${title}`,
         topic: description,
         visibility: Visibility.Private,
         preset: Preset.TrustedPrivateChat,
