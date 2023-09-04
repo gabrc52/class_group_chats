@@ -43,7 +43,11 @@
 	}
 </script>
 
-<KerbInput {username}/>
+<div class="section" style="padding-bottom: 0;">
+	<div class="container is-max-desktop">
+		<KerbInput {username}/>
+	</div>
+</div>
 
 <!-- TODO: it would be nice to show one single loading indicator and wait for all children
 	but i don't think there's currently a straightforward way to know whether a child is loading -->

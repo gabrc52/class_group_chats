@@ -38,6 +38,7 @@
 		"http-status": "^1.6.2",
 		"matrix-js-sdk": "^28.0.0",
 		"rollup-plugin-postcss": "^4.0.2",
-		"svelte-local-storage-store": "^0.6.0"
+		"svelte-local-storage-store": "^0.6.0",
+		"winchan": "^0.2.2"
 	}
 }
