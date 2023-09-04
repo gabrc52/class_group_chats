@@ -5,11 +5,24 @@ import { getRoomId, matrixClient } from "$lib/matrix";
 import { getSubjectDetails, getSubjectsApiTerm } from "$lib/subject";
 import { error, json } from "@sveltejs/kit";
 import { MatrixError } from "matrix-js-sdk";
+import { PUBLIC_MATRIX_HOMESERVER } from "$env/static/public";
+import httpStatus from "http-status";
+
+function isMatrixUserOurs(mxid: string): boolean {
+    const homeserver = mxid.split(':')[1];
+    return homeserver === PUBLIC_MATRIX_HOMESERVER;
+}
 
 export const PUT = authenticated(async function ({ params }) {
     // TODO: check if student and not staff (ideally)
     try {
         const { subject, mxid } = params;
+        if (!isMatrixUserOurs(mxid!)) {
+            throw error(
+                httpStatus.NOT_IMPLEMENTED,
+                "adding external users is not supported yet. please ask matrix@mit.edu to add you manually"
+            );
+        }
         const term = await getSubjectsApiTerm();
         const details = await getSubjectDetails(subject!);
         // TODO: it would be nice but not necessary to add other Matrix
@@ -32,7 +45,7 @@ export const PUT = authenticated(async function ({ params }) {
     }
 });
 
-export const GET = authenticated(async function({ params }) {
+export const GET = authenticated(async function ({ params }) {
     try {
         const { subject, mxid } = params;
         const term = await getSubjectsApiTerm();
@@ -41,15 +54,15 @@ export const GET = authenticated(async function({ params }) {
         if (roomId === undefined) {
             // room doesn't exist, we count is as you are not in the chat yet
             // (and it hasn't been created because no one has tried to join)
-            return json({membership: ClassGroupChatMembership.not_joined});
+            return json({ membership: ClassGroupChatMembership.not_joined });
         }
         let response: Record<string, any>;
         try {
             // getJoinedRoomMembers would have worked but would be O(N) instead of O(1)
-            response = await matrixClient.getStateEvent(roomId, 'm.room.member', mxid!);    
-        } catch(e) {
+            response = await matrixClient.getStateEvent(roomId, 'm.room.member', mxid!);
+        } catch (e) {
             // user has never been invited to the room
-            return json({membership: ClassGroupChatMembership.not_joined});
+            return json({ membership: ClassGroupChatMembership.not_joined });
         }
         const membership_conversion = new Map([
             ['ban', ClassGroupChatMembership.banned],
@@ -59,7 +72,7 @@ export const GET = authenticated(async function({ params }) {
         // We treat anything else ('leave' and 'kick', or any unexpected values)
         // as not joined
         const membership = membership_conversion.get(response.membership) ?? ClassGroupChatMembership.not_joined;
-        return json({membership});
+        return json({ membership });
     } catch (e) {
         if (e instanceof SubjectNotFoundError) {
             // This is never thrown because we never look up the subject.
