@@ -43,7 +43,9 @@
 				</button>
 			</div>
 			<div class="column">
-				<button class="button is-warning" on:click={importFromWebathena}>Import from Webathena</button>
+				<button class="button is-warning" on:click={importFromWebathena}
+					>Import from Webathena</button
+				>
 			</div>
 		</div>
 	</div>
@@ -51,32 +53,35 @@
 
 {#if $username}
 	{#if showHydrantInstructions}
-	<div class="section">
-		<div class="container is-max-desktop">
-			<a href="https://hydrant.mit.edu" target="_self">
-				<div class="notification is-warning">
-					<button
-						class="delete"
-						on:click|preventDefault={() => (showHydrantInstructions = false)}
-					/>
-					<!-- TODO would require another PR to Hydrant but pass a flag meaning (redirect me now) -->
-					To import your class list from <HydrantLogo />, you must go to <HydrantLogo /><span
-						class="icon"><i class="fa-solid fa-arrow-up-right-from-square" /></span
-					> and once you have made your class selections, click on the button which says
-					<button class="button is-light"
-						><span class="icon"><i class="fa-regular fa-message" /></span><span
-							>Join group chats on Matrix</span
-						><span class="icon"><i class="fa-solid fa-arrow-up-right-from-square" /></span></button
-					>.
-				</div>
-			</a>
+		<div class="section">
+			<div class="container is-max-desktop">
+				<a href="https://hydrant.mit.edu" target="_self">
+					<div class="notification is-warning">
+						<button
+							class="delete"
+							on:click|preventDefault={() => (showHydrantInstructions = false)}
+						/>
+						<!-- TODO would require another PR to Hydrant but pass a flag meaning (redirect me now) -->
+						To import your class list from <HydrantLogo />, you must go to <HydrantLogo /><span
+							class="icon"><i class="fa-solid fa-arrow-up-right-from-square" /></span
+						>
+						and once you have made your class selections, click on the button which says
+						<button class="button is-light"
+							><span class="icon"
+								><i class="fa-regular fa-message" style="transform: scaleX(-1);" /></span
+							><span>Join group chats on Matrix</span><span class="icon"
+								><i class="fa-solid fa-arrow-up-right-from-square" /></span
+							></button
+						>.
+					</div>
+				</a>
+			</div>
 		</div>
-	</div>
 	{/if}
 
 	<SearchBox on:subjectSelected={(event) => (subject = event.detail)} />
 
 	{#if subject}
-	<SubjectDetails {subject} />
+		<SubjectDetails {subject} />
 	{/if}
 {/if}
