@@ -62,8 +62,16 @@
 {#await Promise.all([getSubjectDetails(subject.number), getSubjectChat(subject.number), getMembership(subject.number, $mxid)] )}
 	<div class="section">
 		<div class="container is-max-desktop">
-			<h1 class="title">{subject.number}</h1>
-			<h2 class="subtitle">{subject.name}</h2>
+			<div class="level">
+				<div class="level-left">
+					<div class="level-item">
+						<h1 class="title">{subject.number}</h1>
+					</div>
+					<div class="level-item">
+						<h2 class="subtitle">{subject.name}</h2>
+					</div>
+				</div>
+			</div>
 			<progress class="progress is-info" max="100">30%</progress>
 		</div>
 	</div>
