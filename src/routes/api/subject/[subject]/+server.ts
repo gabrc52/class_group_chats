@@ -1,4 +1,5 @@
-import { getSubjectDetails, SubjectNotFoundError, type Subject } from '$lib/subject';
+import { getSubjectDetails } from '$lib/subject';
+import { SubjectNotFoundError, type Subject } from '$lib/types';
 import { error, json } from '@sveltejs/kit';
 import { PUBLIC_HYDRANT_BASEURL } from "$env/static/public";
 

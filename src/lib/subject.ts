@@ -1,5 +1,5 @@
 import { MULESOFT_SUBJECT_API, MULESOFT_CLIENT_ID, MULESOFT_CLIENT_SECRET } from "$env/static/private";
-import { decode } from 'he';
+import he from 'he';
 import { SubjectNotFoundError, type SubjectDetails } from "$lib/types";
 import { getSubjectsApiTerm } from "$lib/terms";
 
@@ -49,12 +49,12 @@ export async function getSubjectDetails(subject: string): Promise<SubjectDetails
     // Some fields may contain HTML entities, so we unescape them
     return {
         canonicalNumber: canonicalNumber,
-        title: decode(json.item.title),
-        cluster: decode(json.item.cluster),
-        prerequisites: decode(json.item.prerequisites),
+        title: he.decode(json.item.title),
+        cluster: he.decode(json.item.cluster),
+        prerequisites: he.decode(json.item.prerequisites),
         units: json.item.units,
-        optional: decode(json.item.optional),
-        description: decode(json.item.description),
+        optional: he.decode(json.item.optional),
+        description: he.decode(json.item.description),
         instructorKerbs: instructorKerbs,
     };
 }
