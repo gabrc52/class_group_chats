@@ -95,5 +95,6 @@
 {:else}
 	{#each subjects as subject (subject.number)}
 		<SubjectDetails {subject} isListItem={true} />
+		<hr class="solid is-hidden-desktop"/>
 	{/each}
 {/if}
