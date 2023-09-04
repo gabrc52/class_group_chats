@@ -67,7 +67,7 @@
 						<h1 class="title">{subject.number}</h1>
 					</div>
 					<div class="level-item">
-						<h2 class="subtitle">{subject.name}</h2>
+						<span class="subtitle">{subject.name}</span>
 					</div>
 				</div>
 			</div>
@@ -83,7 +83,7 @@
 						<h1 class="title">{canonicalSubject.canonicalNumber}</h1>
 					</div>
 					<div class="level-item">
-						<h2 class="subtitle">{canonicalSubject.title}</h2>
+						<span class="subtitle">{canonicalSubject.title}</span>
 					</div>
 				</div>
 				<div class="level-right">
