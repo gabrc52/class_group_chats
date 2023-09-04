@@ -1,9 +1,12 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import HydrantLogo from '$lib/components/HydrantLogo.svelte';
 	import KerbInput from '$lib/components/KerbInput.svelte';
 	import SearchBox from '$lib/components/SearchBox.svelte';
 	import SubjectDetails from '$lib/components/SubjectDetails.svelte';
+	import { getClassListFromMoira } from '$lib/moira';
 	import type { Subject } from '$lib/types';
+	import { encodeTicket, loginWebathena } from '$lib/webathena';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 
@@ -13,6 +16,14 @@
 	const username: Writable<string> = getContext('username');
 
 	$: console.log(subject);
+
+	async function importFromWebathena(): Promise<void> {
+		const webathena = await loginWebathena();
+		const token = encodeTicket(webathena);
+		const classes = await getClassListFromMoira(token);
+		console.log(classes);
+		goto(`/classes/import?via=Webathena${classes.map((cls) => `&class=${cls}`).join('')}`);
+	}
 </script>
 
 <div class="section" style="padding-bottom: 0;">
@@ -31,7 +42,7 @@
 				</button>
 			</div>
 			<div class="column">
-				<button class="button is-warning">Import from Webathena</button>
+				<button class="button is-warning" on:click={importFromWebathena}>Import from Webathena</button>
 			</div>
 		</div>
 	</div>
