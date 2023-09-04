@@ -3,7 +3,8 @@
 -->
 
 <script lang="ts">
-	import type { Subject, SubjectDetails, MembershipResult, SubjectChatDetails } from '$lib/types';
+	import { PUBLIC_MATRIX_ROOM_LINK_BASE } from '$env/static/public';
+import type { Subject, SubjectDetails, MembershipResult, SubjectChatDetails } from '$lib/types';
 	import { ClassGroupChatMembership } from '$lib/types';
 	import { getContext } from 'svelte';
 	import type { Readable } from 'svelte/store';
@@ -156,6 +157,17 @@
 							</span>
 						</span>
 					</div>
+					{#if membership !== Membership.not_joined}
+						<div class="level-item">
+							<!-- slay: https://stackoverflow.com/questions/66166695/php-html-if-a-new-tab-already-exists-dont-create-a-new-one -->
+							<!-- useful because Element dislikes having several tabs/windows open -->
+							<a class="button" target="element" href="{PUBLIC_MATRIX_ROOM_LINK_BASE}{chat.alias}">
+								<span class="icon">
+									<i class="fa-solid fa-up-right-from-square"></i>
+								</span>
+							</a>
+						</div>
+					{/if}
 				</div>
 			</div>
 			{#if membership == Membership.invited}

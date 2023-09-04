@@ -1,5 +1,4 @@
 import { PUBLIC_MATRIX_HOMESERVER } from '$env/static/public';
-import { getSubjectDetails, getSubjectsApiTerm, toSubjectsApi } from "$lib/subject";
 import { Preset, Visibility } from 'matrix-js-sdk';
 import { matrixClient } from './matrix';
 import { power_level_content_override } from './powerLevels';
