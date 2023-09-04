@@ -11,7 +11,14 @@
 	const Membership = ClassGroupChatMembership;
 
 	export let subject: Subject;
-	export let showDescription: boolean = true;
+	
+	/**
+	 * Whether this component is being rendered as an item in a list
+	 */
+	export let isListItem: boolean = false;
+
+	// this implies hiding the description
+	$: showDescription = !isListItem;
 
 	const mxid: Readable<string> = getContext('mxid');
 
@@ -60,7 +67,7 @@
 		   especially if we just clicked the join button
 -->
 {#await Promise.all([getSubjectDetails(subject.number), getSubjectChat(subject.number), getMembership(subject.number, $mxid)] )}
-	<div class="section">
+	<div class={isListItem ? "block" : "section"}>
 		<div class="container is-max-desktop">
 			<div class="level">
 				<div class="level-left">
@@ -71,13 +78,20 @@
 						<span class="subtitle">{subject.name}</span>
 					</div>
 				</div>
+				<!-- tidbit: if there is no subject name given, use that space for the lodaing indicator -->
+				<div class="level-item">
+					{#if !subject.name}
+						<progress class="progress is-info" max="100">30%</progress>
+					{/if}
+				</div>
 			</div>
-			<progress class="progress is-info" max="100">30%</progress>
+			{#if subject.name}
+				<progress class="progress is-info" max="100">30%</progress>
+			{/if}
 		</div>
 	</div>
 {:then [canonicalSubject, chat, membership]}
-	<!-- this is probably hard-coded behavior for our specific usage-->
-	<div class={showDescription ? "section" : "block"}>
+	<div class={isListItem ? "block" : "section"}>
 		<div class="container is-max-desktop">
 			<div class="level">
 				<div class="level-left">
