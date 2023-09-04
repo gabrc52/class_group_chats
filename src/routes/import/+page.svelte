@@ -43,6 +43,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Importing from {importingFrom}</title>
+</svelte:head>
+
 <div class="section" style="padding-bottom: 0;">
 	<div class="container is-max-desktop">
 		<KerbInput {username}/>

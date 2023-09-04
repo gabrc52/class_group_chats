@@ -27,6 +27,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Class group chats</title>
+</svelte:head>
+
 <div class="section" style="padding-bottom: 0;">
 	<div class="container is-max-desktop">
 		<div class="columns is-centered is-vcentered">
