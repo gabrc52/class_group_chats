@@ -177,7 +177,7 @@
 					<!--button class="delete" /-->
 					<p>
 						You have already been invited to the chat. To accept the invite, go to
-						<a href="https://matrix.mit.edu">
+						<a target="element" href="{PUBLIC_MATRIX_ROOM_LINK_BASE}{chat.alias}">
 							matrix.mit.edu<span class="icon"><i class="fa fa-external-link-alt" /></span>
 						</a>.
 					</p>
