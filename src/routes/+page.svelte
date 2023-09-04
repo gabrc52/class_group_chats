@@ -6,7 +6,7 @@
 	import SubjectDetails from '$lib/components/SubjectDetails.svelte';
 	import { getClassListFromMoira } from '$lib/moira';
 	import type { Subject } from '$lib/types';
-	import { encodeTicket, loginWebathena } from '$lib/webathena';
+	import { encodeTicket, getUsername, loginWebathena } from '$lib/webathena';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 
@@ -21,6 +21,7 @@
 		const webathena = await loginWebathena();
 		const token = encodeTicket(webathena);
 		const classes = await getClassListFromMoira(token);
+		$username = getUsername(webathena);
 		console.log(classes);
 		goto(`/classes/import?via=Webathena${classes.map((cls) => `&class=${cls}`).join('')}`);
 	}
