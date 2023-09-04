@@ -15,21 +15,14 @@
 <!-- TODO: maybe center?-->
 <div class="section content">
 	<div class="container is-max-desktop">
-		<h1 class="title">Importing from 
+		<h1 class="title is-1">Importing from 
 			{#if importingFrom.toLowerCase() == 'hydrant'}
 				<HydrantLogo/>
 			{:else}
 				{importingFrom}
 			{/if}
 		</h1>
-        <p class="subtitle">Join some of them or join all of them, your pick.</p>
-        <!-- TODO: make UI actually functional, using similar endpoints to SubjectDetails.svelte -->
-
-		<!-- TODO: use a smaller component - we are reusing the existing one for demo purposes
-			
-			it would be good to turn SubjectDetails into SubjectContainer and just pass the necessary
-			stuff as props. or some other way to keep it DRY
-		-->
+        <p class="subtitle is-4">Join some of them or join all of them, your pick.</p>
 	</div>
 	{#each classNumbers as classNumber}
 		<SubjectDetails subject={{
@@ -41,18 +34,3 @@
 		}}/>
 	{/each}
 </div>
-
-<style>
-	@font-face { font-family: Epilogue-Bold; src: url('/Epilogue-Bold.ttf'); } 
-
-	#hydr {
-		font-family: Epilogue-Bold;
-		color: #1499e1;
-		text-transform: lowercase;
-	}
-
-	#ant {
-		font-family: Epilogue-Bold;
-		color: #e43a45;
-	}
-</style>
