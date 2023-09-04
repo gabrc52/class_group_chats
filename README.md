@@ -14,6 +14,7 @@ In order to use this project, you need to set the following environment variable
 * `PUBLIC_MATRIX_HOMESERVER`: The Matrix homeserver.
 * `MATRIX_BASEURL`: The URL at which the Matrix API is available.
 * `PUBLIC_MATRIX_ROOM_LINK_BASE`: The prefix for room permalinks. For our Element instance it is `https://matrix.mit.edu/#/room/`.
+* `PUBLIC_ROOM_ALIAS_PREFIX`: The prefix to use for room aliases on Matrix (e.g. `subject_` or `subject-test_`). Note that if you use an app service, the app service registration YAML file must declare this room alias prefix to be able to control it.
 * `MULESOFT_CLIENT_ID`: A client ID to access developer.mit.edu APIs
 * `MULESOFT_CLIENT_SECRET`: A client secret to access developer.mit.edu APIs
 * `MULESOFT_SUBJECT_API="https://mit-course-catalog-v2.cloudhub.io/coursecatalog/v2"` (the Subject API endpoint)
