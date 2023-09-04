@@ -3,7 +3,7 @@
 		<p class="title">Matrix class group chats</p>
 		<p class="subtitle">
 			Join group chats for your classes. Select and join your desired classes below and go to <a
-				href="https://matrix.mit.edu">matrix.mit.edu</a
+				href="https://matrix.mit.edu" target="element">matrix.mit.edu</a
 			> to chat.
 		</p>
 	</div>
