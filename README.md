@@ -1,15 +1,23 @@
 # MIT class group chats for Matrix
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+This web application is part of the SIPB Matrix project. For other GitHub repos in this project, see [sipb/uplink](https://github.com/sipb/uplink).
+
+## Get involved
+
+If you want to get involved with this project, shoot an email to matrix@ !
 
 ## Environment variables needed
 
 In order to use this project, you need to set the following environment variables in `.env`:
 
 * `MATRIX_TOKEN`: A Matrix access token for the bot or app service.
-* `API_SHARED_SECRET`: A shared secret that trusted clients of the API can use to perform actions. Generate with `pwgen -s 64 -n 1`
+* `PUBLIC_MATRIX_HOMESERVER`: The Matrix homeserver.
+* `MATRIX_BASEURL`: The URL at which the Matrix API is available.
 * `MULESOFT_CLIENT_ID`: A client ID to access developer.mit.edu APIs
 * `MULESOFT_CLIENT_SECRET`: A client secret to access developer.mit.edu APIs
+* `MULESOFT_SUBJECT_API="https://mit-course-catalog-v2.cloudhub.io/coursecatalog/v2"` (the Subject API endpoint)
+* `API_SHARED_SECRET`: A shared secret that trusted clients of the API can use to perform actions. Generate with `pwgen -s 64 -n 1`
+* `PUBLIC_HYDRANT_BASEURL="https://hydrant.mit.edu"` (the URL at which Hydrant is hosted)
 
 ## Developing
 
