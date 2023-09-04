@@ -1,5 +1,4 @@
 import { PUBLIC_HYDRANT_BASEURL } from "$env/static/public";
-import assert from "assert";
 
 // TODO: figure out how to use the Terms API, and use it to get the latest term.
 
@@ -21,9 +20,10 @@ export async function getSubjectsApiTerm() {
     try {
         return toSubjectsApi(await getLatestTerm());
     } catch (e) {
+        console.log(e, 'manually computing term instead');
         const month = date.getMonth(); // 0-indexed
         const NOT_SPRING_ANYMORE = 5;
-        return month >= NOT_SPRING_ANYMORE ? `${year}FA` : `${year}SP`;
+        return month >= NOT_SPRING_ANYMORE ? `${year + 1}FA` : `${year}SP`;
     }
 }
 
@@ -33,12 +33,14 @@ export async function getSubjectsApiTerm() {
 export function toSubjectsApi(term: string) {
     const date = new Date();
     const year = date.getFullYear();
-    assert.strictEqual(term.length, 3);
+    if (term.length !== 3) {
+        throw Error(`${term} is not 3-characters long`);
+    }
     const conversions = new Map([
         ['s', 'SP'],
         ['f', 'FA'],
     ]);
-    const convertedTerm = conversions.get(term[0]) ?? assert.fail(`unknown prefix ${term[0]}`);
+    const convertedTerm = conversions.get(term[0])!;
     const century = year.toString().substring(0, 2);
     const relativeYear = term.substring(1);
     
