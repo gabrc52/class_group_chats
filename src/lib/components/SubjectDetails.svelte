@@ -82,6 +82,17 @@
 				<div class="level-right">
 					<div class="level-item">
 						<button
+							class="button is-primary is-outlined"
+							on:click={() => subject = subject}
+						>
+							<span class="icon">
+								<i class="fa-solid fa-arrow-rotate-right"/>
+							</span>
+							<span>Refresh</span>
+						</button>
+					</div>
+					<div class="level-item">
+						<button
 							class:is-loading={loading}
 							class="button is-link"
 							disabled={loading || membership !== Membership.not_joined}
