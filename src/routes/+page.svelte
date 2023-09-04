@@ -62,7 +62,7 @@
 					<!-- TODO would require another PR to Hydrant but pass a flag meaning (redirect me now) -->
 					To import your class list from <HydrantLogo />, you must go to <HydrantLogo /><span
 						class="icon"><i class="fa-solid fa-arrow-up-right-from-square" /></span
-					> and click on the button which says
+					> and once you have made your class selections, click on the button which says
 					<button class="button is-light"
 						><span class="icon"><i class="fa-regular fa-message" /></span><span
 							>Join group chats on Matrix</span
