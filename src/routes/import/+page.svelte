@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import HydrantLogo from '$lib/components/HydrantLogo.svelte';
 	import SubjectDetails from '$lib/components/SubjectDetails.svelte';
 
 	let importingFrom: string;
@@ -16,7 +17,7 @@
 	<div class="container is-max-desktop">
 		<h1 class="title">Importing from 
 			{#if importingFrom.toLowerCase() == 'hydrant'}
-				<span id="hydr">Hydr</span><span id="ant">ant</span>
+				<HydrantLogo/>
 			{:else}
 				{importingFrom}
 			{/if}
