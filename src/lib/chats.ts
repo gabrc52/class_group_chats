@@ -34,4 +34,5 @@ export async function createChat(subjectDetails: SubjectDetails, term: string) {
     const roomId = response.room_id;
     // tell our custom plugin that this room is student-only
     await matrixClient.sendStateEvent(roomId, 'edu.mit.sipb.student_only', {}, '');
+    return roomId;
 }

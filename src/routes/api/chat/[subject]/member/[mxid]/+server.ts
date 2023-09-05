@@ -33,7 +33,7 @@ export const PUT = authenticated(async function ({ params }) {
         if (roomId === undefined) {
             roomId = await createChat(details, term);
         }
-        await matrixClient.invite(roomId, mxid!);
+        await matrixClient.invite(roomId as string, mxid!);
         return json({});
     } catch (e) {
         if (e instanceof SubjectNotFoundError) {
