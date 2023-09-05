@@ -57,6 +57,9 @@
 		const response = await fetch(`/classes/api/chat/${number}/member/${mxid}`, {
 			method: 'PUT'
 		});
+		if (!response.ok) {
+			alert(`Sorry, an error (${response.statusText}) occurred. Please try again. If you need help email matrix@mit.edu.\n${await response.text()}`);
+		}
 		// TODO: check if successful otherwise show an error
 		subject = subject; // to reload upon inviting (hack?)
 		loading = false;

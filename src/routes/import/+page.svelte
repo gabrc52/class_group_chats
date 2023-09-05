@@ -36,8 +36,13 @@
 			const response = await fetch(`/classes/api/chat/${subject.number}/member/${$mxid}`, {
 				method: 'PUT'
 			});
-			// TODO: error checking again, but for now 403 is returned when you are already inside
-			// which would cause unnecessary errors
+			if (!response.ok) {
+				const text = await response.text();
+				// swallow already in the room errors
+				if (!text.includes("already in the room")) {
+					alert(`Sorry, an error (${response.statusText}) occurred. Please try again. If you need help email matrix@mit.edu.\n${text}`);
+				}
+			}
 		}
 		loading = false;
 	}
