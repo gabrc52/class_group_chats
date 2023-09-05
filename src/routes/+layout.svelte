@@ -30,5 +30,8 @@
 			Brought to you by <a href="https://sipb.mit.edu" target="_blank" rel="noopener">SIPB</a>.
             The source code is available on <a href="https://github.com/gabrc52/class_group_chats/">GitHub</a>.
 		</p>
+		<p>
+			Contact: <a href="mailto:matrix@mit.edu">matrix@mit.edu</a>
+		</p>
 	</div>
 </footer>
