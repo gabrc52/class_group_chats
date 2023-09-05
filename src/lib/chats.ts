@@ -31,5 +31,7 @@ export async function createChat(subjectDetails: SubjectDetails, term: string) {
         preset: Preset.TrustedPrivateChat,
         power_level_content_override: power_level_content_override,
     });
-    return response.room_id;
+    const roomId = response.room_id;
+    // tell our custom plugin that this room is student-only
+    await matrixClient.sendStateEvent(roomId, 'edu.mit.sipb.student_only', {}, '');
 }
