@@ -8,10 +8,10 @@
 		</p>
 	</div>
 
-	<div class="notification is-danger">
+	<!--div class="notification is-danger">
 		<span class="icon">
 			<i class="fa-solid fa-triangle-exclamation"></i>
 		</span>
 		Hi! You have discovered a link that is work-in-progress. This notice will be removed once the service is launched. <strong>The chats you join right now will be testing chats, so you will need to rejoin them if you test this...</strong> ~rgabriel
-	</div>
+	</div-->
 </section>
