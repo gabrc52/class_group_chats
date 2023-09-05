@@ -17,4 +17,8 @@ export const power_level_content_override = {
       "im.vector.modular.widgets": 0,
       "io.element.voice_broadcast_info": 0
     },
+    // anyone can ping everyone
+    "notifications": {
+      "room": 0
+    },
   }
