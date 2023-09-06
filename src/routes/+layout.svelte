@@ -12,7 +12,7 @@
 	// TODO: use some actual authentication mechanism
     const username = persisted<string>('edu.mit.sipb.subjects.username', '');
     setContext('username', username);
-	const mxid = derived(username, (username) => `@${username.trim()}:${PUBLIC_MATRIX_HOMESERVER}`);
+	const mxid = derived(username, (username) => `@${username.trim().toLowerCase()}:${PUBLIC_MATRIX_HOMESERVER}`);
     setContext('mxid', mxid);
 </script>
 
