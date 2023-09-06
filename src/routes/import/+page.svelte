@@ -5,6 +5,8 @@
 	import SubjectDetails from '$lib/components/SubjectDetails.svelte';
 	import type { Subject } from '$lib/types';
 	import { getContext } from 'svelte';
+	import { cubicOut } from 'svelte/easing';
+	import { tweened } from 'svelte/motion';
 	import type { Readable, Writable } from 'svelte/store';
 
 	const username: Writable<string> = getContext('username');
@@ -30,12 +32,23 @@
 		oldNumber: undefined
 	}));
 
+	const progress = tweened(0, {
+		duration: 400,
+		easing: cubicOut
+	});
+
+	$: maxProgress = subjects.length - 1;
+
+	// TODO: Promise.all instead of busy-waiting
+
 	async function inviteAll(): Promise<void> {
 		loading = true;
+		$progress = 0;
 		for (const subject of subjects) {
 			const response = await fetch(`/classes/api/chat/${subject.number}/member/${$mxid}`, {
 				method: 'PUT'
 			});
+			$progress = $progress + 1;
 			if (!response.ok) {
 				const text = await response.text();
 				// swallow already in the room errors
@@ -108,7 +121,7 @@
 	</div>
 	{#if loading === true}
 		<div class="container is-max-desktop">
-			<progress class="progress is-link" max="100">30%</progress>
+			<progress class="progress is-link" value={$progress} max={maxProgress}>loading...</progress>
 		</div>
 	{:else}
 		{#each subjects as subject (subject.number)}
