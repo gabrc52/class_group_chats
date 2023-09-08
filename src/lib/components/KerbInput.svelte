@@ -12,9 +12,9 @@
     $: (async () => {
         if ($username) {
             const kerb = $username.trim().toLowerCase();
-            lookedUpUsername = kerb;
             const response = await fetch(`/classes/api/kerb/${kerb}`);
             const result: UsernameExistsResult = await response.json();
+            lookedUpUsername = kerb;
             usernameExists = result.exists;
         }
     })();
