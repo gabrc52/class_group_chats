@@ -44,3 +44,6 @@ export type Subject /* from hydrant */ = {
 
 export class SubjectNotFoundError extends Error {}
 
+export type UsernameExistsResult = {
+    exists: boolean,
+}
