@@ -2,7 +2,7 @@
 	import { PUBLIC_ROOM_ALIAS_PREFIX } from "$env/static/public";
 </script>
 
-<section class="hero is-primary">
+<section class="hero is-primary" id="header">
 	<div class="hero-body content">
 		<p class="title">Matrix class group chats</p>
 		<p class="subtitle">
@@ -21,3 +21,9 @@
 		</div>
 	{/if}
 </section>
+
+<style>
+	#header {
+		background-color: rgb(18, 154, 120);
+	}
+</style>
