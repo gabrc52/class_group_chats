@@ -7,7 +7,7 @@
 		<p class="title">Matrix class group chats</p>
 		<p class="subtitle">
 			Join group chats for your classes. Select and join your desired classes below and go to <a
-				href="https://matrix.mit.edu" target="element">matrix.mit.edu</a
+				href="https://matrix.mit.edu" target="element" id="mlink">matrix.mit.edu</a
 			> to chat.
 		</p>
 	</div>
@@ -25,5 +25,9 @@
 <style>
 	#header {
 		background-color: rgb(18, 154, 120);
+	}
+	#mlink {
+		text-decoration: underline;
+		color: rgb(249, 221, 138);	/**rgb(249, 212, 39)**/
 	}
 </style>
