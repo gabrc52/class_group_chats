@@ -3,6 +3,17 @@
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
 	import FeedbackIcon from "svelte-material-icons/MessageAlertOutline.svelte";
 	import GitHubIcon from "svelte-material-icons/Github.svelte";
+
+	import { PUBLIC_MATRIX_HOMESERVER } from '$env/static/public';
+	import { setContext } from 'svelte';
+	import { persisted } from 'svelte-local-storage-store';
+    import { derived, readonly } from 'svelte/store';
+
+	// TODO: use some actual authentication mechanism
+    const username = persisted<string>('edu.mit.sipb.subjects.username', '');
+    setContext('username', username);
+	const mxid = derived(username, (username) => `@${username.trim().toLowerCase()}:${PUBLIC_MATRIX_HOMESERVER}`);
+    setContext('mxid', mxid);
 </script>
 
 <!-- App Shell -->
