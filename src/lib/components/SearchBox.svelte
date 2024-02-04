@@ -5,6 +5,7 @@
 	import { persisted } from 'svelte-local-storage-store';
 	import { createEventDispatcher } from 'svelte';
 	import type { Readable } from 'svelte/store';
+	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
 	const dispatch = createEventDispatcher();
 
 	enum Level {
@@ -74,13 +75,11 @@
 						</span>
 					</p>
 				</div>
-				<p class="panel-tabs">
-					<!-- TODO: accessibility stuff like making sure Tab and Enter works,
-							as well as whatever else is the issue with <a> -->
-					<a class:is-active={$level === Level.undergrad} on:click={() => ($level = Level.undergrad)}>Undergrad</a>
-					<a class:is-active={$level === Level.grad} on:click={() => ($level = Level.grad)}>Grad</a>
-					<a class:is-active={$level === Level.both} on:click={() => ($level = Level.both)}>Both</a>
-				</p>
+				<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
+					<RadioItem bind:group={$level} name="level" value={Level.undergrad}>Undergrad</RadioItem>
+					<RadioItem bind:group={$level} name="level" value={Level.grad}>Grad</RadioItem>
+					<RadioItem bind:group={$level} name="level" value={Level.both}>Both</RadioItem>
+				</RadioGroup>
 
 				{#each results as result (result.number)}
 				<a class="panel-block" on:click={() => selectSubject(result)}>
