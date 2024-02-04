@@ -20,30 +20,26 @@
 </script>
 
 <label for="kerb" class="label">Enter your kerb</label>
-<div class="field is-horizontal has-addons">
-	<p class="control">
-		<span class="button is-static">@</span>
-	</p>
-	<p class="control">
-		<input
-			class="input"
-			class:is-danger={!usernameExists}
-			type="text"
-			id="kerb"
-			name="kerb"
-			placeholder="jflorey"
-            on:change={async (e) => {
-                const kerb = e.currentTarget.value;
-                const result = await exists(kerb);
-                lookedUpUsername = kerb;
-                usernameExists = result;
-            }}
-			bind:value={$username}
-		/>
-	</p>
-	<p class="control">
-		<span class="button is-static">:{PUBLIC_MATRIX_HOMESERVER}</span>
-	</p>
+<div class="input-group input-group-divider grid-cols-[auto_1fr_auto]">
+	<div class="input-group-shim">@</div>
+	<input
+		class="input"
+		class:is-danger={!usernameExists}
+		type="text"
+		id="kerb"
+		name="kerb"
+		placeholder="jflorey"
+		on:change={async (e) => {
+			const kerb = e.currentTarget.value;
+			const result = await exists(kerb);
+			lookedUpUsername = kerb;
+			usernameExists = result;
+		}}
+		bind:value={$username}
+	/>
+	<div class="input-group-shim">
+		:{PUBLIC_MATRIX_HOMESERVER}
+	</div>
 </div>
 {#if $username}
 	{#if usernameExists}
