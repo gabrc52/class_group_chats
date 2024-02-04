@@ -32,19 +32,15 @@
 </svelte:head>
 
 <div class="container mx-auto max-w-screen-lg py-4 space-x-4">
-	<div class="flex flex-row ">
-		<div class="column is-half">
+	<div class="flex flex-row items-center">
+		<div>
 			<KerbInput {username} />
 		</div>
-		<div class="column">
-			<button class="btn" on:click={() => (showHydrantInstructions = true)}>
-				<span>Import class list from</span>
-				<span style="margin-left: 5px;"><HydrantLogo /></span>
-			</button>
-		</div>
-		<div class="column">
-			<button class="btn" on:click={importFromWebathena}>Import from Webathena</button>
-		</div>
+		<button class="btn" on:click={() => (showHydrantInstructions = true)}>
+			<span>Import class list from</span>
+			<span style="margin-left: 5px;"><HydrantLogo /></span>
+		</button>
+		<button class="btn" on:click={importFromWebathena}>Import from Webathena</button>
 	</div>
 
 	{#if $username}
