@@ -24,7 +24,7 @@
 	<div class="input-group-shim">@</div>
 	<input
 		class="input"
-		class:is-danger={!usernameExists}
+		class:input-error={!usernameExists}
 		type="text"
 		id="kerb"
 		name="kerb"
