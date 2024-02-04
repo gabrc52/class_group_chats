@@ -23,7 +23,6 @@
 <div class="input-group input-group-divider grid-cols-[auto_1fr_auto]">
 	<div class="input-group-shim">@</div>
 	<input
-		class="input"
 		class:input-error={!usernameExists}
 		type="text"
 		id="kerb"
