@@ -31,61 +31,54 @@
 	<title>Class group chats</title>
 </svelte:head>
 
-<div class="section" style="padding-bottom: 0;">
-	<div class="container is-max-desktop">
-		<div class="columns is-centered is-vcentered">
-			<div class="column is-half">
-				<KerbInput {username} />
-			</div>
-			<div class="column">
-				<button
-					class="button is-info is-light is-outlined"
-					on:click={() => (showHydrantInstructions = true)}
-				>
-					<span>Import class list from</span>
-					<span style="margin-left: 5px;"><HydrantLogo /></span>
-				</button>
-			</div>
-			<div class="column">
-				<button class="button is-warning" on:click={importFromWebathena}
-					>Import from Webathena</button
-				>
-			</div>
+<div class="container mx-auto max-w-screen-lg py-4 space-x-4">
+	<div class="flex flex-row ">
+		<div class="column is-half">
+			<KerbInput {username} />
+		</div>
+		<div class="column">
+			<button class="btn" on:click={() => (showHydrantInstructions = true)}>
+				<span>Import class list from</span>
+				<span style="margin-left: 5px;"><HydrantLogo /></span>
+			</button>
+		</div>
+		<div class="column">
+			<button class="btn" on:click={importFromWebathena}>Import from Webathena</button>
 		</div>
 	</div>
-</div>
 
-{#if $username}
-	{#if showHydrantInstructions}
-		<div class="section">
-			<div class="container is-max-desktop">
-				<a href="https://hydrant.mit.edu" target="_self">
-					<div class="notification is-warning">
-						<button
-							class="delete"
-							on:click|preventDefault={() => (showHydrantInstructions = false)}
-						/>
-						<!-- TODO would require another PR to Hydrant but pass a flag meaning (redirect me now) -->
-						To import your class list from <HydrantLogo />, you must go to <HydrantLogo /><span
-							class="icon"><i class="fa-solid fa-arrow-up-right-from-square" /></span
-						>
-						and once you have made your class selections, click on the button which says
-						<button class="button is-light"
-							><span class="icon"
-								><i class="fa-regular fa-message" style="transform: scaleX(-1);" /></span
-							><span>Join group chats on Matrix</span><span class="icon"
-								><i class="fa-solid fa-arrow-up-right-from-square" /></span
-							></button
-						>.
-					</div>
-				</a>
+	{#if $username}
+		{#if showHydrantInstructions}
+			<div class="section">
+				<div class="container is-max-desktop">
+					<a href="https://hydrant.mit.edu" target="_self">
+						<div class="notification is-warning">
+							<button
+								class="delete"
+								on:click|preventDefault={() => (showHydrantInstructions = false)}
+							/>
+							<!-- TODO would require another PR to Hydrant but pass a flag meaning (redirect me now) -->
+							To import your class list from <HydrantLogo />, you must go to <HydrantLogo /><span
+								class="icon"><i class="fa-solid fa-arrow-up-right-from-square" /></span
+							>
+							and once you have made your class selections, click on the button which says
+							<button class="button is-light"
+								><span class="icon"
+									><i class="fa-regular fa-message" style="transform: scaleX(-1);" /></span
+								><span>Join group chats on Matrix</span><span class="icon"
+									><i class="fa-solid fa-arrow-up-right-from-square" /></span
+								></button
+							>.
+						</div>
+					</a>
+				</div>
 			</div>
-		</div>
-	{/if}
+		{/if}
 
-	<SearchBox on:subjectSelected={(event) => (subject = event.detail)} />
+		<SearchBox on:subjectSelected={(event) => (subject = event.detail)} />
 
-	{#if subject}
-		<SubjectDetails {subject} />
+		{#if subject}
+			<SubjectDetails {subject} />
+		{/if}
 	{/if}
-{/if}
+</div>
