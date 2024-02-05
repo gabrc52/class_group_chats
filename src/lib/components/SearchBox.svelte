@@ -6,7 +6,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import type { Readable } from 'svelte/store';
 	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
-
+	import type { MouseEventHandler } from 'svelte/elements';
 	// TODO: does CloesCircleOutline look better?
 	import CloseIcon from "svelte-material-icons/CloseCircle.svelte";
 
