@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.postcss';
-	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, Modal } from '@skeletonlabs/skeleton';
 	import FeedbackIcon from "svelte-material-icons/MessageAlertOutline.svelte";
 	import GitHubIcon from "svelte-material-icons/Github.svelte";
 
@@ -8,14 +8,19 @@
 	import { setContext } from 'svelte';
 	import { persisted } from 'svelte-local-storage-store';
     import { derived, readonly } from 'svelte/store';
+	import { initializeStores } from '@skeletonlabs/skeleton';
 
 	// TODO: use some actual authentication mechanism
     const username = persisted<string>('edu.mit.sipb.subjects.username', '');
     setContext('username', username);
 	const mxid = derived(username, (username) => `@${username.trim().toLowerCase()}:${PUBLIC_MATRIX_HOMESERVER}`);
     setContext('mxid', mxid);
+
+	/// For Skeleton: https://www.skeleton.dev/utilities/modals
+	initializeStores();
 </script>
 
+<Modal/>
 <!-- App Shell -->
 <AppShell>
 	<svelte:fragment slot="header">
