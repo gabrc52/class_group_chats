@@ -4,17 +4,38 @@
 	import KerbInput from '$lib/components/KerbInput.svelte';
 	import SearchBox from '$lib/components/SearchBox.svelte';
 	import SubjectDetails from '$lib/components/SubjectDetails.svelte';
+	import { Stepper, Step } from '@skeletonlabs/skeleton';
 	import { getClassListFromMoira } from '$lib/moira';
 	import type { Subject } from '$lib/types';
 	import { encodeTicket, getUsername, loginWebathena } from '$lib/webathena';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
+	import { writable } from 'svelte/store';
 	import { onMount } from 'svelte';
-	import { PUBLIC_HYDRANT_BASEURL } from '$env/static/public';
+	import { PUBLIC_HYDRANT_BASEURL, PUBLIC_MATRIX_BASEURL } from '$env/static/public';
+	import CustomStepper from '$lib/components/stepper/CustomStepper.svelte';
+
+	let isMobile: boolean | undefined;
+
+	let hydrantUrl = PUBLIC_HYDRANT_BASEURL;
+	let matrixSsoUrl = "#";
+
+	onMount(() => {
+		// get callback (from window.location)
+		const hydrantCallback = `${window.location}hydrantCallback`;
+		const touchstoneCallback = `${window.location}touchstoneCallback`;
+		hydrantUrl = `${PUBLIC_HYDRANT_BASEURL}/#/export?callback=${encodeURIComponent(hydrantCallback)}`;
+		matrixSsoUrl = `${PUBLIC_MATRIX_BASEURL}/_matrix/client/v3/login/sso/redirect/saml?redirectUrl=${encodeURIComponent(touchstoneCallback)}`;
+
+		// get whether mobile (from user agent)
+		const { userAgent } = navigator;
+		isMobile = userAgent.includes("Android") || userAgent.includes("iPhone") || userAgent.includes("iPod");
+	});
 
 	let subject: Subject | undefined;
 
 	const username: Writable<string> = getContext('username');
+	let usernameExists: Writable<boolean> = writable<boolean>(true);	
 
 	$: console.log(subject);
 
@@ -24,15 +45,12 @@
 		const classes = await getClassListFromMoira(token);
 		$username = getUsername(webathena);
 		console.log(classes);
+		// TODO: don't want this anymore
 		goto(`/classes/import?via=Webathena${classes.map((cls) => `&class=${cls}`).join('')}`);
 	}
 
-	let hydrantUrl = PUBLIC_HYDRANT_BASEURL;
-
-	onMount(() => {
-		const callback = `${window.location}hydrantCallback`;
-		hydrantUrl = `${PUBLIC_HYDRANT_BASEURL}/#/export?callback=${encodeURIComponent(callback)}`;
-	})
+	let step = writable<number>(1);
+	let canGoNext = true;
 </script>
 
 <svelte:head>
@@ -40,7 +58,56 @@
 </svelte:head>
 
 <div class="container px-4 mx-auto max-w-screen-lg py-4 space-x-4">
-	<div class="grid md:grid-flow-col grid-flow-row items-center space-x-8 space-y-2 pb-4">
+	
+	<div class="py-4">
+		<CustomStepper {step} {canGoNext}>
+			{#if $step === 1}
+				{#if isMobile === true}
+				<div class="w-fit">
+					<KerbInput {username} {usernameExists} />
+				</div>
+				{/if}
+				{#if isMobile === false}
+					<a class="btn variant-filled-tertiary" href={matrixSsoUrl}>Login with Touchstone</a>
+				{/if}
+			{:else if $step === 2}
+			<p class="pb-2">You can import your class list from an external provider:</p>
+			<div class="flex">
+				<a class="btn variant-filled flex" href={hydrantUrl}>
+					<span>Import class list from</span>
+					<span style="margin-left: 5px;"><HydrantLogo /></span>
+				</a>
+				<button class="flex btn variant-filled-secondary ml-4" on:click={importFromWebathena}>Import from Canvas via Webathena</button>
+			</div>
+			{:else}
+			{/if}
+		</CustomStepper>
+	</div>
+
+	
+	<!-- TODO(skeleton): I don't like this stepper since it doesn't preview future steps,
+		 but this is what skeleton provides and no time to write a new one or figure out how to import the
+		React one. See https://bfanger.medium.com/combining-react-and-svelte-in-a-single-app-interop-6f78aed96ce2
+		and https://mui.com/material-ui/react-stepper/
+	-->
+	<!-- TODO: how to programatically set to a part of the stepper? -->
+	<!-- <Stepper> -->
+		<!-- TODO: bug - upon refresh it doesn't check existence -->
+		<!-- <Step locked={!$username || !$usernameExists}> -->
+			<!-- <svelte:fragment slot="header">Identify yourself</svelte:fragment> -->
+			<!-- This would be login, but on mobile it's enter your kerb -->
+			<!-- <div class="w-full md:w-1/2"> -->
+				<!--  -->
+			<!-- </div> -->
+		<!-- </Step> -->
+		<!-- <Step> -->
+			<!-- <svelte:fragment slot="header">(header)</svelte:fragment> -->
+			<!-- (content) -->
+		<!-- </Step> -->
+		<!-- ... -->
+	<!-- </Stepper> -->
+
+	<!-- <div class="grid md:grid-flow-col grid-flow-row items-center space-x-8 space-y-2 pb-4">
 		<div>
 			<KerbInput {username} />
 		</div>
@@ -61,5 +128,5 @@
 		{#if subject}
 			<SubjectDetails {subject} />
 		{/if}
-	{/if}
+	{/if} -->
 </div>

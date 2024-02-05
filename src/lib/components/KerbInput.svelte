@@ -3,11 +3,12 @@
 	import type { UsernameExistsResult } from '$lib/types';
 	import { getContext } from 'svelte';
 	import type { Readable, Writable } from 'svelte/store';
+	import { writable } from 'svelte/store';
 
 	export let username: Writable<string>;
 	const mxid: Readable<string> = getContext('mxid');
 
-	let usernameExists: boolean = true;
+	export let usernameExists = writable<boolean>(true);
 	let lookedUpUsername: string;
 
 	async function exists(username: string): Promise<boolean> {
@@ -32,7 +33,7 @@
 			const kerb = e.currentTarget.value;
 			const result = await exists(kerb);
 			lookedUpUsername = kerb;
-			usernameExists = result;
+			$usernameExists = result;
 		}}
 		bind:value={$username}
 	/>
@@ -41,7 +42,7 @@
 	</div>
 </div>
 {#if $username}
-	{#if usernameExists}
+	{#if $usernameExists}
 		<p class="text-xs">The full thing ({$mxid}) is your global Matrix username.</p>
 	{:else}
 		<p class="text-sm text-error-300">Kerb {lookedUpUsername} does not exist</p>

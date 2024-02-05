@@ -1,9 +1,10 @@
-import { MATRIX_TOKEN, MATRIX_BASEURL } from '$env/static/private';
+import { MATRIX_TOKEN } from '$env/static/private';
+import { PUBLIC_MATRIX_BASEURL } from '$env/static/public';
 import { MatrixError } from 'matrix-js-sdk';
 import * as matrix from 'matrix-js-sdk';
 
 export const matrixClient = matrix.createClient({ 
-    baseUrl: MATRIX_BASEURL,
+    baseUrl: PUBLIC_MATRIX_BASEURL,
     accessToken: MATRIX_TOKEN,
 });
 
