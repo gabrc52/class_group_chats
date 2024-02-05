@@ -86,7 +86,13 @@
 						</a>
 						<button class="flex btn variant-filled-secondary ml-4" on:click={importFromWebathena}>Import from Canvas via Webathena</button>
 					</div>
-					<button class="btn font-bold mt-4 text-warning-400" on:click={() => showClassPicker = true}>+ Add class manually</button>
+					<button class="btn font-bold mt-4 text-warning-400" on:click={() => {
+						showClassPicker = true;
+
+						/// Focus the search box
+						// TODO: this is hacky, figure out if there is a better way
+						setTimeout(() => document.getElementById("searchbox")?.focus(), 10);
+					}}>+ Add class manually</button>
 				{/if}
 				<!-- TODO: use an actual modal -->
 				<!-- TODO: don't just set the subject -> append instead -->
