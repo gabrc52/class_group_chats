@@ -31,8 +31,8 @@
 	<title>Class group chats</title>
 </svelte:head>
 
-<div class="container mx-auto max-w-screen-lg py-4 space-x-4">
-	<div class="grid md:grid-flow-col grid-flow-row items-center space-x-8 pb-4">
+<div class="container px-4 mx-auto max-w-screen-lg py-4 space-x-4">
+	<div class="grid md:grid-flow-col grid-flow-row items-center space-x-8 space-y-2 pb-4">
 		<div>
 			<KerbInput {username} />
 		</div>

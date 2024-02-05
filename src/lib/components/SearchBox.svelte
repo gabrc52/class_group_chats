@@ -6,6 +6,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import type { Readable } from 'svelte/store';
 	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
+
 	const dispatch = createEventDispatcher();
 
 	enum Level {
@@ -34,22 +35,21 @@
 	}
 
 	async function search(subjects: Subject[], query: string, level: Level): Promise<Subject[]> {
-        query = query.trim();
-        // Don't display anything if there is no query yet
-        if (query === '') {
-            return [];
-        }
+		query = query.trim();
+		// Don't display anything if there is no query yet
+		if (query === '') {
+			return [];
+		}
 		// TODO: ideally, we should sort by relevance, for example prefer startsWith over includes
 		// this is more of a stretch goal but makes the user interface nicer
 		// It seems like Hydrant has some fuzzier matching (for example "6042" works too)
 		return subjects.filter(
 			(subject) =>
-				((subject.level === 'G' && level !== Level.undergrad)
-					|| (subject.level === 'U' && level !== Level.grad))
-				&& (subject.number.toLowerCase().includes(query.toLowerCase())
-					|| (subject.oldNumber && subject.oldNumber.includes(query))
-					|| subject.name.toLowerCase().includes(query.toLowerCase())
-			)
+				((subject.level === 'G' && level !== Level.undergrad) ||
+					(subject.level === 'U' && level !== Level.grad)) &&
+				(subject.number.toLowerCase().includes(query.toLowerCase()) ||
+					(subject.oldNumber && subject.oldNumber.includes(query)) ||
+					subject.name.toLowerCase().includes(query.toLowerCase()))
 		);
 	}
 
@@ -63,33 +63,30 @@
 
 <div class="section">
 	{#if subjects.length > 0}
-		<div class="container is-max-desktop" transition:fade={{ duration: 200 }}>
-			<div class="panel">
-				<p class="panel-heading">Class search</p>
-				<div class="panel-block">
-					<p class="control has-icons-left">
-						<!-- TODO turn this into a form too -->
-						<input class="input" type="text" id="searchbox" placeholder="Search a class by number or name" bind:value={query} />
-						<span class="icon is-left">
-							<i class="fas fa-search" aria-hidden="true" />
-						</span>
-					</p>
-				</div>
-				<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
-					<RadioItem bind:group={$level} name="level" value={Level.undergrad}>Undergrad</RadioItem>
-					<RadioItem bind:group={$level} name="level" value={Level.grad}>Grad</RadioItem>
-					<RadioItem bind:group={$level} name="level" value={Level.both}>Both</RadioItem>
-				</RadioGroup>
+		<div class="card p-4" transition:fade={{ duration: 200 }}>
+			<p class="pb-4">Class search</p>
+			<!-- TODO: re-add search icon -->
+			<input
+				class="input"
+				type="text"
+				id="searchbox"
+				placeholder="Search a class by number or name"
+				bind:value={query}
+			/>
+			<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
+				<RadioItem bind:group={$level} name="level" value={Level.undergrad}>Undergrad</RadioItem>
+				<RadioItem bind:group={$level} name="level" value={Level.grad}>Grad</RadioItem>
+				<RadioItem bind:group={$level} name="level" value={Level.both}>Both</RadioItem>
+			</RadioGroup>
 
-				{#each results as result (result.number)}
+			{#each results as result (result.number)}
 				<a class="panel-block" on:click={() => selectSubject(result)}>
 					<span class="panel-icon">
-						<i class="fas fa-book" aria-hidden=	"true" />
+						<i class="fas fa-book" aria-hidden="true" />
 					</span>
 					<p><strong>{result.number}</strong>: {result.name}</p>
 				</a>
-				{/each}
-			</div>
+			{/each}
 		</div>
 	{:else}
 		<progress class="progress is-primary" max="100">30%</progress>
