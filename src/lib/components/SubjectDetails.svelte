@@ -1,5 +1,7 @@
 <!--
     Component with subject details and the option to join the group chat
+
+	TODO: migrate bulma -> skeleton & tailwind
 -->
 
 <script lang="ts">
