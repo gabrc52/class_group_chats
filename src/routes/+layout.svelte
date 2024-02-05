@@ -48,7 +48,7 @@
 		</AppBar>
 	</svelte:fragment>
 	<svelte:fragment slot="pageFooter">
-		<!-- TODO: footer styling -->
+		<!-- TODO(skeleton): footer styling -->
 		<!-- <p>
 			Brought to you by <a href="https://sipb.mit.edu" target="_blank" rel="noopener">SIPB</a>.
             The source code is available on <a href="https://github.com/gabrc52/class_group_chats/">GitHub</a>.

@@ -63,15 +63,20 @@
 
 {#if subjects.length > 0}
 	<div class="card p-4 mx-auto" transition:fade={{ duration: 200 }}>
+		<div class="fixed"></div>
 		<div class="flex pb-4 items-center">
 			<span>Class search</span>
-			<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary" class="ml-auto">
+			<RadioGroup
+				active="variant-filled-primary"
+				hover="hover:variant-soft-primary"
+				class="ml-auto"
+			>
 				<RadioItem bind:group={$level} name="level" value={Level.undergrad}>Undergrad</RadioItem>
 				<RadioItem bind:group={$level} name="level" value={Level.grad}>Grad</RadioItem>
 				<RadioItem bind:group={$level} name="level" value={Level.both}>Both</RadioItem>
 			</RadioGroup>
 		</div>
-		<!-- TODO: re-add search icon -->
+		<!-- TODO(skeleton): re-add search icon -->
 
 		<input
 			class="input"
@@ -81,19 +86,24 @@
 			bind:value={query}
 		/>
 
-		<!-- TODO: make centering actually work, tried w-full in parent and mx-auto but doesn't work -->
-		<div class="mx-auto"></div>
+		<!-- TODO(skeleton): yes, the Autocomplete element exists in Skeleton.
+			I am choosing to copy the styling to avoid having to refactor, and then this also
+			means the <strong> inside would still work
+		-->
 
-		{#each results as result (result.number)}
-			<div>
-				<a on:click={() => selectSubject(result)}>
-					<span class="panel-icon">
-						<i class="fas fa-book" aria-hidden="true" />
-					</span>
-					<p><strong>{result.number}</strong>: {result.name}</p>
-				</a>
-			</div>
-		{/each}
+		<div class="overflow-y-auto max-h-96 w-full mt-2 autocomplete">
+			<nav class="autocomplete-nav">
+				<ul class="autocomplete-list list-nav">
+					{#each results as result (result.number)}
+						<li class="autocomplete-item">
+							<button class="autocomplete-button w-full" type="button" on:click={() => selectSubject(result)}>
+								<strong>{result.number}</strong>: {result.name}
+							</button>
+						</li>
+					{/each}
+				</ul>
+			</nav>
+		</div>
 	</div>
 {:else}
 	<progress class="progress is-primary" max="100">30%</progress>
