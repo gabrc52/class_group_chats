@@ -25,17 +25,17 @@
 -->
 
 <script lang="ts">
-    import LockIcon from './LockIcon.svelte';
-    import Checkmark from './Checkmark.svelte';
-    import type { Writable } from 'svelte/store';
+	import LockIcon from './LockIcon.svelte';
+	import Checkmark from './Checkmark.svelte';
+	import type { Writable } from 'svelte/store';
 
-    /**
-     * Number from 1 to 3
-     */
-    // Writable so this component can modify it too
-    export let step: Writable<number>;
+	/**
+	 * Number from 1 to 3
+	 */
+	// Writable so this component can modify it too
+	export let step: Writable<number>;
 
-    export let canGoNext: boolean;
+	export let canGoNext: boolean;
 </script>
 
 <ol class="flex items-center w-full text-sm font-medium text-center sm:text-base">
@@ -88,22 +88,31 @@
 
 <!-- copied from skeleton-->
 <div class="$step-navigation flex justify-between gap-4" style="">
-	<button type="button" class="btn variant-ghost" disabled={$step === 1} on:click={() => {
-        $step = $step - 1;
-        if ($step < 1) $step = 1;
-    }}>
-        ← Back
-    </button>
+	<button
+		type="button"
+		class="btn variant-ghost"
+		disabled={$step === 1}
+		on:click={() => {
+			$step = $step - 1;
+			if ($step < 1) $step = 1;
+		}}
+	>
+		← Back
+	</button>
 	{#if $step < 3}
-    <button type="button" class="btn variant-filled" disabled={!canGoNext} on:click={() => {
-        $step = $step + 1;
-        if ($step > 3) $step = 3;
-    }}>
-        {#if !canGoNext}
-        <LockIcon/>
-        {/if}
-        <span>Next →</span>
-    </button>
-    {/if}
+		<button
+			type="button"
+			class="btn variant-filled"
+			disabled={!canGoNext}
+			on:click={() => {
+				$step = $step + 1;
+				if ($step > 3) $step = 3;
+			}}
+		>
+			{#if !canGoNext}
+				<LockIcon />
+			{/if}
+			<span>Next →</span>
+		</button>
+	{/if}
 </div>
-

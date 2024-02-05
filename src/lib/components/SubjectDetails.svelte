@@ -14,7 +14,7 @@
 	const Membership = ClassGroupChatMembership;
 
 	export let subject: Subject;
-	
+
 	/**
 	 * Whether this component is being rendered as an item in a list
 	 */
@@ -60,7 +60,9 @@
 			method: 'PUT'
 		});
 		if (!response.ok) {
-			alert(`Sorry, an error (${response.statusText}) occurred. Please try again. If you need help email matrix@mit.edu.\n${await response.text()}`);
+			alert(
+				`Sorry, an error (${response.statusText}) occurred. Please try again. If you need help email matrix@mit.edu.\n${await response.text()}`
+			);
 		}
 		// TODO: check if successful otherwise show an error
 		subject = subject; // to reload upon inviting (hack?)
@@ -72,8 +74,8 @@
 		   maybe we want to show subject info while the membership is loading, 
 		   especially if we just clicked the join button
 -->
-{#await Promise.all([getSubjectDetails(subject.number), getSubjectChat(subject.number), getMembership(subject.number, $mxid)] )}
-	<div class={isListItem ? "block" : "section"}>
+{#await Promise.all( [getSubjectDetails(subject.number), getSubjectChat(subject.number), getMembership(subject.number, $mxid)] )}
+	<div class={isListItem ? 'block' : 'section'}>
 		<div class="container is-max-desktop">
 			<div class="level">
 				<div class="level-left">
@@ -97,7 +99,7 @@
 		</div>
 	</div>
 {:then [canonicalSubject, chat, membership]}
-	<div class={isListItem ? "block" : "section"}>
+	<div class={isListItem ? 'block' : 'section'}>
 		<div class="container is-max-desktop">
 			<div class="level">
 				<div class="level-left">
@@ -112,12 +114,9 @@
 					{#if !isListItem}
 						<!-- I think it's too confusing/non-sensical to have several refresh buttons -->
 						<div class="level-item">
-							<button
-								class="button is-primary is-outlined"
-								on:click={() => subject = subject}
-							>
+							<button class="button is-primary is-outlined" on:click={() => (subject = subject)}>
 								<span class="icon">
-									<i class="fa-solid fa-arrow-rotate-right"/>
+									<i class="fa-solid fa-arrow-rotate-right" />
 								</span>
 								<span>Refresh</span>
 							</button>

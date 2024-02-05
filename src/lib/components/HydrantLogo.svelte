@@ -1,7 +1,10 @@
 <span id="hydr">Hydr</span><span id="ant">ant</span>
 
 <style>
-	@font-face { font-family: Epilogue-Bold; src: url('/Epilogue-Bold.ttf'); } 
+	@font-face {
+		font-family: Epilogue-Bold;
+		src: url('/Epilogue-Bold.ttf');
+	}
 
 	#hydr {
 		font-family: Epilogue-Bold;

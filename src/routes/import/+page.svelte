@@ -52,8 +52,10 @@
 			if (!response.ok) {
 				const text = await response.text();
 				// swallow already in the room errors
-				if (!text.includes("already in the room")) {
-					alert(`Sorry, an error (${response.statusText}) occurred. Please try again. If you need help email matrix@mit.edu.\n${text}`);
+				if (!text.includes('already in the room')) {
+					alert(
+						`Sorry, an error (${response.statusText}) occurred. Please try again. If you need help email matrix@mit.edu.\n${text}`
+					);
 				}
 			}
 		}
@@ -67,7 +69,7 @@
 
 <div class="section" style="padding-bottom: 0;">
 	<div class="container is-max-desktop">
-		<KerbInput {username}/>
+		<KerbInput {username} />
 	</div>
 </div>
 
@@ -126,8 +128,7 @@
 	{:else}
 		{#each subjects as subject (subject.number)}
 			<SubjectDetails {subject} isListItem={true} />
-			<hr class="solid is-hidden-desktop"/>
+			<hr class="solid is-hidden-desktop" />
 		{/each}
 	{/if}
-
 {/if}

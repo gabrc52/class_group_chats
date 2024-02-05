@@ -1,26 +1,29 @@
 <script lang="ts">
 	import '../app.postcss';
 	import { AppShell, AppBar, Modal } from '@skeletonlabs/skeleton';
-	import FeedbackIcon from "svelte-material-icons/MessageAlertOutline.svelte";
-	import GitHubIcon from "svelte-material-icons/Github.svelte";
+	import FeedbackIcon from 'svelte-material-icons/MessageAlertOutline.svelte';
+	import GitHubIcon from 'svelte-material-icons/Github.svelte';
 
 	import { PUBLIC_MATRIX_HOMESERVER } from '$env/static/public';
 	import { setContext } from 'svelte';
 	import { persisted } from 'svelte-local-storage-store';
-    import { derived, readonly } from 'svelte/store';
+	import { derived, readonly } from 'svelte/store';
 	import { initializeStores } from '@skeletonlabs/skeleton';
 
 	// TODO: use some actual authentication mechanism
-    const username = persisted<string>('edu.mit.sipb.subjects.username', '');
-    setContext('username', username);
-	const mxid = derived(username, (username) => `@${username.trim().toLowerCase()}:${PUBLIC_MATRIX_HOMESERVER}`);
-    setContext('mxid', mxid);
+	const username = persisted<string>('edu.mit.sipb.subjects.username', '');
+	setContext('username', username);
+	const mxid = derived(
+		username,
+		(username) => `@${username.trim().toLowerCase()}:${PUBLIC_MATRIX_HOMESERVER}`
+	);
+	setContext('mxid', mxid);
 
 	/// For Skeleton: https://www.skeleton.dev/utilities/modals
 	initializeStores();
 </script>
 
-<Modal/>
+<Modal />
 <!-- App Shell -->
 <AppShell>
 	<svelte:fragment slot="header">
@@ -36,7 +39,7 @@
 					target="_blank"
 					rel="noreferrer"
 				>
-				<div style="padding-right: 4px;"><GitHubIcon/></div>
+					<div style="padding-right: 4px;"><GitHubIcon /></div>
 					Source code
 				</a>
 				<a
@@ -46,7 +49,7 @@
 					target="_blank"
 					rel="noreferrer"
 				>
-				<div style="padding-right: 4px;"><FeedbackIcon/></div>
+					<div style="padding-right: 4px;"><FeedbackIcon /></div>
 					Give us feedback!
 				</a>
 			</svelte:fragment>
@@ -64,4 +67,3 @@
 	</svelte:fragment>
 	<slot />
 </AppShell>
-

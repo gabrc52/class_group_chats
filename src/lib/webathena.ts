@@ -42,5 +42,5 @@ export function encodeTicket(webathena: any) {
 
 // This the same as /whoami on the moira-rest-api
 export function getUsername(webathena: any) {
-	return webathena.cname.nameString[0]
+	return webathena.cname.nameString[0];
 }

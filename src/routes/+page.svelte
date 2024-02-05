@@ -18,7 +18,7 @@
 	let isMobile: boolean | undefined;
 
 	let hydrantUrl = PUBLIC_HYDRANT_BASEURL;
-	let matrixSsoUrl = "#";
+	let matrixSsoUrl = '#';
 
 	onMount(() => {
 		// get callback (from window.location)
@@ -29,13 +29,14 @@
 
 		// get whether mobile (from user agent)
 		const { userAgent } = navigator;
-		isMobile = userAgent.includes("Android") || userAgent.includes("iPhone") || userAgent.includes("iPod");
+		isMobile =
+			userAgent.includes('Android') || userAgent.includes('iPhone') || userAgent.includes('iPod');
 	});
 
 	let subject: Subject | undefined;
 
 	const username: Writable<string> = getContext('username');
-	let usernameExists: Writable<boolean> = writable<boolean>(true);	
+	let usernameExists: Writable<boolean> = writable<boolean>(true);
 
 	$: console.log(subject);
 
@@ -63,7 +64,6 @@
 </svelte:head>
 
 <div class="container px-4 mx-auto max-w-screen-lg py-4 space-x-4">
-	
 	<div class="py-4">
 		<CustomStepper {step} {canGoNext}>
 			{#if $step === 1}
@@ -84,25 +84,33 @@
 							<span>Import class list from</span>
 							<span style="margin-left: 5px;"><HydrantLogo /></span>
 						</a>
-						<button class="flex btn variant-filled-secondary ml-4" on:click={importFromWebathena}>Import from Canvas via Webathena</button>
+						<button class="flex btn variant-filled-secondary ml-4" on:click={importFromWebathena}
+							>Import from Canvas via Webathena</button
+						>
 					</div>
-					<button class="btn font-bold mt-4 text-warning-400" on:click={() => {
-						showClassPicker = true;
+					<button
+						class="btn font-bold mt-4 text-warning-400"
+						on:click={() => {
+							showClassPicker = true;
 
-						/// Focus the search box
-						// TODO: this is hacky, figure out if there is a better way
-						setTimeout(() => document.getElementById("searchbox")?.focus(), 10);
-					}}>+ Add class manually</button>
+							/// Focus the search box
+							// TODO: this is hacky, figure out if there is a better way
+							setTimeout(() => document.getElementById('searchbox')?.focus(), 10);
+						}}>+ Add class manually</button
+					>
 				{/if}
 				<!-- TODO: use an actual modal -->
 				<!-- TODO: don't just set the subject -> append instead -->
-				
+
 				<!-- using conditional display style instead of if to share state / avoid mounting and unmounting -->
-				<div style:display={showClassPicker ? "block" : "none"}>
-					<SearchBox on:subjectSelected={(event) => {
-						selectedSubjects = [...selectedSubjects, event.detail.number];
-						showClassPicker = false;
-					}} onClose={() => showClassPicker = false}/>
+				<div style:display={showClassPicker ? 'block' : 'none'}>
+					<SearchBox
+						on:subjectSelected={(event) => {
+							selectedSubjects = [...selectedSubjects, event.detail.number];
+							showClassPicker = false;
+						}}
+						onClose={() => (showClassPicker = false)}
+					/>
 				</div>
 
 				{#if !showClassPicker}
@@ -120,7 +128,6 @@
 		</CustomStepper>
 	</div>
 
-	
 	<!-- TODO(skeleton): I don't like this stepper since it doesn't preview future steps,
 		 but this is what skeleton provides and no time to write a new one or figure out how to import the
 		React one. See https://bfanger.medium.com/combining-react-and-svelte-in-a-single-app-interop-6f78aed96ce2
@@ -128,19 +135,19 @@
 	-->
 	<!-- TODO: how to programatically set to a part of the stepper? -->
 	<!-- <Stepper> -->
-		<!-- TODO: bug - upon refresh it doesn't check existence -->
-		<!-- <Step locked={!$username || !$usernameExists}> -->
-			<!-- <svelte:fragment slot="header">Identify yourself</svelte:fragment> -->
-			<!-- This would be login, but on mobile it's enter your kerb -->
-			<!-- <div class="w-full md:w-1/2"> -->
-				<!--  -->
-			<!-- </div> -->
-		<!-- </Step> -->
-		<!-- <Step> -->
-			<!-- <svelte:fragment slot="header">(header)</svelte:fragment> -->
-			<!-- (content) -->
-		<!-- </Step> -->
-		<!-- ... -->
+	<!-- TODO: bug - upon refresh it doesn't check existence -->
+	<!-- <Step locked={!$username || !$usernameExists}> -->
+	<!-- <svelte:fragment slot="header">Identify yourself</svelte:fragment> -->
+	<!-- This would be login, but on mobile it's enter your kerb -->
+	<!-- <div class="w-full md:w-1/2"> -->
+	<!--  -->
+	<!-- </div> -->
+	<!-- </Step> -->
+	<!-- <Step> -->
+	<!-- <svelte:fragment slot="header">(header)</svelte:fragment> -->
+	<!-- (content) -->
+	<!-- </Step> -->
+	<!-- ... -->
 	<!-- </Stepper> -->
 
 	<!-- <div class="grid md:grid-flow-col grid-flow-row items-center space-x-8 space-y-2 pb-4">

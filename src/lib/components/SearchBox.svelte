@@ -8,7 +8,7 @@
 	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
 	import type { MouseEventHandler } from 'svelte/elements';
 	// TODO: does CloesCircleOutline look better?
-	import CloseIcon from "svelte-material-icons/CloseCircle.svelte";
+	import CloseIcon from 'svelte-material-icons/CloseCircle.svelte';
 
 	export let onClose: MouseEventHandler<HTMLButtonElement> | undefined = undefined;
 
@@ -73,7 +73,7 @@
 				<!-- TODO(skeleton): make this button look better, in particular larger,
 					or the size is fine but move it to the corner and reduce the padding
 				 -->
-				<button class="btn size-max" on:click={onClose}><CloseIcon/></button>
+				<button class="btn size-max" on:click={onClose}><CloseIcon /></button>
 			{/if}
 			<span>Class search</span>
 			<RadioGroup
@@ -106,7 +106,11 @@
 				<ul class="autocomplete-list list-nav">
 					{#each results as result (result.number)}
 						<li class="autocomplete-item">
-							<button class="autocomplete-button w-full" type="button" on:click={() => selectSubject(result)}>
+							<button
+								class="autocomplete-button w-full"
+								type="button"
+								on:click={() => selectSubject(result)}
+							>
 								<strong>{result.number}</strong>: {result.name}
 							</button>
 						</li>
