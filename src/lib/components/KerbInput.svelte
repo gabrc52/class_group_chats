@@ -19,7 +19,7 @@
 	}
 </script>
 
-<label for="kerb" class="label">Enter your kerb</label>
+<label for="kerb">Enter your kerb</label>
 <div class="input-group input-group-divider grid-cols-[auto_1fr_auto]">
 	<div class="input-group-shim">@</div>
 	<input
@@ -42,8 +42,8 @@
 </div>
 {#if $username}
 	{#if usernameExists}
-		<p class="help">The full thing ({$mxid}) is your global Matrix username.</p>
+		<p class="text-xs">The full thing ({$mxid}) is your global Matrix username.</p>
 	{:else}
-		<p class="help is-danger">Kerb {lookedUpUsername} does not exist</p>
+		<p class="text-sm text-error-300">Kerb {lookedUpUsername} does not exist</p>
 	{/if}
 {/if}
