@@ -39,18 +39,23 @@
 
 	$: console.log(subject);
 
+	let selectedSubjects: string[] = [];
+
 	async function importFromWebathena(): Promise<void> {
 		const webathena = await loginWebathena();
 		const token = encodeTicket(webathena);
 		const classes = await getClassListFromMoira(token);
 		$username = getUsername(webathena);
 		console.log(classes);
+		selectedSubjects = classes;
 		// TODO: don't want this anymore
-		goto(`/classes/import?via=Webathena${classes.map((cls) => `&class=${cls}`).join('')}`);
+		// goto(`/classes/import?via=Webathena${classes.map((cls) => `&class=${cls}`).join('')}`);
 	}
 
 	let step = writable<number>(1);
 	let canGoNext = true;
+
+	let showClassPicker = false;
 </script>
 
 <svelte:head>
@@ -63,23 +68,47 @@
 		<CustomStepper {step} {canGoNext}>
 			{#if $step === 1}
 				{#if isMobile === true}
-				<div class="w-fit">
-					<KerbInput {username} {usernameExists} />
-				</div>
+					<div class="w-fit">
+						<KerbInput {username} {usernameExists} />
+					</div>
 				{/if}
 				{#if isMobile === false}
 					<a class="btn variant-filled-tertiary" href={matrixSsoUrl}>Login with Touchstone</a>
 				{/if}
 			{:else if $step === 2}
-			<p class="pb-2">You can import your class list from an external provider:</p>
-			<div class="flex">
-				<a class="btn variant-filled flex" href={hydrantUrl}>
-					<span>Import class list from</span>
-					<span style="margin-left: 5px;"><HydrantLogo /></span>
-				</a>
-				<button class="flex btn variant-filled-secondary ml-4" on:click={importFromWebathena}>Import from Canvas via Webathena</button>
-			</div>
+				{#if !showClassPicker}
+					<p class="pb-2">You can import your class list from an external provider:</p>
+					<div class="flex">
+						<a class="btn variant-filled flex" href={hydrantUrl}>
+							<span>Import class list from</span>
+							<span style="margin-left: 5px;"><HydrantLogo /></span>
+						</a>
+						<button class="flex btn variant-filled-secondary ml-4" on:click={importFromWebathena}>Import from Canvas via Webathena</button>
+					</div>
+					<button class="btn font-bold mt-4 text-warning-400" on:click={() => showClassPicker = true}>+ Add class manually</button>
+				{/if}
+				<!-- TODO: use an actual modal -->
+				<!-- TODO: don't just set the subject -> append instead -->
+				
+				<!-- using conditional display style instead of if to share state / avoid mounting and unmounting -->
+				<div style:display={showClassPicker ? "block" : "none"}>
+					<SearchBox on:subjectSelected={(event) => {
+						selectedSubjects = [...selectedSubjects, event.detail.number];
+						showClassPicker = false;
+					}} onClose={() => showClassPicker = false}/>
+				</div>
+
+				{#if !showClassPicker}
+					<!-- TODO: make this look nice & functional ! -->
+					<ul>
+						{#each selectedSubjects as subject (subject)}
+							<!-- TODO: add delete button -->
+							<li>{subject}</li>
+						{/each}
+					</ul>
+				{/if}
 			{:else}
+				TODO: guidance on how to use Matrix goes here
 			{/if}
 		</CustomStepper>
 	</div>

@@ -7,6 +7,11 @@
 	import type { Readable } from 'svelte/store';
 	import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
 
+	// TODO: does CloesCircleOutline look better?
+	import CloseIcon from "svelte-material-icons/CloseCircle.svelte";
+
+	export let onClose: MouseEventHandler<HTMLButtonElement> | undefined = undefined;
+
 	const dispatch = createEventDispatcher();
 
 	enum Level {
@@ -64,6 +69,12 @@
 {#if subjects.length > 0}
 	<div class="card p-4 mx-auto" transition:fade={{ duration: 200 }}>
 		<div class="flex pb-4 items-center">
+			{#if onClose}
+				<!-- TODO(skeleton): make this button look better, in particular larger,
+					or the size is fine but move it to the corner and reduce the padding
+				 -->
+				<button class="btn size-max" on:click={onClose}><CloseIcon/></button>
+			{/if}
 			<span>Class search</span>
 			<RadioGroup
 				active="variant-filled-primary"
