@@ -77,7 +77,8 @@
 				{/if}
 			{:else if $step === 2}
 				{#if !showClassPicker}
-					<p class="pb-2">You can import your class list from an external provider:</p>
+					<!-- TODO: consider hiding these icons after returning from the other service -->
+					<p class="pb-2">You can import your class list from another SIPB service:</p>
 					<div class="flex">
 						<a class="btn variant-filled flex" href={hydrantUrl}>
 							<span>Import class list from</span>
