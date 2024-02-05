@@ -61,34 +61,40 @@
 	}
 </script>
 
-<div class="section">
-	{#if subjects.length > 0}
-		<div class="card p-4" transition:fade={{ duration: 200 }}>
-			<p class="pb-4">Class search</p>
-			<!-- TODO: re-add search icon -->
-			<input
-				class="input"
-				type="text"
-				id="searchbox"
-				placeholder="Search a class by number or name"
-				bind:value={query}
-			/>
-			<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
+{#if subjects.length > 0}
+	<div class="card p-4 mx-auto" transition:fade={{ duration: 200 }}>
+		<div class="flex pb-4 items-center">
+			<span>Class search</span>
+			<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary" class="ml-auto">
 				<RadioItem bind:group={$level} name="level" value={Level.undergrad}>Undergrad</RadioItem>
 				<RadioItem bind:group={$level} name="level" value={Level.grad}>Grad</RadioItem>
 				<RadioItem bind:group={$level} name="level" value={Level.both}>Both</RadioItem>
 			</RadioGroup>
+		</div>
+		<!-- TODO: re-add search icon -->
 
-			{#each results as result (result.number)}
-				<a class="panel-block" on:click={() => selectSubject(result)}>
+		<input
+			class="input"
+			type="text"
+			id="searchbox"
+			placeholder="Search a class by number or name"
+			bind:value={query}
+		/>
+
+		<!-- TODO: make centering actually work, tried w-full in parent and mx-auto but doesn't work -->
+		<div class="mx-auto"></div>
+
+		{#each results as result (result.number)}
+			<div>
+				<a on:click={() => selectSubject(result)}>
 					<span class="panel-icon">
 						<i class="fas fa-book" aria-hidden="true" />
 					</span>
 					<p><strong>{result.number}</strong>: {result.name}</p>
 				</a>
-			{/each}
-		</div>
-	{:else}
-		<progress class="progress is-primary" max="100">30%</progress>
-	{/if}
-</div>
+			</div>
+		{/each}
+	</div>
+{:else}
+	<progress class="progress is-primary" max="100">30%</progress>
+{/if}
