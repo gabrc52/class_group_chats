@@ -63,7 +63,6 @@
 
 {#if subjects.length > 0}
 	<div class="card p-4 mx-auto" transition:fade={{ duration: 200 }}>
-		<div class="fixed"></div>
 		<div class="flex pb-4 items-center">
 			<span>Class search</span>
 			<RadioGroup
