@@ -9,9 +9,10 @@
 	import { encodeTicket, getUsername, loginWebathena } from '$lib/webathena';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
+	import { onMount } from 'svelte';
+	import { PUBLIC_HYDRANT_BASEURL } from '$env/static/public';
 
 	let subject: Subject | undefined;
-	let showHydrantInstructions: boolean = false;
 
 	const username: Writable<string> = getContext('username');
 
@@ -25,6 +26,13 @@
 		console.log(classes);
 		goto(`/classes/import?via=Webathena${classes.map((cls) => `&class=${cls}`).join('')}`);
 	}
+
+	let hydrantUrl = PUBLIC_HYDRANT_BASEURL;
+
+	onMount(() => {
+		const callback = `${window.location}hydrantCallback`;
+		hydrantUrl = `${PUBLIC_HYDRANT_BASEURL}/#/export?callback=${encodeURIComponent(callback)}`;
+	})
 </script>
 
 <svelte:head>
@@ -37,10 +45,10 @@
 			<KerbInput {username} />
 		</div>
 		<div>
-			<button class="btn variant-filled" on:click={() => (showHydrantInstructions = true)}>
+			<a class="btn variant-filled" href={hydrantUrl}>
 				<span>Import class list from</span>
 				<span style="margin-left: 5px;"><HydrantLogo /></span>
-			</button>
+			</a>
 		</div>
 		<div>
 			<button class="btn variant-filled" on:click={importFromWebathena}>Import from Canvas via Webathena</button>
@@ -48,33 +56,6 @@
 	</div>
 
 	{#if $username}
-		{#if showHydrantInstructions}
-			<div class="section">
-				<div class="container is-max-desktop">
-					<a href="https://hydrant.mit.edu" target="_self">
-						<div class="notification is-warning">
-							<button
-								class="delete"
-								on:click|preventDefault={() => (showHydrantInstructions = false)}
-							/>
-							<!-- TODO would require another PR to Hydrant but pass a flag meaning (redirect me now) -->
-							To import your class list from <HydrantLogo />, you must go to <HydrantLogo /><span
-								class="icon"><i class="fa-solid fa-arrow-up-right-from-square" /></span
-							>
-							and once you have made your class selections, click on the button which says
-							<button class="button is-light"
-								><span class="icon"
-									><i class="fa-regular fa-message" style="transform: scaleX(-1);" /></span
-								><span>Join group chats on Matrix</span><span class="icon"
-									><i class="fa-solid fa-arrow-up-right-from-square" /></span
-								></button
-							>.
-						</div>
-					</a>
-				</div>
-			</div>
-		{/if}
-
 		<SearchBox on:subjectSelected={(event) => (subject = event.detail)} />
 
 		{#if subject}
