@@ -9,9 +9,10 @@
 	import { persisted } from 'svelte-local-storage-store';
 	import { derived, readonly } from 'svelte/store';
 	import { initializeStores } from '@skeletonlabs/skeleton';
+	import { LOCAL_STORAGE_SUBJECT_LEVEL_KEY } from '$lib/constants';
 
 	// TODO: use some actual authentication mechanism
-	const username = persisted<string>('edu.mit.sipb.subjects.username', '');
+	const username = persisted<string>(LOCAL_STORAGE_SUBJECT_LEVEL_KEY, '');
 	setContext('username', username);
 	const mxid = derived(
 		username,

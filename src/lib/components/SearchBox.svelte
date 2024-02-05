@@ -9,6 +9,7 @@
 	import type { MouseEventHandler } from 'svelte/elements';
 	// TODO: does CloesCircleOutline look better?
 	import CloseIcon from 'svelte-material-icons/CloseCircle.svelte';
+	import { LOCAL_STORAGE_SUBJECT_LEVEL_KEY } from '$lib/constants';
 
 	export let onClose: MouseEventHandler<HTMLButtonElement> | undefined = undefined;
 
@@ -25,7 +26,7 @@
 	let results: Subject[] = [];
 	// we namespace the local storage keys because we are on the same local storage
 	// as Element
-	let level = persisted('edu.mit.sipb.subjects.level', Level.undergrad);
+	let level = persisted(LOCAL_STORAGE_SUBJECT_LEVEL_KEY, Level.undergrad);
 
 	let username: Readable<string> = getContext('username');
 
