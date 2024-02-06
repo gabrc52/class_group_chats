@@ -76,6 +76,8 @@
 	<title>Class group chats</title>
 </svelte:head>
 
+<!-- TODO(skeleton): gradient bad - make it look better (simply no gradient) -->
+
 <div class="container px-4 mx-auto max-w-screen-lg py-4 space-x-4">
 	{#if !loading}
 	<div class="py-4">
