@@ -97,9 +97,10 @@
 					</div>
 				{/if}
 				{#if isMobile === false}
-					<a class="btn variant-filled-tertiary" href={matrixSsoUrl}>Login with Touchstone</a>
 					{#if $username}
-						<p class="mt-4">You are already logged in as <strong>{$username}</strong>.</p>
+						<p>You are already logged in as <strong>{$username}</strong>.</p>
+					{:else}
+						<a class="btn variant-filled-tertiary" href={matrixSsoUrl}>Login with Touchstone</a>
 					{/if}
 				{/if}
 			{:else if $step === 2}
