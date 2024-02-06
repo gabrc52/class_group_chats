@@ -12,11 +12,19 @@
 	import { LOCAL_STORAGE_SUBJECT_LEVEL_KEY } from '$lib/constants';
 
 	// TODO: use some actual authentication mechanism
+	// This can be either a kerb or a full MXID
 	const username = persisted<string>(LOCAL_STORAGE_SUBJECT_LEVEL_KEY, '');
 	setContext('username', username);
 	const mxid = derived(
 		username,
-		(username) => `@${username.trim().toLowerCase()}:${PUBLIC_MATRIX_HOMESERVER}`
+		(username) => {
+			// If already a MXID then don't do anything
+			if (username.startsWith('@')) {
+				return username;
+			} else {
+				return `@${username.trim().toLowerCase()}:${PUBLIC_MATRIX_HOMESERVER}`;
+			}
+		}
 	);
 	setContext('mxid', mxid);
 

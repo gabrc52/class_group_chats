@@ -63,11 +63,14 @@
 		const matrixLoginToken = localStorage.getItem(LOCAL_STORAGE_LOGIN_TOKEN_KEY);
 		if (matrixLoginToken) {
 			// TODO: exception handling + UI for it
-			console.log(await loginElement(matrixLoginToken));
-		}
+			const mxid = await loginElement(matrixLoginToken);
+			$username = mxid;
+			$step = 2;
+			// The login token has been consumed now
+			localStorage.removeItem(LOCAL_STORAGE_LOGIN_TOKEN_KEY);
+		}		
 
 		// TODO: determine whether we received hydrant class list
-		
 		loading = false;
 	});
 </script>
