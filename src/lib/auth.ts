@@ -17,7 +17,7 @@ export function authenticated(f: RequestHandler): RequestHandler {
 		const authenticated =
 			e.isSubRequest || e.request.headers.get('shared_secret') === API_SHARED_SECRET;
 		if (!authenticated) {
-			throw error(status.UNAUTHORIZED, 'Please specify a shared_secret header');
+			error(status.UNAUTHORIZED, 'Please specify a shared_secret header');
 		}
 		return f(e);
 	};

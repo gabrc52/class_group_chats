@@ -5,6 +5,6 @@ export async function load({ url }) {
 	// Redirect user to the home page if no classes given
 	const subjects = url.searchParams.getAll('class');
 	if (subjects.length === 0) {
-		throw redirect(httpStatus.FOUND, '/classes/');
+		redirect(httpStatus.FOUND, '/classes/');
 	}
 }

@@ -19,10 +19,10 @@ export const PUT = authenticated(async function ({ params }) {
 	try {
 		const { subject, mxid } = params;
 		if (!isMatrixUserOurs(mxid!)) {
-			throw error(
-				httpStatus.NOT_IMPLEMENTED,
-				'adding external users is not supported yet. please ask matrix@mit.edu to add you manually'
-			);
+			error(
+            				httpStatus.NOT_IMPLEMENTED,
+            				'adding external users is not supported yet. please ask matrix@mit.edu to add you manually'
+            			);
 		}
 		const term = await getSubjectsApiTerm();
 		const details = await getSubjectDetails(subject!);
@@ -37,9 +37,9 @@ export const PUT = authenticated(async function ({ params }) {
 		return json({});
 	} catch (e) {
 		if (e instanceof SubjectNotFoundError) {
-			throw error(404, 'subject does not exist');
+			error(404, 'subject does not exist');
 		} else if (e instanceof MatrixError) {
-			throw error(e.httpStatus ?? 500, e.data.error ?? 'a matrix error occurred');
+			error(e.httpStatus ?? 500, e.data.error ?? 'a matrix error occurred');
 		} else {
 			throw e;
 		}
@@ -81,10 +81,10 @@ export const GET = authenticated(async function ({ params }) {
 			// it is probably fine, since we avoid the unnecessary API call
 			// but mistakenly assume every class exists.
 			// (This doesn't matter since PUT does validate that it exists)
-			throw error(404, 'subject does not exist');
+			error(404, 'subject does not exist');
 		} else if (e instanceof MatrixError) {
 			console.log(e);
-			throw error(e.httpStatus ?? 500, e.data.error ?? 'a matrix error occurred');
+			error(e.httpStatus ?? 500, e.data.error ?? 'a matrix error occurred');
 		} else {
 			throw e;
 		}

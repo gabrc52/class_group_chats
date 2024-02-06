@@ -29,7 +29,7 @@ export async function GET({ params }) {
 		return json(await getSubjectDetails(params.subject));
 	} catch (e) {
 		if (e instanceof SubjectNotFoundError) {
-			throw error(404, 'subject not found');
+			error(404, 'subject not found');
 		} else {
 			throw e;
 		}
