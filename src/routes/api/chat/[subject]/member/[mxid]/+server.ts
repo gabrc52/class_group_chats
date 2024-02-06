@@ -4,7 +4,7 @@ import { createChat, getRoomAlias } from '$lib/chats';
 import { getRoomId, matrixClient } from '$lib/matrix';
 import { getSubjectDetails } from '$lib/subject';
 import { getSubjectsApiTerm } from '$lib/terms';
-import { error, json } from '@sveltejs/kit';
+import { error, json, type NumericRange } from '@sveltejs/kit';
 import { MatrixError } from 'matrix-js-sdk';
 import { PUBLIC_MATRIX_HOMESERVER } from '$env/static/public';
 import httpStatus from 'http-status';
@@ -12,6 +12,17 @@ import httpStatus from 'http-status';
 function isMatrixUserOurs(mxid: string): boolean {
 	const homeserver = mxid.split(':')[1];
 	return homeserver === PUBLIC_MATRIX_HOMESERVER;
+}
+
+/**
+ * Wrap error to make Typescript happy. Return 500 if null
+ */
+function wrapError(statusCode: number | undefined): NumericRange<400, 599> {
+	if (statusCode === undefined || statusCode < 400 || statusCode > 599) {
+		return 500;
+	}
+	// huh even with this it doesn't work?
+	return statusCode as NumericRange<400, 599>;
 }
 
 export const PUT = authenticated(async function ({ params }) {
@@ -39,7 +50,7 @@ export const PUT = authenticated(async function ({ params }) {
 		if (e instanceof SubjectNotFoundError) {
 			error(404, 'subject does not exist');
 		} else if (e instanceof MatrixError) {
-			error(e.httpStatus ?? 500, e.data.error ?? 'a matrix error occurred');
+			error(wrapError(e.httpStatus), e.data.error ?? 'a matrix error occurred');
 		} else {
 			throw e;
 		}
@@ -84,7 +95,7 @@ export const GET = authenticated(async function ({ params }) {
 			error(404, 'subject does not exist');
 		} else if (e instanceof MatrixError) {
 			console.log(e);
-			error(e.httpStatus ?? 500, e.data.error ?? 'a matrix error occurred');
+			error(wrapError(e.httpStatus), e.data.error ?? 'a matrix error occurred');
 		} else {
 			throw e;
 		}
