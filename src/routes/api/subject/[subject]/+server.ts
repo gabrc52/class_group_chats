@@ -24,15 +24,14 @@ async function getAllHydrantClasses() {
 export async function GET({ params }) {
 	if (params.subject === 'all') {
 		return json(await getAllHydrantClasses());
-	} else {
-		try {
-			return json(await getSubjectDetails(params.subject));
-		} catch (e) {
-			if (e instanceof SubjectNotFoundError) {
-				throw error(404, 'subject not found');
-			} else {
-				throw e;
-			}
+	}
+	try {
+		return json(await getSubjectDetails(params.subject));
+	} catch (e) {
+		if (e instanceof SubjectNotFoundError) {
+			throw error(404, 'subject not found');
+		} else {
+			throw e;
 		}
 	}
 }
