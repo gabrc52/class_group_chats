@@ -14,7 +14,7 @@
 	import { onMount } from 'svelte';
 	import { PUBLIC_HYDRANT_BASEURL, PUBLIC_MATRIX_BASEURL } from '$env/static/public';
 	import CustomStepper from '$lib/components/stepper/CustomStepper.svelte';
-	import { LOCAL_STORAGE_LOGIN_TOKEN_KEY } from '$lib/constants';
+	import { LOCAL_STORAGE_LOGIN_TOKEN_KEY, LOCAL_STORAGE_SUBJECT_LIST_KEY } from '$lib/constants';
 	import { loginElement, USER_ID_KEY } from '$lib/element';
 
 	let isMobile: boolean | undefined;
@@ -69,11 +69,23 @@
 		const matrixLoginToken = localStorage.getItem(LOCAL_STORAGE_LOGIN_TOKEN_KEY);
 		if (matrixLoginToken) {
 			// TODO: exception handling + UI for it
+			// TODO: login indicator
 			const mxid = await loginElement(matrixLoginToken);
 			$username = mxid;
 			$step = 2;
 			// The login token has been consumed now
 			localStorage.removeItem(LOCAL_STORAGE_LOGIN_TOKEN_KEY);
+		}
+
+		// determine whether we received a class list from Hydrant
+		const hydrantClassListJson = localStorage.getItem(LOCAL_STORAGE_SUBJECT_LIST_KEY);
+		if (hydrantClassListJson) {
+			const hydrantClassList = JSON.parse(hydrantClassListJson);
+			// append Hydrant class list (in case someone presses the button, so it doesn't
+			// wipe their class list)
+			selectedSubjects = [...selectedSubjects, ...hydrantClassList];
+			// Don't do it indefinitely, just for the redirect
+			localStorage.removeItem(LOCAL_STORAGE_SUBJECT_LIST_KEY);
 		}
 
 		loading = false;
