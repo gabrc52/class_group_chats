@@ -45,6 +45,14 @@
 	let step = writable<number>(1);
 	let canGoNext = true;
 
+	/// rules for when to allow going next
+	$: if ($step === 1) {		
+		canGoNext = $username !== "";
+	}
+	$: if ($step === 2) {
+		canGoNext = selectedSubjects.length > 0;
+	}
+
 	let showClassPicker = false;
 
 	onMount(async () => {
