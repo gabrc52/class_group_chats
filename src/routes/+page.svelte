@@ -14,31 +14,20 @@
 	import { onMount } from 'svelte';
 	import { PUBLIC_HYDRANT_BASEURL, PUBLIC_MATRIX_BASEURL } from '$env/static/public';
 	import CustomStepper from '$lib/components/stepper/CustomStepper.svelte';
+	import { LOCAL_STORAGE_LOGIN_TOKEN_KEY } from '$lib/constants';
+	import { loginElement } from '$lib/element';
 
 	let isMobile: boolean | undefined;
 
 	let hydrantUrl = PUBLIC_HYDRANT_BASEURL;
 	let matrixSsoUrl = '#';
 
-	onMount(() => {
-		// get callback (from window.location)
-		const hydrantCallback = `${window.location}hydrantCallback`;
-		const touchstoneCallback = `${window.location}touchstoneCallback`;
-		hydrantUrl = `${PUBLIC_HYDRANT_BASEURL}/#/export?callback=${encodeURIComponent(hydrantCallback)}`;
-		matrixSsoUrl = `${PUBLIC_MATRIX_BASEURL}/_matrix/client/v3/login/sso/redirect/saml?redirectUrl=${encodeURIComponent(touchstoneCallback)}`;
-
-		// get whether mobile (from user agent)
-		const { userAgent } = navigator;
-		isMobile =
-			userAgent.includes('Android') || userAgent.includes('iPhone') || userAgent.includes('iPod');
-	});
+	let loading = true;
 
 	let subject: Subject | undefined;
 
 	const username: Writable<string> = getContext('username');
 	let usernameExists: Writable<boolean> = writable<boolean>(true);
-
-	$: console.log(subject);
 
 	let selectedSubjects: string[] = [];
 
@@ -57,6 +46,30 @@
 	let canGoNext = true;
 
 	let showClassPicker = false;
+
+	onMount(async () => {
+		// get callback (from window.location)
+		const hydrantCallback = `${window.location}hydrantCallback`;
+		const touchstoneCallback = `${window.location}touchstoneCallback`;
+		hydrantUrl = `${PUBLIC_HYDRANT_BASEURL}/#/export?callback=${encodeURIComponent(hydrantCallback)}`;
+		matrixSsoUrl = `${PUBLIC_MATRIX_BASEURL}/_matrix/client/v3/login/sso/redirect/saml?redirectUrl=${encodeURIComponent(touchstoneCallback)}`;
+
+		// get whether mobile (from user agent)
+		const { userAgent } = navigator;
+		isMobile =
+			userAgent.includes('Android') || userAgent.includes('iPhone') || userAgent.includes('iPod');
+
+		// determine whether we received a matrix token
+		const matrixLoginToken = localStorage.getItem(LOCAL_STORAGE_LOGIN_TOKEN_KEY);
+		if (matrixLoginToken) {
+			// TODO: exception handling + UI for it
+			console.log(await loginElement(matrixLoginToken));
+		}
+
+		// TODO: determine whether we received hydrant class list
+		
+		loading = false;
+	});
 </script>
 
 <svelte:head>
@@ -64,6 +77,7 @@
 </svelte:head>
 
 <div class="container px-4 mx-auto max-w-screen-lg py-4 space-x-4">
+	{#if !loading}
 	<div class="py-4">
 		<CustomStepper {step} {canGoNext}>
 			{#if $step === 1}
@@ -127,6 +141,7 @@
 			{/if}
 		</CustomStepper>
 	</div>
+	{/if}
 
 	<!-- TODO(skeleton): I don't like this stepper since it doesn't preview future steps,
 		 but this is what skeleton provides and no time to write a new one or figure out how to import the
