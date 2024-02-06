@@ -15,7 +15,7 @@
 	import { PUBLIC_HYDRANT_BASEURL, PUBLIC_MATRIX_BASEURL } from '$env/static/public';
 	import CustomStepper from '$lib/components/stepper/CustomStepper.svelte';
 	import { LOCAL_STORAGE_LOGIN_TOKEN_KEY } from '$lib/constants';
-	import { loginElement } from '$lib/element';
+	import { loginElement, USER_ID_KEY } from '$lib/element';
 
 	let isMobile: boolean | undefined;
 
@@ -59,6 +59,12 @@
 		isMobile =
 			userAgent.includes('Android') || userAgent.includes('iPhone') || userAgent.includes('iPod');
 
+		// determine if already logged in Element
+		const existingUserId = localStorage.getItem(USER_ID_KEY);
+		if (existingUserId) {
+			$username = existingUserId;
+		}
+
 		// determine whether we received a matrix token
 		const matrixLoginToken = localStorage.getItem(LOCAL_STORAGE_LOGIN_TOKEN_KEY);
 		if (matrixLoginToken) {
@@ -68,9 +74,8 @@
 			$step = 2;
 			// The login token has been consumed now
 			localStorage.removeItem(LOCAL_STORAGE_LOGIN_TOKEN_KEY);
-		}		
+		}
 
-		// TODO: determine whether we received hydrant class list
 		loading = false;
 	});
 </script>
@@ -93,6 +98,9 @@
 				{/if}
 				{#if isMobile === false}
 					<a class="btn variant-filled-tertiary" href={matrixSsoUrl}>Login with Touchstone</a>
+					{#if $username}
+						<p class="mt-4">You are already logged in as <strong>{$username}</strong>.</p>
+					{/if}
 				{/if}
 			{:else if $step === 2}
 				{#if !showClassPicker}

@@ -5,7 +5,7 @@ const HOMESERVER_URL_KEY = 'mx_hs_url';
 const ID_SERVER_URL_KEY = 'mx_is_url';
 const ACCESS_TOKEN_STORAGE_KEY = 'mx_access_token';
 const HAS_ACCESS_TOKEN_STORAGE_KEY = 'mx_has_access_token';
-const USER_ID_KEY = 'mx_user_id';
+export const USER_ID_KEY = 'mx_user_id'; // TODO move to constants.ts
 const DEVICE_ID_KEY = 'mx_device_id';
 
 
