@@ -1,6 +1,8 @@
 <!--
     Component with subject details and the option to join the group chat
 
+	This is unused in the new UX (wizard)
+
 	TODO: migrate bulma -> skeleton & tailwind
 -->
 
