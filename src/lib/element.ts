@@ -1,4 +1,4 @@
-import { createClient } from 'matrix-js-sdk';
+// import { createClient } from 'matrix-js-sdk';
 import { PUBLIC_MATRIX_BASEURL } from '$env/static/public';
 
 const HOMESERVER_URL_KEY = 'mx_hs_url';
@@ -23,12 +23,27 @@ export async function loginElement(loginToken: string) {
         throw Error("not expected to be logged in! inconsistent state?");
     }
 
-    // TODO: this throws an error - should just do a HTTP request by hand???
-	const client = createClient({ baseUrl: PUBLIC_MATRIX_BASEURL });
-	const loginResponse = await client.login('m.login.token', {
-		token: loginToken,
-		initial_device_display_name: 'SIPB Matrix Web'
-	});
+    // this throws an error
+    // Uncaught (in promise) ReferenceError: global is not defined
+	// const client = createClient({ baseUrl: PUBLIC_MATRIX_BASEURL });
+	// const loginResponse = await client.login('m.login.token', {
+	// 	token: loginToken,
+	// 	initial_device_display_name: 'SIPB Matrix Web'
+	// });
+
+    const httpResponse = await fetch(`${PUBLIC_MATRIX_BASEURL}/_matrix/client/v3/login`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            "type": "m.login.token",
+            "token": loginToken,
+            "initial_device_display_name": "SIPB Matrix Web",
+        }),
+    });
+    const loginResponse = await httpResponse.json();
+
     localStorage.setItem(HOMESERVER_URL_KEY, PUBLIC_MATRIX_BASEURL);
     localStorage.setItem(ID_SERVER_URL_KEY, "https://matrix.org");
 	localStorage.setItem(USER_ID_KEY, loginResponse.user_id);
@@ -41,4 +56,6 @@ export async function loginElement(loginToken: string) {
 	
     // TODO: figure out what happens if element is never opened after a fresh login. might be bad.
 	sessionStorage.setItem('mx_fresh_login', String(true));
+
+    return loginResponse.user_id;
 }
