@@ -9,14 +9,14 @@
 	import { persisted } from 'svelte-local-storage-store';
 	import { derived, readonly } from 'svelte/store';
 	import { initializeStores } from '@skeletonlabs/skeleton';
-	import { LOCAL_STORAGE_SUBJECT_LEVEL_KEY } from '$lib/constants';
+	import { LOCAL_STORAGE_USERNAME_KEY } from '$lib/constants';
 
 	import '@fortawesome/fontawesome-free/css/all.min.css';
 	import MatrixLogo from '$lib/components/MatrixLogo.svelte';
 
 	// TODO: use some actual authentication mechanism
 	// This can be either a kerb or a full MXID
-	const username = persisted<string>(LOCAL_STORAGE_SUBJECT_LEVEL_KEY, '');
+	const username = persisted<string>(LOCAL_STORAGE_USERNAME_KEY, '');
 	setContext('username', username);
 	const mxid = derived(
 		username,
