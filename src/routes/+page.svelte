@@ -65,7 +65,7 @@
 	// This is so before step 3, a "popup" opens (by making the button an <a> element,
 	// and adding target = _blank)
 	let popupOnNext: string | undefined = undefined;
-	$: popupOnNext = (canGoNext && $step === 2) ? PUBLIC_MATRIX_BASEURL : undefined;
+	$: popupOnNext = (canGoNext && !$isMobile && $step === 2) ? PUBLIC_MATRIX_BASEURL : undefined;
 
 	let onNext: Function = () => {};
 	$: onNext = (canGoNext && $step == 2) ? async () => {
