@@ -17,7 +17,7 @@
 	import { LOCAL_STORAGE_LOGIN_TOKEN_KEY, LOCAL_STORAGE_SUBJECT_LIST_KEY } from '$lib/constants';
 	import { loginElement, USER_ID_KEY } from '$lib/element';
 	import SubjectListItem from '$lib/components/SubjectListItem.svelte';
-	import MatrixInstructions from '$lib/components/MatrixInstructions.svelte';
+	import MatrixJoin from '$lib/components/MatrixJoin.svelte';
 
 	let isMobile: boolean | undefined;
 
@@ -204,7 +204,7 @@
 					</ul>
 				{/if}
 			{:else}
-				<MatrixInstructions/>
+				<MatrixJoin subjects={selectedSubjects}/>
 			{/if}
 		</CustomStepper>
 	</div>
