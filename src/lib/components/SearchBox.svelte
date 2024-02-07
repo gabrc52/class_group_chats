@@ -77,6 +77,7 @@
 				<button class="btn size-max" on:click={onClose}><CloseIcon /></button>
 			{/if}
 			<span>Class search</span>
+			<!-- TODO(skeleton): this overflows on mobile: do the col vs row thing? -->
 			<RadioGroup
 				active="variant-filled-primary"
 				hover="hover:variant-soft-primary"
