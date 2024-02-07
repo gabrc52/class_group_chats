@@ -39,7 +39,8 @@
 		<!-- App Bar -->
 		<AppBar>
 			<svelte:fragment slot="lead">
-				<strong class="text-xl uppercase">Class group chats via [matrix]</strong>
+				<strong class="text-xl uppercase hidden sm:block">Class group chats via [matrix]</strong>
+				<strong class="text-xl uppercase sm:hidden block">Matrix class chats</strong>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<a
