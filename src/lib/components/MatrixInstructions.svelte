@@ -1,5 +1,6 @@
 <script lang="ts">
 	import MatrixLogo from './MatrixLogo.svelte';
+    import ElementLogo from './ElementLogo.svelte';
 	import { PUBLIC_MATRIX_HOMESERVER } from '$env/static/public';
 	import { getContext } from 'svelte';
 	import type { Readable } from 'svelte/store';
@@ -14,16 +15,28 @@
 <div id="instructions-container" class="flex">
     <div id="matrix-instructions" class="space-y-4 flex-grow">
         <p>
-            Welcome to the <MatrixLogo />. To chat, you will need a Matrix app.
+            Welcome to the <MatrixLogo />.
+            {#if $isMobile}
+            To chat, you will need a Matrix app, such as <ElementLogo/> Element.
+            {:else}
+            To chat, you will need a Matrix app.
+            {/if}
         </p>
     
+        {#if $isMobile}
         <p>
-            We have opened a <img
-                src="https://matrix.mit.edu/media/jRbOYeVrDhIksWyNIzoStGZE"
-                width="20em"
-                alt="element icon"
-                class="inline"
-            />
+            You will also need to change your server to <strong>matrix.mit.edu</strong>, as follows:
+        </p>
+        <p>
+            <img src="mobile1.png" alt="First, select that you already have an account."/>
+        </p>
+        <p>
+            <img src="mobile2.png" alt="Click on Edit next to matrix.org"/>
+        </p>
+
+        {:else}
+        <p>
+            We have opened a <ElementLogo/>
             tab so that you can use <strong>matrix.mit.edu</strong> on your browser.
         </p>
     
@@ -67,6 +80,7 @@
                 </div>
             </dl>
         </div>
+        {/if}
     
         <p>If you need any help with Matrix, don't hesitate to contact matrix@mit.edu.</p>
     </div>
@@ -78,7 +92,7 @@
     <summary>More info</summary>
 
     <p class="blockquote not-italic">
-        Matrix is a free an open source federated messaging network. Just like email, you have a user
+        Matrix is a free and open source federated messaging network. Just like email, you have a user
         ID, which is <strong>{$mxid}</strong>.
         <a href="https://sipb.mit.edu" target="_blank">SIPB</a> is hosting a Matrix server for MIT at
         <strong>{PUBLIC_MATRIX_HOMESERVER}</strong>. If you would like to learn more about Matrix, you
