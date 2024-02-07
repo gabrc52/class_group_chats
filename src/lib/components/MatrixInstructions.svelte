@@ -68,24 +68,22 @@
         </div>
     
         <p>If you need any help with Matrix, don't hesitate to contact matrix@mit.edu.</p>
-    
-        <!-- TODO(skeleton): opening this shrinks the QR code -->
-        <details>
-            <summary>More info</summary>
-    
-            <p class="blockquote not-italic">
-                Matrix is a free an open source federated messaging network. Just like email, you have a user
-                ID, which is <strong>{$mxid}</strong>.
-                <a href="https://sipb.mit.edu" target="_blank">SIPB</a> is hosting a Matrix server for MIT at
-                <strong>{PUBLIC_MATRIX_HOMESERVER}</strong>. If you would like to learn more about Matrix, you
-                can visit the project's website at
-                <a class="anchor" href="https://matrix.org" rel="noopener" target="_blank">matrix.org</a>. If
-                you would like to collaborate on SIPB Matrix, come to a SIPB meeting in W20-557 on a Monday at
-                7:30 pm, or email matrix@mit.edu.
-            </p>
-        </details>
     </div>
     <div class="ml-8 my-auto">
         <img src="qr-code.png" title="QR code to download Element on your phone" alt="Download Element on your phone via the app store." class="size-min"/>
-    </div>    
+    </div>
 </div>
+<details class="mt-4">
+    <summary>More info</summary>
+
+    <p class="blockquote not-italic">
+        Matrix is a free an open source federated messaging network. Just like email, you have a user
+        ID, which is <strong>{$mxid}</strong>.
+        <a href="https://sipb.mit.edu" target="_blank">SIPB</a> is hosting a Matrix server for MIT at
+        <strong>{PUBLIC_MATRIX_HOMESERVER}</strong>. If you would like to learn more about Matrix, you
+        can visit the project's website at
+        <a class="anchor" href="https://matrix.org" rel="noopener" target="_blank">matrix.org</a>. If
+        you would like to collaborate on SIPB Matrix, come to a SIPB meeting in W20-557 on a Monday at
+        7:30 pm, or email matrix@mit.edu.
+    </p>
+</details>
