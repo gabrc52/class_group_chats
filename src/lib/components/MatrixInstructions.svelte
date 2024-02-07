@@ -6,6 +6,7 @@
 	import PinIcon from 'svelte-material-icons/Pin.svelte';
 
 	const mxid: Readable<string> = getContext('mxid');
+    let isMobile: Readable<boolean> = getContext('isMobile');
 </script>
 
 <!-- TODO: show different instructions on mobile -->
@@ -69,7 +70,7 @@
     
         <p>If you need any help with Matrix, don't hesitate to contact matrix@mit.edu.</p>
     </div>
-    <div class="ml-8 my-auto">
+    <div class="ml-8 my-auto hidden sm:block">
         <img src="qr-code.png" title="QR code to download Element on your phone" alt="Download Element on your phone via the app store." class="size-min"/>
     </div>
 </div>
