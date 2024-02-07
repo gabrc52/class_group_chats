@@ -1,7 +1,7 @@
 import { authenticated } from '$lib/auth';
 import { getRoomAlias } from '$lib/chats';
 import { getRoomId, countMembers } from '$lib/matrix';
-import { getLatestTerm, getSubjectsApiTerm } from '$lib/terms';
+import { getLatestTermHydrant, getCurrentTerm } from '$lib/terms';
 import { json } from '@sveltejs/kit';
 
 /**
@@ -10,7 +10,7 @@ import { json } from '@sveltejs/kit';
  */
 export const GET = async function ({ params }) {
 	const { subject } = params;
-	const term = await getSubjectsApiTerm();
+	const term = await getCurrentTerm();
 	const alias = getRoomAlias(subject!, term);
 	const id = await getRoomId(alias);
 	return json({

@@ -2,7 +2,7 @@ import { PUBLIC_MATRIX_HOMESERVER, PUBLIC_ROOM_ALIAS_PREFIX } from '$env/static/
 import { Preset, Visibility } from 'matrix-js-sdk';
 import { matrixClient } from './matrix';
 import { power_level_content_override } from './powerLevels';
-import type { SubjectDetails } from './types';
+import type { SubjectDetailsMulesoft } from './types';
 
 function getRoomAliasLocalpart(subject: string, term: string): string {
 	return `${PUBLIC_ROOM_ALIAS_PREFIX}${subject}_${term.toLowerCase()}`;
@@ -22,7 +22,7 @@ export function getRoomAlias(subject: string, term: string): string {
 	return alias;
 }
 
-export async function createChat(subjectDetails: SubjectDetails, term: string) {
+export async function createChat(subjectDetails: SubjectDetailsMulesoft, term: string) {
 	const { canonicalNumber, title, description } = subjectDetails;
 	const response = await matrixClient.createRoom({
 		room_alias_name: getRoomAliasLocalpart(canonicalNumber, term),

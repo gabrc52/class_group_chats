@@ -1,4 +1,4 @@
-import { getSubjectDetails } from '$lib/subject';
+import { getSubjectDetailsMulesoft } from '$lib/subject';
 import { SubjectNotFoundError, type Subject } from '$lib/types';
 import { error, json } from '@sveltejs/kit';
 import { PUBLIC_HYDRANT_BASEURL } from '$env/static/public';
@@ -26,7 +26,7 @@ export async function GET({ params }) {
 		return json(await getAllHydrantClasses());
 	}
 	try {
-		return json(await getSubjectDetails(params.subject));
+		return json(await getSubjectDetailsMulesoft(params.subject));
 	} catch (e) {
 		if (e instanceof SubjectNotFoundError) {
 			error(404, 'subject not found');

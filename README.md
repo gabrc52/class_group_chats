@@ -8,6 +8,8 @@ If you want to get involved with this project, shoot an email to matrix@ !
 
 ## Environment variables needed
 
+You need to have Oracle Data Warehouse installed / in use by following the instructions in https://github.com/psvenk/fireroad-warehouse.
+
 In order to use this project, you need to set the following environment variables in `.env`:
 
 - `MATRIX_TOKEN`: A Matrix access token for the bot or app service.
@@ -20,6 +22,15 @@ In order to use this project, you need to set the following environment variable
 - `MULESOFT_SUBJECT_API="https://mit-course-catalog-v2.cloudhub.io/coursecatalog/v2"` (the Subject API endpoint)
 - `API_SHARED_SECRET`: A shared secret that trusted clients of the API can use to perform actions. Generate with `pwgen -s 64 -n 1`
 - `PUBLIC_HYDRANT_BASEURL="https://hydrant.mit.edu"` (the URL at which Hydrant is hosted)
+- `WAREHOUSE_USERNAME`, `WAREHOUSE_PASSWORD`, `ORACLE_HOME` (see Oracle instructions)
+
+It is also important to set the `LD_LIBRARY_PATH` and `ORACLE_HOME` so that the Oracle software works. This cannot be done in `.env`, so you need to set it prior to running the application, e.g.:
+
+```bash
+export ORACLE_HOME="/home/rgabriel/Projects/uplink/data_warehouse/instantclient_21_13"
+export LD_LIBRARY_PATH=$ORACLE_HOME # since mine was empty, no need to append
+npm run dev
+```
 
 ## Developing
 

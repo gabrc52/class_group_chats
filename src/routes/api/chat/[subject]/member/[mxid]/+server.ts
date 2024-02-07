@@ -2,8 +2,8 @@ import { authenticated } from '$lib/auth';
 import { ClassGroupChatMembership, SubjectNotFoundError } from '$lib/types';
 import { createChat, getRoomAlias } from '$lib/chats';
 import { getRoomId, matrixClient } from '$lib/matrix';
-import { getSubjectDetails } from '$lib/subject';
-import { getSubjectsApiTerm } from '$lib/terms';
+import { getSubjectDetailsMulesoft } from '$lib/subject';
+import { getCurrentTerm } from '$lib/terms';
 import { error, json, type NumericRange } from '@sveltejs/kit';
 import { MatrixError } from 'matrix-js-sdk';
 import { PUBLIC_MATRIX_HOMESERVER } from '$env/static/public';
@@ -35,8 +35,9 @@ export const PUT = authenticated(async function ({ params }) {
             				'adding external users is not supported yet. please ask matrix@mit.edu to add you manually'
             			);
 		}
-		const term = await getSubjectsApiTerm();
-		const details = await getSubjectDetails(subject!);
+		const term = await getCurrentTerm();
+		// TODO: VERY IMPORTANT - USE THE ORACLE CODE INSTEAD
+		const details = await getSubjectDetailsMulesoft(subject!);
 		// TODO: it would be nice but not necessary to add other Matrix
 		// aliases for each other non-canonical number
 		const alias = getRoomAlias(details.canonicalNumber, term);
@@ -60,7 +61,7 @@ export const PUT = authenticated(async function ({ params }) {
 export const GET = authenticated(async function ({ params }) {
 	try {
 		const { subject, mxid } = params;
-		const term = await getSubjectsApiTerm();
+		const term = await getCurrentTerm();
 		const alias = getRoomAlias(subject!, term);
 		let roomId = await getRoomId(alias);
 		if (roomId === undefined) {

@@ -5,7 +5,8 @@ import { PUBLIC_HYDRANT_BASEURL } from '$env/static/public';
 /**
  * Get the latest term in Hydrant format (e.g. f23)
  */
-export async function getLatestTerm() {
+export async function getLatestTermHydrant() {
+	// TODO: ngl we should cache this
 	const response = await fetch(`${PUBLIC_HYDRANT_BASEURL}/latestTerm.json`);
 	const json = await response.json();
 	return json.urlName;
@@ -13,12 +14,13 @@ export async function getLatestTerm() {
 
 /**
  * Get the latest term in Subject API format (e.g. 2023FA)
+ * This format is used by data warehouse as well.
  */
-export async function getSubjectsApiTerm() {
+export async function getCurrentTerm() {
 	const date = new Date();
 	const year = date.getFullYear();
 	try {
-		return toSubjectsApi(await getLatestTerm());
+		return toSubjectsApi(await getLatestTermHydrant());
 	} catch (e) {
 		console.log(e, 'manually computing term instead');
 		const month = date.getMonth(); // 0-indexed

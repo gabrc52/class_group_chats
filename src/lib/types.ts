@@ -22,8 +22,11 @@ export type MembershipResult = {
 
 // For subject.ts
 
-export type SubjectDetails = {
-	canonicalNumber: string; // e.g. 6.1200 instead of 6.042 or 18.062
+// god damn why are there 3 different ways of getting subjects
+// except subjects API, that is probably redundant but the way you're supposed to use it
+
+export type SubjectDetailsMulesoft = {
+	canonicalNumber: string; // e.g. 6.1200 instead of 6.042 or 18.062, grad & undergrad number distinguishable
 	title: string; // e.g. "Mathematics for Computer Science"
 	cluster: string; // e.g. "(Same subject as 18.062J)"
 	prerequisites: string; // e.g. "Calculus I (GIR)"
@@ -31,6 +34,24 @@ export type SubjectDetails = {
 	optional: string; // e.g. "Credit cannot also be received for 3.091, 5.111, 5.112, ES.5111, ES.5112"
 	description: string; // subject description
 	instructorKerbs: string[]; // e.g. ["hartz", "rcm", ...], or empty array if unknown
+};
+
+/**
+ * A parsed subset of what Oracle returns
+ */
+export type SubjectDetailsOracle = {
+	numStudents: number;
+	masterNumber: string; // grad & undergrad number indistinguishable
+	
+	/**
+	 * List of subject numbers (including this one)
+	 */
+	otherNumbers: string[];
+
+	/**
+	 * Short title, may use a lot of abbreviations
+	 */
+	title: string;
 };
 
 export type Subject /* from hydrant */ = {

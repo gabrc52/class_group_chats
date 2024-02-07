@@ -4,10 +4,20 @@ import {
 	MULESOFT_CLIENT_SECRET
 } from '$env/static/private';
 import he from 'he';
-import { SubjectNotFoundError, type SubjectDetails } from '$lib/types';
-import { getSubjectsApiTerm } from '$lib/terms';
+import { SubjectNotFoundError, type SubjectDetailsMulesoft, type SubjectDetailsOracle } from '$lib/types';
+import { getCurrentTerm } from '$lib/terms';
+import { oracleQuery } from './warehouse';
 
-function getCanonicalNumber(subjectItem: any): string {
+/**
+ * Extract the canonical number from a subjetcs API response.
+ * 
+ * This does work for classes with multiple undergrad numbers, but does
+ * not link together the undergrad and grad numbers.
+ * 
+ * @param subjectItem result from the subjects API
+ * @returns the canonical subject number
+ */
+function extractCanonicalNumber(subjectItem: any): string {
 	if (!subjectItem.cluster) {
 		return subjectItem.subjectId;
 	}
@@ -23,16 +33,15 @@ function getCanonicalNumber(subjectItem: any): string {
 }
 
 /**
- * Get the details about a subject.
- * Currently uses the Subjects API.
+ * Get the details about a subject, using the Subjects API.
  *
  * @param subject the canonical subject number (i.e. 6.1010)
  * @returns the details about said subject
  * @throws SubjectNotFoundError if the subject does not exist
  *  or is not offered this term
  */
-export async function getSubjectDetails(subject: string): Promise<SubjectDetails> {
-	const term = await getSubjectsApiTerm();
+export async function getSubjectDetailsMulesoft(subject: string): Promise<SubjectDetailsMulesoft> {
+	const term = await getCurrentTerm();
 	const url = `${MULESOFT_SUBJECT_API}/terms/${term}/subjects/${subject}`;
 	const response = await fetch(url, {
 		headers: {
@@ -43,9 +52,9 @@ export async function getSubjectDetails(subject: string): Promise<SubjectDetails
 	if (!response.ok) throw new SubjectNotFoundError();
 	const json = await response.json();
 	if (json.item.offered !== true) throw new SubjectNotFoundError();
-	const canonicalNumber = getCanonicalNumber(json.item);
+	const canonicalNumber = extractCanonicalNumber(json.item);
 	if (canonicalNumber !== subject) {
-		return getSubjectDetails(canonicalNumber);
+		return getSubjectDetailsMulesoft(canonicalNumber);
 	}
 	const instructorKerbs = json.item.instructorDetails
 		? json.item.instructorDetails.map((i: { kerbId: string }) => i.kerbId.toLowerCase())
@@ -60,5 +69,79 @@ export async function getSubjectDetails(subject: string): Promise<SubjectDetails
 		optional: he.decode(json.item.optional),
 		description: he.decode(json.item.description),
 		instructorKerbs: instructorKerbs
+	};
+}
+
+
+/**
+ * Get the master number for a class
+ * 
+ * @param subject the class
+ * @returns the master number, or undefined if there were no results
+ * @throws SubjectNotFoundError if the subject does not exist
+ */
+export async function getMasterNumber(subject: string): Promise<string> {
+	const term = await getCurrentTerm();
+	const results = await oracleQuery<any>(
+		`
+		select MASTER_SUBJECT_ID
+		from SUBJECT_OFFERED
+		where TERM_CODE = :term
+			and SUBJECT_ID = :subject
+			and IS_MASTER_SECTION = 'Y'
+		`,
+		{ term, subject }
+	);
+	if (results === undefined) {
+		throw new Error("oracle returned undefined!");
+	}
+	const result = results[0];
+	if (result === undefined) {
+		throw new SubjectNotFoundError();
+	}
+	return result.MASTER_SUBJECT_ID;
+}
+
+
+/**
+ * Get the details about a subject, using the Oracle Data Warehouse.
+ *
+ * @param subject the subject subject number (i.e. 6.1010)
+ * @returns the details about said subject
+ * @throws SubjectNotFoundError if the subject does not exist
+ *  or is not offered this term
+ */
+export async function getSubjectDetailsOracle(subject: string): Promise<SubjectDetailsOracle> {
+	const term = await getCurrentTerm();
+	// TODO: there is more in oracle of course, but we don't need more rn
+	// see docs http://web.mit.edu/warehouse/metadata/fields/subject_offered.html
+	//      and http://web.mit.edu/warehouse/metadata/fields/cis_course_catalog.html
+	const results = await oracleQuery<any>(
+		`
+		select
+			MASTER_SUBJECT_ID,
+			CLUSTER_ENROLLMENT_NUMBER,
+			SUBJECT_ENROLLMENT_NUMBER,
+			CLUSTER_LIST,
+			SUBJECT_TITLE
+		from SUBJECT_OFFERED
+		where TERM_CODE = :term
+			and SUBJECT_ID = :subject
+			and IS_MASTER_SECTION = 'Y'
+		`,
+		{ term, subject }
+	);
+	if (results === undefined) {
+		throw new Error("oracle returned undefined!");
+	}
+	const result = results[0];
+	if (result === undefined) {
+		throw new SubjectNotFoundError();
+	}
+	return {
+		masterNumber: result.MASTER_SUBJECT_ID,
+		title: result.SUBJECT_TITLE,
+		otherNumbers: result.CLUSTER_LIST?.split(', ') ?? [],
+		numStudents: result.CLUSTER_ENROLLMENT_NUMBER || result.SUBJECT_ENROLLMENT_NUMBER,
 	};
 }

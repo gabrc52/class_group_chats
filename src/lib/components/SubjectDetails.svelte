@@ -8,7 +8,7 @@
 
 <script lang="ts">
 	import { PUBLIC_MATRIX_ROOM_LINK_BASE } from '$env/static/public';
-	import type { Subject, SubjectDetails, MembershipResult, SubjectChatDetails } from '$lib/types';
+	import type { Subject, SubjectDetailsMulesoft, MembershipResult, SubjectChatDetails } from '$lib/types';
 	import { ClassGroupChatMembership } from '$lib/types';
 	import { getContext } from 'svelte';
 	import type { Readable } from 'svelte/store';
@@ -27,7 +27,7 @@
 
 	const mxid: Readable<string> = getContext('mxid');
 
-	async function getSubjectDetails(number: string): Promise<SubjectDetails> {
+	async function getSubjectDetails(number: string): Promise<SubjectDetailsMulesoft> {
 		const response = await fetch(`/classes/api/subject/${number}`);
 		const json = await response.json();
 		return json;
