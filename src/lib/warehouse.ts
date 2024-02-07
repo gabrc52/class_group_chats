@@ -16,9 +16,7 @@ let pool: oracledb.Pool;
  * Init Oracle DB if needed
  */
 async function init(): Promise<void> {
-	console.log("init ran", process.env.ORACLE_HOME, process.env.LD_LIBRARY_PATH);
 	assert(process.env.ORACLE_HOME !== undefined);
-	console.log(WAREHOUSE_USERNAME);
 	if (pool !== undefined) {
 		return;
 	}
