@@ -19,7 +19,7 @@
     });
 </script>
 
-<div class="hover:bg-primary-500 hover:bg-opacity-20">
+<div class="hover:bg-secondary-500 hover:bg-opacity-35">
 	<!-- <span class="badge-icon p-4 variant-soft-secondary"><i class="fa-solid fa-book"></i></span> -->
 	<span class="flex-auto space-x-2">
         <span class="font-bold">{subject}</span>
