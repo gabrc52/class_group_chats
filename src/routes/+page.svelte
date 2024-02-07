@@ -16,6 +16,7 @@
 	import CustomStepper from '$lib/components/stepper/CustomStepper.svelte';
 	import { LOCAL_STORAGE_LOGIN_TOKEN_KEY, LOCAL_STORAGE_SUBJECT_LIST_KEY } from '$lib/constants';
 	import { loginElement, USER_ID_KEY } from '$lib/element';
+	import SubjectListItem from '$lib/components/SubjectListItem.svelte';
 
 	let isMobile: boolean | undefined;
 
@@ -54,6 +55,11 @@
 	}
 
 	let showClassPicker = false;
+	// automatically hide the class picker when going back
+	// (in case people accidentally go back and don't see the back button)
+	$: if ($step !== 2) {
+		showClassPicker = false;
+	}
 
 	onMount(async () => {
 		// get callback (from window.location)
@@ -157,7 +163,6 @@
 					>
 				{/if}
 				<!-- TODO: use an actual modal -->
-				<!-- TODO: don't just set the subject -> append instead -->
 
 				<!-- using conditional display style instead of if to share state / avoid mounting and unmounting -->
 				<div style:display={showClassPicker ? 'block' : 'none'}>
@@ -172,10 +177,10 @@
 
 				{#if !showClassPicker}
 					<!-- TODO: make this look nice & functional ! -->
-					<ul>
+					<ul class="list-dl mt-2">
 						{#each selectedSubjects as subject (subject)}
 							<!-- TODO: add delete button -->
-							<li>{subject}</li>
+							<SubjectListItem {subject} onDelete={() => undefined}/>
 						{/each}
 					</ul>
 				{/if}
