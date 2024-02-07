@@ -108,7 +108,7 @@
 		<svelte:element this={popupOnNext ? "a" : "button"}
 			role="button" tabindex="0"
 			href={popupOnNext}
-			target="_blank"
+			target="element"
 			type="button"
 			class="btn variant-filled"
 			disabled={!canGoNext}
