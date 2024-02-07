@@ -108,6 +108,7 @@
 				<ul class="autocomplete-list list-nav">
 					{#each results as result (result.number)}
 						<li class="autocomplete-item">
+							<!-- TODO(skeleton): things are oddly centered if restricted space / mobile -->
 							<button
 								class="autocomplete-button w-full"
 								type="button"
