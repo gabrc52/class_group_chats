@@ -13,7 +13,7 @@
 	import { writable } from 'svelte/store';
 	import { onMount } from 'svelte';
 	import { PUBLIC_HYDRANT_BASEURL, PUBLIC_MATRIX_BASEURL } from '$env/static/public';
-	import CustomStepper from '$lib/components/stepper/CustomStepper.svelte';
+	import CustomStepper from '$lib/components/CustomStepper.svelte';
 	import { LOCAL_STORAGE_LOGIN_TOKEN_KEY, LOCAL_STORAGE_SUBJECT_LIST_KEY } from '$lib/constants';
 	import { loginElement, USER_ID_KEY } from '$lib/element';
 	import SubjectListItem from '$lib/components/SubjectListItem.svelte';

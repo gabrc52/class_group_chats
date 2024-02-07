@@ -6,6 +6,7 @@
 <script lang="ts">
 	import { onMount } from "svelte";
     import type { SubjectDetailsOracle } from "$lib/types";
+    import TrashIcon from "$lib/icons/TrashIcon.svelte";
 
 	export let subject: string;
     let subjectDetails: SubjectDetailsOracle | undefined;
@@ -21,7 +22,8 @@
 
 <div class="hover:bg-secondary-500 hover:bg-opacity-35">
 	<!-- <span class="badge-icon p-4 variant-soft-secondary"><i class="fa-solid fa-book"></i></span> -->
-	<span class="flex-auto space-x-2">
+	<button type="button" class="btn-icon btn-icon-sm variant-filled"><TrashIcon/></button>
+    <span class="flex-auto space-x-2">
         <span class="font-bold">{subject}</span>
         {#if subjectDetails}
             <span class="opacity-70">{subjectDetails?.title}</span>

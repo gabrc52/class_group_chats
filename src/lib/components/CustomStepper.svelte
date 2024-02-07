@@ -25,8 +25,8 @@
 -->
 
 <script lang="ts">
-	import LockIcon from './LockIcon.svelte';
-	import Checkmark from './Checkmark.svelte';
+	import LockIcon from '../icons/LockIcon.svelte';
+	import Checkmark from '../icons/Checkmark.svelte';
 	import type { Writable } from 'svelte/store';
 
 	/**
