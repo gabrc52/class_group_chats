@@ -181,7 +181,10 @@
 					<ul class="list-dl mt-2">
 						{#each selectedSubjects as subject (subject)}
 							<!-- TODO: add delete button -->
-							<SubjectListItem {subject} onDelete={() => undefined}/>
+							<SubjectListItem {subject} onDelete={() => {
+								// yes O(N) idgaf, it also removes the exact reference
+								selectedSubjects = selectedSubjects.filter((s) => s != subject);
+							}}/>
 						{/each}
 					</ul>
 				{/if}

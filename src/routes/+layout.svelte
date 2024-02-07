@@ -11,6 +11,8 @@
 	import { initializeStores } from '@skeletonlabs/skeleton';
 	import { LOCAL_STORAGE_SUBJECT_LEVEL_KEY } from '$lib/constants';
 
+	import '@fortawesome/fontawesome-free/css/all.min.css';
+
 	// TODO: use some actual authentication mechanism
 	// This can be either a kerb or a full MXID
 	const username = persisted<string>(LOCAL_STORAGE_SUBJECT_LEVEL_KEY, '');

@@ -6,11 +6,12 @@
 <script lang="ts">
 	import { onMount } from "svelte";
     import type { SubjectDetailsOracle } from "$lib/types";
-    import TrashIcon from "$lib/icons/TrashIcon.svelte";
+	import type { MouseEventHandler } from "svelte/elements";
+	import { slide } from "svelte/transition";
 
 	export let subject: string;
     let subjectDetails: SubjectDetailsOracle | undefined;
-	export let onDelete: Function;
+	export let onDelete: MouseEventHandler<HTMLButtonElement>;
 
     onMount(async () => {
         const response = await fetch(`/classes/api/subjectWarehouse/${subject}`);
@@ -20,21 +21,14 @@
     });
 </script>
 
-<div class="hover:bg-secondary-500 hover:bg-opacity-35">
-	<!-- <span class="badge-icon p-4 variant-soft-secondary"><i class="fa-solid fa-book"></i></span> -->
-	<button type="button" class="btn-icon btn-icon-sm variant-filled"><TrashIcon/></button>
+<div transition:slide class="hover:bg-secondary-500 hover:bg-opacity-35">
+	<!-- so the material icon is too small - i tried copying just the svg and it's too big -->
+	<button on:click={onDelete} type="button" class="btn-icon btn-icon-sm variant-filled"><i class="fa-solid fa-trash"></i></button>
     <span class="flex-auto space-x-2">
         <span class="font-bold">{subject}</span>
+        <!-- TODO: it would be good to use the longer name -->
         {#if subjectDetails}
             <span class="opacity-70">{subjectDetails?.title}</span>
         {/if}
     </span>
 </div>
-
-<!-- <li>
-	<span class="badge bg-primary-500">💀</span>
-	<span class="flex-auto">
-		<dt>{subject}</dt>
-		<dd>Description</dd>
-	</span>
-</li> -->
