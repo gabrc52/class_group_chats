@@ -114,7 +114,10 @@
 			// (fix this by using local storage, if it should be done)
 			selectedSubjects = [...selectedSubjects, ...hydrantClassList];
 			// Don't do it indefinitely, just for the redirect
-			localStorage.removeItem(LOCAL_STORAGE_SUBJECT_LIST_KEY);
+			if ($username) {
+				// only if logged in, otherwise trying to log in will make it forget
+				localStorage.removeItem(LOCAL_STORAGE_SUBJECT_LIST_KEY);
+			}
 
 			// If we're here, it is because the Hydrant button was clicked, but just to be
 			// really sure, make sure the username is set
