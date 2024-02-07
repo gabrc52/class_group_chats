@@ -69,6 +69,7 @@
     
         <p>If you need any help with Matrix, don't hesitate to contact matrix@mit.edu.</p>
     
+        <!-- TODO(skeleton): opening this shrinks the QR code -->
         <details>
             <summary>More info</summary>
     
