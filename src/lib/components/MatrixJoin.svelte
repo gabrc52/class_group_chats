@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getContext, onMount } from "svelte";
 	import type { Readable } from "svelte/store";
+	import MatrixInstructions from "./MatrixInstructions.svelte";
 
     export let subjects: string[];
 
@@ -34,5 +35,10 @@
     onMount(inviteAll);
 </script>
 
-<!-- TODO if loading else show instructions -->
-<progress class="bg-success-500/30 h" value={progress} max={subjects.length} />
+{#if loading}
+	You are currently being invited to all the chats. Please wait...
+
+	<progress value={progress} max={subjects.length} />
+{:else}
+	<MatrixInstructions/>
+{/if}
