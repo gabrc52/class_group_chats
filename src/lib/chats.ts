@@ -22,11 +22,11 @@ export function getRoomAlias(subject: string, term: string): string {
 	return alias;
 }
 
-export async function createChat(subjectDetails: SubjectDetailsMulesoft, term: string) {
-	const { canonicalNumber, title, description } = subjectDetails;
+export async function createChat(number: string, subjectDetails: SubjectDetailsMulesoft, term: string) {
+	const { title, description } = subjectDetails;
 	const response = await matrixClient.createRoom({
-		room_alias_name: getRoomAliasLocalpart(canonicalNumber, term),
-		name: `${canonicalNumber} ${title}`,
+		room_alias_name: getRoomAliasLocalpart(number, term),
+		name: `${number} ${title}`,
 		topic: description,
 		visibility: Visibility.Private,
 		preset: Preset.TrustedPrivateChat,
