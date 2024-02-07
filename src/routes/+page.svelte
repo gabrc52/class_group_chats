@@ -9,7 +9,7 @@
 	import type { Subject } from '$lib/types';
 	import { encodeTicket, getUsername, loginWebathena } from '$lib/webathena';
 	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
+	import type { Readable, Writable } from 'svelte/store';
 	import { writable } from 'svelte/store';
 	import { onMount } from 'svelte';
 	import { PUBLIC_HYDRANT_BASEURL, PUBLIC_MATRIX_BASEURL } from '$env/static/public';
@@ -19,7 +19,7 @@
 	import SubjectListItem from '$lib/components/SubjectListItem.svelte';
 	import MatrixJoin from '$lib/components/MatrixJoin.svelte';
 
-	let isMobile: boolean | undefined;
+	let isMobile: Readable<boolean> = getContext('isMobile');
 
 	let hydrantUrl = PUBLIC_HYDRANT_BASEURL;
 	let matrixSsoUrl = '#';
@@ -80,11 +80,6 @@
 		hydrantUrl = `${PUBLIC_HYDRANT_BASEURL}/#/export?callback=${encodeURIComponent(hydrantCallback)}`;
 		matrixSsoUrl = `${PUBLIC_MATRIX_BASEURL}/_matrix/client/v3/login/sso/redirect/saml?redirectUrl=${encodeURIComponent(touchstoneCallback)}`;
 
-		// get whether mobile (from user agent)
-		const { userAgent } = navigator;
-		isMobile =
-			userAgent.includes('Android') || userAgent.includes('iPhone') || userAgent.includes('iPod');
-
 		// determine if already logged in Element
 		const existingUserId = localStorage.getItem(USER_ID_KEY);
 		if (existingUserId) {
@@ -141,12 +136,12 @@
 	<div class="py-4">
 		<CustomStepper {step} {canGoNext} {popupOnNext} {onNext}>
 			{#if $step === 1}
-				{#if isMobile === true}
+				{#if $isMobile === true}
 					<div class="w-fit">
 						<KerbInput {username} {usernameExists} />
 					</div>
 				{/if}
-				{#if isMobile === false}
+				{#if $isMobile === false}
 					{#if $username}
 						<p>You are already logged in as <strong>{$username}</strong>.</p>
 					{:else}

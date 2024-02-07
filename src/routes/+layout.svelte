@@ -5,14 +5,23 @@
 	import GitHubIcon from 'svelte-material-icons/Github.svelte';
 
 	import { PUBLIC_MATRIX_HOMESERVER } from '$env/static/public';
-	import { setContext } from 'svelte';
+	import { onMount, setContext } from 'svelte';
 	import { persisted } from 'svelte-local-storage-store';
-	import { derived, readonly } from 'svelte/store';
+	import { derived, readonly, writable } from 'svelte/store';
 	import { initializeStores } from '@skeletonlabs/skeleton';
 	import { LOCAL_STORAGE_USERNAME_KEY } from '$lib/constants';
 
 	import '@fortawesome/fontawesome-free/css/all.min.css';
 	import MatrixLogo from '$lib/components/MatrixLogo.svelte';
+
+	const isMobile = writable<boolean>(true);
+	setContext('isMobile', readonly(isMobile));
+
+	onMount(() => {
+		// get whether mobile (from user agent)
+		const { userAgent } = navigator;
+		$isMobile = userAgent.includes('Android') || userAgent.includes('iPhone') || userAgent.includes('iPod');
+	});
 
 	// TODO: use some actual authentication mechanism
 	// This can be either a kerb or a full MXID
