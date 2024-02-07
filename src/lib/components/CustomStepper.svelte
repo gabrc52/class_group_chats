@@ -41,6 +41,11 @@
 	 * Popup that will be opened when pressing "Next"
 	 */
 	export let popupOnNext: string | undefined;
+
+	/**
+	 * Additional action to run when next button is clicked
+	*/
+	export let onNext: Function;
 </script>
 
 <ol class="flex items-center w-full text-sm font-medium text-center sm:text-base">
@@ -115,6 +120,7 @@
 			on:click={() => {
 				$step = $step + 1;
 				if ($step > 3) $step = 3;
+				onNext();
 			}}
 		>
 			{#if !canGoNext}

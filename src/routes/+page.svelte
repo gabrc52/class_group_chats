@@ -66,7 +66,12 @@
 	// and adding target = _blank)
 	let popupOnNext: string | undefined = undefined;
 	$: popupOnNext = (canGoNext && $step === 2) ? PUBLIC_MATRIX_BASEURL : undefined;
-	$: console.log(popupOnNext);
+
+	let onNext: Function = () => {};
+	$: onNext = (canGoNext && $step == 2) ? async () => {
+		// in theory, this should change the window back, but that does not seem to work
+		setTimeout(() => window.focus(), 1000);
+	} : () => {};
 
 	onMount(async () => {
 		// get callback (from window.location)
@@ -131,7 +136,7 @@
 <div class="container px-4 mx-auto max-w-screen-lg py-4 space-x-4">
 	{#if !loading}
 	<div class="py-4">
-		<CustomStepper {step} {canGoNext} {popupOnNext}>
+		<CustomStepper {step} {canGoNext} {popupOnNext} {onNext}>
 			{#if $step === 1}
 				{#if isMobile === true}
 					<div class="w-fit">
