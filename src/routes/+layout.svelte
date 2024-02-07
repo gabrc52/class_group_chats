@@ -12,6 +12,7 @@
 	import { LOCAL_STORAGE_SUBJECT_LEVEL_KEY } from '$lib/constants';
 
 	import '@fortawesome/fontawesome-free/css/all.min.css';
+	import MatrixLogo from '$lib/components/MatrixLogo.svelte';
 
 	// TODO: use some actual authentication mechanism
 	// This can be either a kerb or a full MXID
@@ -41,8 +42,8 @@
 		<!-- App Bar -->
 		<AppBar>
 			<svelte:fragment slot="lead">
-				<strong class="text-xl uppercase hidden sm:block">Class group chats via [matrix]</strong>
-				<strong class="text-xl uppercase sm:hidden block">Matrix class chats</strong>
+				<strong class="text-xl uppercase hidden sm:block">Class group chats via <MatrixLogo/></strong>
+				<strong class="text-xl uppercase sm:hidden block"><MatrixLogo/> class chats</strong>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<a

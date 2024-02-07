@@ -189,7 +189,9 @@
 					</ul>
 				{/if}
 			{:else}
-				TODO: guidance on how to use Matrix goes here
+				<p>
+					
+				</p>
 			{/if}
 		</CustomStepper>
 	</div>
