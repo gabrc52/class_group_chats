@@ -42,13 +42,15 @@
 			<div>
 				<span class="badge p-4 variant-soft-primary"><i class="fa-solid fa-download"></i></span>
 				<span class="flex-auto"
-					><dt class="font-bold">Installing the app on your phone</dt>
+					><dt class="font-bold">
+						Installing the <a class="anchor" href="https://matrix.mit.edu/mobile/" target="_blank"
+							>Element</a
+						> app on your phone
+					</dt>
 					<dd class="text-sm opacity-80">
-						Go to your phone's app store and install the <a
-							class="anchor"
-							href="https://matrix.mit.edu/mobile/"
-							target="_blank">Element</a
-						> app by scanning the QR code.
+						Be sure to select
+						<strong>I already have an account</strong>
+						and set your server to <strong>matrix.mit.edu</strong>.
 					</dd></span
 				>
 			</div>
