@@ -142,25 +142,26 @@
 				{#if !showClassPicker}
 					<!-- TODO: consider hiding these icons after returning from the other service -->
 					<p class="pb-2">You can import your class list from another SIPB service:</p>
-					<div class="flex">
-						<a class="btn variant-filled flex" href={hydrantUrl}>
+					<div class="grid md:grid-flow-col grid-flow-row items-center md:space-x-8 space-y-2">
+						<a class="btn variant-filled" href={hydrantUrl}>
 							<span>Import class list from</span>
 							<span style="margin-left: 5px;"><HydrantLogo /></span>
 						</a>
-						<button class="flex btn variant-filled-secondary ml-4" on:click={importFromWebathena}
+						<button class="btn variant-filled-secondary" on:click={importFromWebathena}
 							>Import from Canvas via Webathena</button
 						>
-					</div>
-					<button
-						class="btn font-bold mt-4 text-warning-400"
-						on:click={() => {
-							showClassPicker = true;
+						<button
+							class="btn variant-ghost-warning font-bold text-warning-400"
+							on:click={() => {
+								showClassPicker = true;
 
-							/// Focus the search box
-							// TODO: this is hacky, figure out if there is a better way
-							setTimeout(() => document.getElementById('searchbox')?.focus(), 10);
-						}}>+ Add class manually</button
-					>
+								/// Focus the search box
+								// TODO: this is hacky, figure out if there is a better way
+								setTimeout(() => document.getElementById('searchbox')?.focus(), 10);
+							}}>+ Add class manually</button
+						>
+					</div>
+					
 				{/if}
 				<!-- TODO: use an actual modal -->
 

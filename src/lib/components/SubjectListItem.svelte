@@ -22,7 +22,10 @@
 <div>
 	<!-- <span class="badge-icon p-4 variant-soft-secondary"><i class="fa-solid fa-book"></i></span> -->
 	<span class="flex-auto space-x-2">
-        <span class="font-bold">{subject}</span><span class="opacity-70">{subjectDetails?.title}</span>
+        <span class="font-bold">{subject}</span>
+        {#if subjectDetails}
+            <span class="opacity-70">{subjectDetails?.title}</span>
+        {/if}
     </span>
 </div>
 
