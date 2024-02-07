@@ -86,6 +86,6 @@
         </details>
     </div>
     <div class="ml-8 my-auto">
-        <img src="qr-code.png" alt="Download Element on your phone via the app store." class="size-min"/>
+        <img src="qr-code.png" title="QR code to download Element on your phone" alt="Download Element on your phone via the app store." class="size-min"/>
     </div>    
 </div>
