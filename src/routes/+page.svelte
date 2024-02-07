@@ -62,6 +62,12 @@
 		showClassPicker = false;
 	}
 
+	// This is so before step 3, a "popup" opens (by making the button an <a> element,
+	// and adding target = _blank)
+	let popupOnNext: string | undefined = undefined;
+	$: popupOnNext = (canGoNext && $step === 2) ? PUBLIC_MATRIX_BASEURL : undefined;
+	$: console.log(popupOnNext);
+
 	onMount(async () => {
 		// get callback (from window.location)
 		const hydrantCallback = `${window.location}hydrantCallback`;
@@ -125,7 +131,7 @@
 <div class="container px-4 mx-auto max-w-screen-lg py-4 space-x-4">
 	{#if !loading}
 	<div class="py-4">
-		<CustomStepper {step} {canGoNext}>
+		<CustomStepper {step} {canGoNext} {popupOnNext}>
 			{#if $step === 1}
 				{#if isMobile === true}
 					<div class="w-fit">

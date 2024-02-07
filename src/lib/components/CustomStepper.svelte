@@ -36,6 +36,11 @@
 	export let step: Writable<number>;
 
 	export let canGoNext: boolean;
+
+	/**
+	 * Popup that will be opened when pressing "Next"
+	 */
+	export let popupOnNext: string | undefined;
 </script>
 
 <ol class="flex items-center w-full text-sm font-medium text-center sm:text-base">
@@ -100,7 +105,10 @@
 		← Back
 	</button>
 	{#if $step < 3}
-		<button
+		<svelte:element this={popupOnNext ? "a" : "button"}
+			role="button" tabindex="0"
+			href={popupOnNext}
+			target="_blank"
 			type="button"
 			class="btn variant-filled"
 			disabled={!canGoNext}
@@ -113,6 +121,6 @@
 				<LockIcon />
 			{/if}
 			<span>Next →</span>
-		</button>
+		</svelte:element>
 	{/if}
 </div>
