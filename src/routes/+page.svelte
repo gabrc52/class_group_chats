@@ -184,7 +184,11 @@
 				<div style:display={showClassPicker ? 'block' : 'none'}>
 					<SearchBox
 						on:subjectSelected={(event) => {
-							selectedSubjects = [...selectedSubjects, event.detail.number];
+							const number = event.detail.number;
+							// avoid adding duplicate subjects
+							if (!selectedSubjects.includes(number)) {
+								selectedSubjects = [...selectedSubjects, event.detail.number];
+							}
 							showClassPicker = false;
 						}}
 						onClose={() => (showClassPicker = false)}
