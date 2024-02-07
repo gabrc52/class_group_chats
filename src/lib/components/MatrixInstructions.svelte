@@ -1,6 +1,7 @@
 <script lang="ts">
 	import MatrixLogo from './MatrixLogo.svelte';
     import ElementLogo from './ElementLogo.svelte';
+    import AppStores from './AppStores.svelte';
 	import { PUBLIC_MATRIX_HOMESERVER } from '$env/static/public';
 	import { getContext } from 'svelte';
 	import type { Readable } from 'svelte/store';
@@ -24,6 +25,7 @@
         </p>
     
         {#if $isMobile}
+        <AppStores/>
         <p>
             You will also need to change your server to <strong>matrix.mit.edu</strong>, as follows:
         </p>
