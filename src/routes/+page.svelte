@@ -12,7 +12,7 @@
 	import type { Readable, Writable } from 'svelte/store';
 	import { writable } from 'svelte/store';
 	import { onMount } from 'svelte';
-	import { PUBLIC_HYDRANT_BASEURL, PUBLIC_MATRIX_BASEURL } from '$env/static/public';
+	import { PUBLIC_HYDRANT_BASEURL, PUBLIC_MATRIX_BASEURL, PUBLIC_ELEMENT_LINK } from '$env/static/public';
 	import CustomStepper from '$lib/components/CustomStepper.svelte';
 	import { LOCAL_STORAGE_LOGIN_TOKEN_KEY, LOCAL_STORAGE_SUBJECT_LIST_KEY } from '$lib/constants';
 	import { loginElement, USER_ID_KEY } from '$lib/element';
@@ -69,7 +69,7 @@
 	// This is so before step 3, a "popup" opens (by making the button an <a> element,
 	// and adding target = _blank)
 	let popupOnNext: string | undefined = undefined;
-	// $: popupOnNext = (canGoNext && !$isMobile && $step === 2) ? PUBLIC_MATRIX_BASEURL : undefined;
+	// $: popupOnNext = (canGoNext && !$isMobile && $step === 2) ? PUBLIC_ELEMENT_LINK : undefined;
 
 	let onNext: Function = () => {};
 	// $: onNext = (canGoNext && $step == 2) ? async () => {
