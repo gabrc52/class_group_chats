@@ -54,7 +54,7 @@
 {:else}
 <div class="flex flex-col">
 	<p class="pb-4">
-		To view your class group chats, you should open <ElementLogo/> matrix.mit.edu. Click the button below to do so:
+		To view your class group chats, you should open <a href={PUBLIC_ELEMENT_LINK} target="element"> <ElementLogo/> matrix.mit.edu</a>. Click the button below to do so:
 	</p>
 	<a type="button" class="btn variant-filled-success mx-auto" href={PUBLIC_ELEMENT_LINK} target="element" on:click={() => $hasOpenedElement = true}>
 		<span><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
