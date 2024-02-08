@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import HydrantLogo from '$lib/components/HydrantLogo.svelte';
+	import HydrantLogo from '$lib/components/logos/HydrantLogo.svelte';
 	import KerbInput from '$lib/components/KerbInput.svelte';
 	import SubjectDetails from '$lib/components/SubjectDetails.svelte';
 	import type { Subject } from '$lib/types';

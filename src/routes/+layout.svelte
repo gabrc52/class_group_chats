@@ -12,7 +12,7 @@
 	import { LOCAL_STORAGE_USERNAME_KEY } from '$lib/constants';
 
 	import '@fortawesome/fontawesome-free/css/all.min.css';
-	import MatrixLogo from '$lib/components/MatrixLogo.svelte';
+	import MatrixLogo from '$lib/components/logos/MatrixLogo.svelte';
 
 	const isMobile = writable<boolean>(true);
 	setContext('isMobile', readonly(isMobile));

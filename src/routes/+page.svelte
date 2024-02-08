@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import HydrantLogo from '$lib/components/HydrantLogo.svelte';
+	import HydrantLogo from '$lib/components/logos/HydrantLogo.svelte';
 	import KerbInput from '$lib/components/KerbInput.svelte';
 	import SearchBox from '$lib/components/SearchBox.svelte';
 	import SubjectDetails from '$lib/components/SubjectDetails.svelte';

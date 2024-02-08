@@ -1,7 +1,7 @@
 <script lang="ts">
-	import MatrixLogo from './MatrixLogo.svelte';
-    import ElementLogo from './ElementLogo.svelte';
-    import AppStores from './AppStores.svelte';
+	import MatrixLogo from './logos/MatrixLogo.svelte';
+    import ElementLogo from './logos/ElementLogo.svelte';
+    import AppStores from './logos/AppStores.svelte';
 	import { PUBLIC_MATRIX_HOMESERVER } from '$env/static/public';
 	import { getContext } from 'svelte';
 	import type { Readable } from 'svelte/store';
