@@ -165,6 +165,7 @@
 					<!-- TODO: consider hiding these icons after returning from the other service -->
 					<p class="pb-2">You can import your class list from another SIPB service:</p>
 					<div class="grid md:grid-flow-col grid-flow-row items-center md:space-x-8 space-y-2">
+						<!-- TODO: prevent middle clicks - only redirect (preventDefault + redirect / or an actual button instead)-->
 						<a class="btn variant-filled" href={hydrantUrl}>
 							<span>Import class list from</span>
 							<span style="margin-left: 5px;"><HydrantLogo /></span>
