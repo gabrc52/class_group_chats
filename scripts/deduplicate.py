@@ -32,5 +32,11 @@ for subject in d.keys():
     if subject in d[subject]:
         d[subject].remove(subject)
 
+dd = {k: v for k,v in d.items() if v}
+
 # we only want the ones with duplicates
-pprint({k: v for k,v in d.items() if v})
+pprint(dd)
+
+q = ''.join(f'&class={value[0]}' for value in dd.values())
+
+print(f'http://localhost:5173/classes/hydrantCallback?hydrant=true{q}')
