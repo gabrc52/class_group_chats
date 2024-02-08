@@ -40,6 +40,15 @@
     onMount(inviteAll);
 </script>
 
+<svelte:window on:beforeunload={(e) => {
+	/// Discourage user from closing the tab if they haven't opened Element yet
+	if (!$hasOpenedElement) {
+		// https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event
+		e.preventDefault();
+		e.returnValue = true;
+	}
+}} />
+
 {#if loading}
 <div class="mb-4">
 		You are currently being invited to all the chats. Please wait...
