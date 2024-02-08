@@ -37,7 +37,8 @@
 		const webathena = await loginWebathena();
 		const token = encodeTicket(webathena);
 		const classes = await getClassListFromMoira(token);
-		$username = getUsername(webathena);
+		// Not changing the username in the new flow, since they should have already given their username
+		// $username = getUsername(webathena);
 		console.log(classes);
 		selectedSubjects = classes;
 		// TODO: don't want this anymore
