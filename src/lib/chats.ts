@@ -8,7 +8,6 @@ function getRoomAliasLocalpart(subject: string, term: string): string {
 	return `${PUBLIC_ROOM_ALIAS_PREFIX}${subject}_${term.toLowerCase()}`;
 }
 
-// TODO: update to get master subject ID from warehouse
 /**
  * Calculate the room alias of a given subject chat
  *
