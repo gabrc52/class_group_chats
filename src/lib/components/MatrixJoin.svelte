@@ -7,6 +7,8 @@
 	import ElementLogo from "./logos/ElementLogo.svelte";
 	import { PUBLIC_ELEMENT_LINK } from "$env/static/public";
 
+	let isMobile: Readable<boolean> = getContext('isMobile');
+
     export let subjects: string[];
 
     let progress: number = 0;
@@ -57,7 +59,7 @@
 </div>
 {/if}
 
-{#if $hasOpenedElement}
+{#if $hasOpenedElement || isMobile}
 <MatrixInstructions/>
 {:else}
 <div class="flex flex-col">
