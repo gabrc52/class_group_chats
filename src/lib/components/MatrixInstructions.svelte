@@ -2,7 +2,7 @@
 	import MatrixLogo from './logos/MatrixLogo.svelte';
 	import ElementLogo from './logos/ElementLogo.svelte';
 	import AppStores from './logos/AppStores.svelte';
-	import { PUBLIC_MATRIX_HOMESERVER } from '$env/static/public';
+	import { PUBLIC_ELEMENT_LINK, PUBLIC_MATRIX_HOMESERVER } from '$env/static/public';
 	import { getContext } from 'svelte';
 	import type { Readable } from 'svelte/store';
 	import PinIcon from 'svelte-material-icons/Pin.svelte';
@@ -17,8 +17,8 @@
 			Welcome to the <MatrixLogo />.
 			{#if $isMobile}
 				To chat, you will need a Matrix app, such as <ElementLogo /> Element.
-			{:else}
-				To chat, you will need a Matrix app.
+            {:else}
+                You can chat through the <a href={PUBLIC_ELEMENT_LINK} target="element" class="anchor">matrix.mit.edu</a> tab on your browser.
 			{/if}
 		</p>
 
@@ -35,8 +35,7 @@
 			</p>
 		{:else}
 			<p>
-				We have opened a <ElementLogo />
-				tab so that you can use <strong>matrix.mit.edu</strong> on your browser.
+				
 			</p>
 
 			<p>We recommend:</p>
@@ -52,7 +51,7 @@
 							/></span
 						>
 						<span class="flex-auto"
-							><dt class="font-bold">Pinning the tab</dt>
+							><dt class="font-bold">Pinning the <ElementLogo /> tab</dt>
 							<dd class="text-sm opacity-80">Right click the tab, and click on "Pin tab".</dd></span
 						>
 					</div>
