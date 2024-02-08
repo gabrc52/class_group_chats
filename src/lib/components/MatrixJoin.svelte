@@ -29,7 +29,7 @@
 			}
 		}
 	}
-	
+
     async function inviteAll(): Promise<void> {
 		loading = true;
 		progress = 0;
@@ -40,14 +40,13 @@
     onMount(inviteAll);
 </script>
 
+{#if loading}
 <div class="mb-4">
-	{#if loading}
 		You are currently being invited to all the chats. Please wait...
 
 		<progress value={progress} max={subjects.length-1} />
-	{/if}
-	
 </div>
+{/if}
 
 {#if $hasOpenedElement}
 <MatrixInstructions/>
