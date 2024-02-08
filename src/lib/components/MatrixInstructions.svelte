@@ -87,6 +87,15 @@
 			</div>
 		{/if}
 
+		<p>
+			<img src="messenger-icon.png" width="20em" alt="messenger icon" class="inline" /> Messenger
+			support is coming soon!
+
+			<span class="text-sm opacity-70"
+				>It isn't ready yet, so for the time being, if you would like to bridge an existing
+				Messenger chat to a Matrix chat, reach out to us and we will bridge it manually.</span
+			>
+		</p>
 		<p>If you need any help with Matrix, don't hesitate to contact matrix@mit.edu.</p>
 	</div>
 	<div class="ml-8 my-auto hidden sm:block">
