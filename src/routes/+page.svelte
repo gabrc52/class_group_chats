@@ -19,6 +19,8 @@
 	import SubjectListItem from '$lib/components/SubjectListItem.svelte';
 	import MatrixJoin from '$lib/components/MatrixJoin.svelte';
 
+	let showHydrantError = false;
+
 	let isMobile: Readable<boolean> = getContext('isMobile');
 
 	let hydrantUrl = PUBLIC_HYDRANT_BASEURL;
@@ -34,6 +36,8 @@
 	let selectedSubjects: string[] = [];
 
 	async function importFromWebathena(): Promise<void> {
+		showHydrantError = false;
+
 		const webathena = await loginWebathena();
 		const token = encodeTicket(webathena);
 		const classes = await getClassListFromMoira(token);
@@ -105,7 +109,11 @@
 		// determine whether we received a class list from Hydrant
 		const hydrantClassListJson = localStorage.getItem(LOCAL_STORAGE_SUBJECT_LIST_KEY);
 		if (hydrantClassListJson) {
-			const hydrantClassList = JSON.parse(hydrantClassListJson);
+			const hydrantClassList: string[] = JSON.parse(hydrantClassListJson);
+			if (hydrantClassList.length === 0) {
+				showHydrantError = true;
+			}
+
 			// append Hydrant class list (in case someone presses the button, so it doesn't
 			// wipe their class list)
 
@@ -167,6 +175,7 @@
 						<button
 							class="btn variant-ghost-warning font-bold text-warning-400"
 							on:click={() => {
+								showHydrantError = false;
 								showClassPicker = true;
 
 								/// Focus the search box
@@ -176,6 +185,22 @@
 						>
 					</div>
 					
+					{#if showHydrantError}
+					<aside class="alert variant-filled-warning m-4">
+						<i class="fa-solid fa-triangle-exclamation text-4xl"></i>
+						<div class="alert-message">
+							<h3 class="h3">Hydrant did not give us any classes.</h3>
+							<p>
+								If you wish to import from Hydrant, make sure to add your class list to
+								<!-- TODO: contrast of the text looks p bad here -->
+								<a href="https://hydrant.mit.edu" class="anchor" target="hydrant">https://hydrant.mit.edu</a> first.
+							</p>
+						</div>
+						<div class="alert-actions">
+							<button class="btn-icon variant-filled" on:click={() => showHydrantError = false}><i class="fa-solid fa-xmark"></i></button>
+						</div>
+					</aside>
+					{/if}
 				{/if}
 				<!-- TODO: use an actual modal -->
 
