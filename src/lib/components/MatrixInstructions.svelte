@@ -77,7 +77,7 @@
 					<div>
 						<span class="badge p-4 variant-soft-primary"><i class="fa-solid fa-bell"></i></span>
 						<span class="flex-auto"
-							><dt class="font-bold">Enabling notificatoins</dt>
+							><dt class="font-bold">Enabling notifications</dt>
 							<dd class="text-sm opacity-80">
 								Make sure to accept the notifications prompt so you don't miss any messages.
 							</dd></span
