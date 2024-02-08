@@ -25,6 +25,7 @@
 
 	// TODO: use some actual authentication mechanism
 	// This can be either a kerb or a full MXID
+	// TODO: consider using session storage here instead -- at least I am testing with many accounts but old usernames get saved
 	const username = persisted<string>(LOCAL_STORAGE_USERNAME_KEY, '');
 	setContext('username', username);
 	const mxid = derived(
