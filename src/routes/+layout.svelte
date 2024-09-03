@@ -67,7 +67,7 @@
 				</a>
 				<a
 					id="feedback-button"
-					class="btn btn-sm variant-ghost-surface"
+					class="btn btn-sm variant-filled-warning"
 					href="https://docs.google.com/forms/d/e/1FAIpQLSfIbAmtZeqLWCRx3L8_Hj28Nwh6TtsCjxN7OZjl8UisDkHgHw/viewform"
 					target="_blank"
 					rel="noreferrer"

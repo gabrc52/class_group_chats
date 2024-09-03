@@ -144,6 +144,12 @@
 <!-- TODO(skeleton): gradient bad - make it look better (simply no gradient) -->
 
 <div class="container px-4 mx-auto max-w-screen-lg py-4 space-x-4">
+	<div class="variant-glass-warning mb-4 rounded-md p-2">
+		If you experience any issues, please email 
+		<a href="mailto:matrix@mit.edu" class="font-bold underline text-tertiary-300">matrix@mit.edu</a> or fill out the 
+		<a href="https://docs.google.com/forms/d/e/1FAIpQLSfIbAmtZeqLWCRx3L8_Hj28Nwh6TtsCjxN7OZjl8UisDkHgHw/viewform" class="font-bold underline text-tertiary-300" target="_blank">feedback form</a>.
+	</div>
+	
 	{#if !loading}
 	<div class="py-4">
 		<CustomStepper {step} {canGoNext} {popupOnNext} {onNext}>
