@@ -55,3 +55,17 @@ npm run build
 ```
 
 You can preview the production build with `npm run preview`.
+
+
+## Pushing to production
+
+```bash
+local$ git push
+local$ ssh uplink@uplink
+uplink@uplink$ sudo su subjects
+subjects@uplink$ cd ~/class_group_chats
+subjects@uplink$ git pull
+subjects@uplink$ npm run build
+subjects@uplink$ exit
+uplink@uplink$ sudo systemctl restart subjects
+```
