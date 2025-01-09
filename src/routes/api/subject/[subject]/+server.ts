@@ -9,14 +9,14 @@ async function getAllHydrantClasses() {
 	const json = await response.json();
 	const allClasses: any[] = Object.values(json.classes);
 	return allClasses.map<Subject>((c) => ({
-		number: c.no,
+		number: c.number,
 		// it may be not defined, which is not an issue in JS as it becomes undefined
 		// which does not get reflected in the JSON.
-		oldNumber: c.on,
-		name: c.n,
-		// description: c.d,
-		// instructor: c.i,
-		level: c.le
+		oldNumber: c.oldNumber,
+		name: c.name,
+		// description: c.description,
+		// instructor: c.inCharge,
+		level: c.level
 	}));
 }
 
