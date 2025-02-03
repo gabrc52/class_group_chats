@@ -59,7 +59,7 @@
 </div>
 {/if}
 
-{#if $hasOpenedElement || isMobile}
+{#if $hasOpenedElement || $isMobile}
 <MatrixInstructions/>
 {:else}
 <div class="flex flex-col">
