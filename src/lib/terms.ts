@@ -9,7 +9,7 @@ export async function getLatestTermHydrant() {
 	// TODO: ngl we should cache this
 	const response = await fetch(`${PUBLIC_HYDRANT_BASEURL}/latestTerm.json`);
 	const json = await response.json();
-	return json.urlName;
+	return json.semester.urlName;
 }
 
 /**
