@@ -148,6 +148,8 @@
 		If you experience any issues, please email 
 		<a href="mailto:matrix@mit.edu" class="font-bold underline text-tertiary-300">matrix@mit.edu</a> or fill out the 
 		<a href="https://docs.google.com/forms/d/e/1FAIpQLSfIbAmtZeqLWCRx3L8_Hj28Nwh6TtsCjxN7OZjl8UisDkHgHw/viewform" class="font-bold underline text-tertiary-300" target="_blank">feedback form</a>.
+		<br/>
+		Please note that you must be a student to join the group chats from this site.
 	</div>
 	
 	{#if !loading}
